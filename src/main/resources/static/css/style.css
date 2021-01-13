@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+@font-face{
+    font-family: 'Caveat', cursive;
+    src: url local('fonts/Caveat-Regular.ttf') format('truetype');
+}
+
+@font-face{
+    font-family: 'Lemon', cursive;
+    src: url local('fonts/Lemon-Regular.ttf') format('truetype');
+}
+
+@font-face{
+    font-family: 'Quando', serif;
+    src: url local('fonts/Quando-Regular.ttf') format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Quando';
+    margin: 0;
+    background-color: #dee7fc;
+}
