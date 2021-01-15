@@ -1,20 +1,5 @@
 @charset "UTF-8";
 
-@font-face{
-    font-family: 'Caveat', cursive;
-    src: url local('fonts/Caveat-Regular.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Lemon', cursive;
-    src: url local('fonts/Lemon-Regular.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Quando', serif;
-    src: url local('fonts/Quando-Regular.ttf') format('truetype');
-}
-
 * {
     box-sizing: border-box;
 }
@@ -28,5 +13,36 @@ body {
     flex-direction: column;
     font-family: 'Quando';
     margin: 0;
-    background-color: #dee7fc;
+    background-image: url("morocco-blue.png");
+}
+
+.orange-background{
+	background-color: #f0e0d1;
+}
+
+.main-title {
+	font-family: 'Lemon';
+}
+
+#content-above-footer {
+    flex: 1 0 auto;
+}
+
+#chef-info {
+	text-align: right;
+}
+
+#chef {
+	font-family: 'Caveat';
+	font-size: x-large;
+	
+}
+
+#footer {
+    flex-shrink: 0;
+    text-align: center;
+}
+
+#footer p {
+    margin: auto;
 }
