@@ -46,3 +46,9 @@ body {
 #footer p {
     margin: auto;
 }
+
+#error_message {
+	margin-top: 30px;
+    padding: 20px 0 20px 0;
+    text-align: center;
+}
