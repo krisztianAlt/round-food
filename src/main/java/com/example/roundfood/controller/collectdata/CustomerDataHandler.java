@@ -1,9 +1,8 @@
 package com.example.roundfood.controller.collectdata;
 
-import com.example.roundfood.DAO.QueryHandler;
+import com.example.roundfood.DAO.CustomerDAO;
 import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.CustomerLegitimacy;
-import com.example.roundfood.model.RoomReservation;
 import com.example.roundfood.service.CustomerDataValidator;
 import com.example.roundfood.service.Password;
 import org.mindrot.jbcrypt.BCrypt;
@@ -19,12 +18,12 @@ import java.util.Map;
 @Service
 public class CustomerDataHandler{
 
-    private QueryHandler queryHandler;
+    private CustomerDAO customerDAO;
     private CustomerDataValidator customerDataValidator;
     private Password password;
 
-    public CustomerDataHandler(QueryHandler queryHandler, CustomerDataValidator customerDataValidator,Password password) {
-        this.queryHandler = queryHandler;
+    public CustomerDataHandler(CustomerDAO customerDAO, CustomerDataValidator customerDataValidator,Password password) {
+        this.customerDAO = customerDAO;
         this.customerDataValidator = customerDataValidator;
         this.password =password;
     }
@@ -39,7 +38,7 @@ public class CustomerDataHandler{
         customer.setLegitimacy(CustomerLegitimacy.USER);
 
         try {
-            queryHandler.saveNewCustomer(customer);
+            customerDAO.saveNewCustomer(customer);
             savingSucceeded = true;
         } catch (Exception e){
             System.out.println("SAVING FAILED: " + e.getMessage());
@@ -93,7 +92,7 @@ public class CustomerDataHandler{
 
     public boolean checkUserIsAdmin(long customerId) {
 
-        Customer customer = queryHandler.getCustomerById(customerId);
+        Customer customer = customerDAO.getCustomerById(customerId);
 
         if (customer.getLegitimacy()== CustomerLegitimacy.ADMIN) {
             return true;
@@ -104,7 +103,7 @@ public class CustomerDataHandler{
 
     public boolean checkUserIsLoggedUserOrAdmin(long customerId) {
 
-        Customer customer = queryHandler.getCustomerById(customerId);
+        Customer customer = customerDAO.getCustomerById(customerId);
 
         if (customer.getLegitimacy()== CustomerLegitimacy.ADMIN || customer.getLegitimacy()== CustomerLegitimacy.USER ) {
             return true;
