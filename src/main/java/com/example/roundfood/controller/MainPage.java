@@ -9,9 +9,11 @@ public class MainPage {
 
 	@RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String renderMainPage() {
-        
-
         return "welcome";
     }
 	
+	@RequestMapping(value = {"/about"}, method = RequestMethod.GET)
+    public String renderAboutPage() {
+        return "about";
+    }
 }

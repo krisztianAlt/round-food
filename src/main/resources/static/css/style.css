@@ -17,12 +17,12 @@ body {
 }
 
 .orange-background {
-	background-color: #f0e0d1;
+	background-color: #f0e0d1 !important;
 }
 
 #nav {
 	background-color: #f0e0d1 !important;
-} 
+}
 
 #carousel-container {
 	margin-top: 30px;
@@ -67,8 +67,29 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
-#error_message {
+.info {
 	margin-top: 30px;
     padding: 20px 0 20px 0;
     text-align: center;
+    border: 2px solid #f0e0d1;
+    border-radius: 10px;
+}
+
+.main-center-login {
+    margin: auto;
+    max-width: 350px;
+}
+
+.alert {
+	margin: 1rem auto;
+	max-width: 350px;
+}
+
+hr.style1 {
+	max-width: 720px;
+	margin: 0 auto 1rem auto;
+}
+
+#login-alert > dl, ol, ul {
+	margin: 0;
 }

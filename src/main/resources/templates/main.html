@@ -28,7 +28,10 @@
 		<link href="https://fonts.googleapis.com/css2?family=Lemon&display=swap" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css2?family=Caveat&family=Quando&display=swap" rel="stylesheet" />
-
+		
+		<!-- Font Awesome CSS file for icons -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+            
 		<!--[if lt IE 9]>
 		    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -41,22 +44,38 @@
 	    
 			<nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
 				<div class="container-fluid">
-				    <a class="navbar-brand main-title" href="/">Round Food</a>
-				    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				      <span class="navbar-toggler-icon"></span>
-				    </button>
-				    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-				    	
-				    	<div layout:fragment="navbar-content">
-				    	</div>
-				    	
-				      	<th:block th:if="${loggedIn}">
-			                <span class="navbar-text"  id="identification" th:text="${customername}">Customer's name</span>
-			            </th:block>
-				    </div>
-			  	</div>
+					<a class="navbar-brand main-title" href="/">Round Food</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					  <span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">						
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" aria-current="page" href="/">Main page</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/about">Info</a>
+							</li>
+						</ul>
+						<div>
+							<th:block th:if="${loggedIn}">
+								<span class="navbar-text"  id="identification" th:text="${customername}">Customer's name</span>
+					      	</th:block>
+					      	<th:block th:unless="${loggedIn}">
+						      	<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							   		<li class="nav-item">
+							   			<a class="nav-link" href="/login"><i class="fas fa-user"></i> Login/Registration</a>
+							   		</li>
+							   		<li class="nav-item">
+							   			<a class="nav-link disabled" href="/basket"><i class="fas fa-shopping-cart"></i></a>
+							   		</li>
+							   	</ul>
+					  		</th:block>
+						</div>
+					</div>
+				</div>
 			</nav>
-    	 
+			    	 	
 	        <div layout:fragment="content">
 	        </div>
 	
