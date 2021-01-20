@@ -38,9 +38,7 @@ public class CustomerAccountController {
         if (errorMessages.size() == 0 &&
                 (boolean) model.asMap().get("savingtried")){
             if ((boolean) model.asMap().get("savingsucceeded")){
-            	System.out.println("MEGYÜNK A LOGINRA");
-            	System.out.println(model.asMap().get("savingsucceeded"));
-                return "redirect:/login";
+                return "redirect:/login-after-registration";
             } else {
                 errorMessages.add("Database problem. Please, try later.");
                 model.addAttribute("errors", errorMessages);
@@ -55,6 +53,7 @@ public class CustomerAccountController {
     public String renderLogin(@RequestParam Map<String,String> allRequestParams,
                               Model model,
                               HttpServletRequest httpServletRequest) {
+    	
         model = customerDataHandler.collectLoginData(allRequestParams, model);
 
         List<String> errorMessages = (List) model.asMap().get("errors");
@@ -70,6 +69,17 @@ public class CustomerAccountController {
 
     }
 
+    @RequestMapping(value = "/login-after-registration", method = RequestMethod.GET)
+    public String renderPlanetsAfterRegistration(@RequestParam Map<String,String> allRequestParams,
+                                Model model,
+                                HttpServletRequest httpServletRequest) {
+
+    	model = customerDataHandler.collectLoginData(allRequestParams, model);
+    	model.addAttribute("savingsucceeded", true);
+
+        return "login";
+    }
+    
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String renderLogout(HttpServletRequest httpServletRequest) {
         httpServletRequest.getSession().removeAttribute("customer_id");

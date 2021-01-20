@@ -70,6 +70,7 @@ public class CustomerDataHandler{
 
     public Model collectLoginData(@RequestParam Map<String,String> allRequestParams,
                                 Model model) {
+    	
         List<String> errorMessages = new ArrayList();
         Map<String, String> customerDatas = new HashMap<>();
         Customer customer = null;
