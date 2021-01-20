@@ -11,6 +11,15 @@
 				    	
 		<div layout:fragment="content">
 
+			<div>
+				<th:block th:if="${loggedIn}">
+					LOGGED IN
+		      	</th:block>
+		      	<th:block th:unless="${loggedIn}">
+			      	NOT LOGGED IN
+		  		</th:block>
+			</div>
+						
 			<div class="container" id="carousel-container">   
 				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 					<ol class="carousel-indicators">

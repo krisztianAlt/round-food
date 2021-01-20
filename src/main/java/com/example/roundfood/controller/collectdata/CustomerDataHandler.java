@@ -22,10 +22,10 @@ public class CustomerDataHandler{
     private CustomerDataValidator customerDataValidator;
     private Password password;
 
-    public CustomerDataHandler(CustomerDAO customerDAO, CustomerDataValidator customerDataValidator,Password password) {
+    public CustomerDataHandler(CustomerDAO customerDAO, CustomerDataValidator customerDataValidator, Password password) {
         this.customerDAO = customerDAO;
         this.customerDataValidator = customerDataValidator;
-        this.password =password;
+        this.password = password;
     }
 
     public boolean saveCustomerDatas(Customer customer) {

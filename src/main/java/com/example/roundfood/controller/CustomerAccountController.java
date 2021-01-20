@@ -38,7 +38,9 @@ public class CustomerAccountController {
         if (errorMessages.size() == 0 &&
                 (boolean) model.asMap().get("savingtried")){
             if ((boolean) model.asMap().get("savingsucceeded")){
-                return "redirect:/customer-registration-succeeded";
+            	System.out.println("MEGYÜNK A LOGINRA");
+            	System.out.println(model.asMap().get("savingsucceeded"));
+                return "redirect:/login";
             } else {
                 errorMessages.add("Database problem. Please, try later.");
                 model.addAttribute("errors", errorMessages);
