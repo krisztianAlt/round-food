@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 	<head>
-	    <title>Registration | Round Food</title>
+	    <title>Profile | Round Food</title>
 	</head>
 	
 	<body>
@@ -12,17 +12,31 @@
 		<div layout:fragment="content">
 			<div class="container">
 				<div class="orange-background info">
-			        <p>Registration</p>
+			        <h4>Profile</h4>
 			        
-			        <div id="login-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(errors)>0}">
-			            <ul th:each="error : ${errors}">
-			                <li th:text="${error}"></li>
-			            </ul>
-			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			        </div>
-			        
+			        <br>
+
 			        <div class="main-center-login">
-			            <form action="/registration" th:object="${customer}" method="post">
+			        
+			            <p>Modifying personal data</p>
+			            
+			            <div id="login-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(errors)>0}">
+				            <ul th:each="error : ${errors}">
+				                <li th:text="${error}"></li>
+				            </ul>
+				            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				        </div>
+				        
+			            <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${updatesucceeded}">
+				            <p><strong>Data modification succeeded!</strong></p>
+				            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				        </div>
+				        
+			            <form action="/profile" th:object="${customer}" method="post">
+			            
+			            	<div class="d-none">
+								<input type="text" class="form-control" th:field="*{id}" id="id" name="id" th:value="*{id}">
+							</div>
 				 			
 				            <div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
@@ -45,17 +59,34 @@
 								<div id="basic-addon4" class="form-text">Format: 'area code'-'phone number', e. g. 30-1234567.</div>
 							</div>
 							
+							<button type="submit" class="btn btn-success">Save data</button>
+						</form>
+						
+						<br>
+						<hr class="style1">
+						
+						<p>Changing password</p>
+						<form action="/profile-password" method="post">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon5"><i class="fas fa-lock"></i></span>
-								<input type="password" class="form-control" th:field="*{password}" id="password" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon5">
-								<div id="basic-addon5" class="form-text">Password must be at least 5 character long.</div>
+								<input type="password" class="form-control" name="oldpassword" placeholder="Current password" aria-label="Password" aria-describedby="basic-addon5">
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon6"><i class="fas fa-lock"></i></span>
-								<input type="password" class="form-control" name="confirm" placeholder="Confirm password" aria-label="Confirm password" aria-describedby="basic-addon6">
+								<input type="password" class="form-control" name="newpassword" placeholder="New password" aria-label="Confirm password" aria-describedby="basic-addon6">
+								<div id="basic-addon6" class="form-text">Password must be at least 5 character long.</div>
 							</div>
-							<button type="submit" class="btn btn-success">Create account</button>
+							<button type="submit" class="btn btn-success">Save new password</button>
 			            </form>
+			            
+			            <br>
+			            <hr class="style1">
+			            
+			            <form action="/profile-delete" method="post">
+			            	<button type="submit" class="btn btn-danger" role="button"><i class="fas fa-trash"></i> Delete profile</button>
+			            </form>
+			            
+			            
 			        </div>
         
 			    </div>

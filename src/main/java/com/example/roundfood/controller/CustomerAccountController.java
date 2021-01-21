@@ -86,5 +86,49 @@ public class CustomerAccountController {
         httpServletRequest.getSession().removeAttribute("customer_name");
         return "redirect:/";
     }
+    
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String renderProfile(Model model,
+    							HttpServletRequest httpServletRequest) {
+    	
+    	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        
+        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("customername", customerName);
+        
+        if (customerId != null) {
+        	customerDataHandler.collectCustomerData(customerId, model);
+        	model.addAttribute("errors", new ArrayList<>());
+        	return "profile";
+        }
+       
+        return "redirect:/";
+    }
+    
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    public String renderProfile(@ModelAttribute Customer customer,
+				            	Model model,
+    							HttpServletRequest httpServletRequest) {
+    	
+    	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        
+    	model = customerDataHandler.collectCustomerProfileModificationData(customer, model);
+
+        List<String> errorMessages = (List) model.asMap().get("errors");
+
+        if (errorMessages.size() == 0 &&
+                (boolean) model.asMap().get("updatetried") &&
+                !(boolean) model.asMap().get("updatesucceeded")){
+        	errorMessages.add("Database problem. Please, try later.");
+            model.addAttribute("errors", errorMessages);
+        }
+        
+        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("customername", customerName);
+        
+        return "profile";
+    }
 
 }

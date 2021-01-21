@@ -28,24 +28,6 @@ public class CustomerDataHandler{
         this.password = password;
     }
 
-    public boolean saveCustomerDatas(Customer customer) {
-        boolean savingSucceeded = false;
-
-
-        String passwordStr = customer.getPassword();
-        String hashPassword = password.hashPassword(passwordStr);
-        customer.setPassword(hashPassword);
-        customer.setLegitimacy(CustomerLegitimacy.USER);
-
-        try {
-            customerDAO.saveNewCustomer(customer);
-            savingSucceeded = true;
-        } catch (Exception e){
-            System.out.println("SAVING FAILED: " + e.getMessage());
-        }
-        return savingSucceeded;
-    }
-
     public Model collectCustomerRegistrationData(Customer customer,
                                                String confirm,
                                                Model model) {
@@ -113,4 +95,63 @@ public class CustomerDataHandler{
         return false;
     }
 
+    public void collectCustomerData(Long customerId,
+            						Model model) {
+    	
+    	Customer customer = customerDAO.getCustomerById(customerId);
+    	model.addAttribute("customer", customer);
+    	
+	}
+    
+    public Model collectCustomerProfileModificationData(Customer customer, Model model) {
+    	List<String> errorMessages;
+        boolean updateSucceeded = false;
+        boolean updateTried = false;
+
+        errorMessages = customerDataValidator.validateModificationDatas(customer);
+
+        if (errorMessages.size() == 0){
+            updateTried = true;
+            updateSucceeded = updateCustomerDatas(customer);
+        }
+
+        model.addAttribute("customer", customer);
+        model.addAttribute("errors", errorMessages);
+        model.addAttribute("updatesucceeded", updateSucceeded);
+        model.addAttribute("updatetried", updateTried);
+    	
+    	return model;
+    }
+    
+    private boolean saveCustomerDatas(Customer customer) {
+        boolean savingSucceeded = false;
+
+
+        String passwordStr = customer.getPassword();
+        String hashPassword = password.hashPassword(passwordStr);
+        customer.setPassword(hashPassword);
+        customer.setLegitimacy(CustomerLegitimacy.USER);
+
+        try {
+            customerDAO.saveNewCustomer(customer);
+            savingSucceeded = true;
+        } catch (Exception e){
+            System.out.println("SAVING FAILED: " + e.getMessage());
+        }
+        return savingSucceeded;
+    }
+    
+    private boolean updateCustomerDatas(Customer customer) {
+    	boolean updateSucceeded = false;
+    	
+    	try {
+            customerDAO.updateCustomer(customer);
+            updateSucceeded = true;
+        } catch (Exception e){
+            System.out.println("UPDATING FAILED: " + e.getMessage());
+        }
+        return updateSucceeded;
+    	
+    }
+    
 }

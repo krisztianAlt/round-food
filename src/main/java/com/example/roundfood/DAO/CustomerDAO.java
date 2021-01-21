@@ -19,6 +19,18 @@ public class CustomerDAO {
 
     }
 	
+	public void updateCustomer(Customer updatedCustomer) {
+		Customer customer = customerRepository.getOne(updatedCustomer.getId());
+		
+		customer.setFirstName(updatedCustomer.getFirstName());
+		customer.setLastName(updatedCustomer.getLastName());
+		customer.setEmail(updatedCustomer.getEmail());
+		customer.setPhoneNumber(updatedCustomer.getPhoneNumber());
+		
+		customerRepository.save(customer);
+	}
+	
+	
 	public Customer getCustomerById(Long customerId) {
         Customer customer = null;
         try{
