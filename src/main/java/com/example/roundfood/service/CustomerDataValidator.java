@@ -51,11 +51,11 @@ public class CustomerDataValidator {
             errorMessages.add("Last name must start with upper case letter.");
         }
 
-        Pattern compiledPattern = Pattern.compile(
+        Pattern compiledPatternEmail = Pattern.compile(
                 "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        Matcher matcher = compiledPattern.matcher(customer.getEmail());
-        boolean emailIsCorrect = matcher.matches();
+        Matcher matcherEmail = compiledPatternEmail.matcher(customer.getEmail());
+        boolean emailIsCorrect = matcherEmail.matches();
         if (!emailIsCorrect){
             errorMessages.add("Please, type email in one of these formats: john.doe@fantasymail.com, johndoe@fantasymail.com.");
         }
@@ -64,6 +64,17 @@ public class CustomerDataValidator {
             errorMessages.add("This email is already exists in our database. Give another one.");
         }
 
+        Pattern compiledPatternPhone = Pattern.compile("\\d{2,3}-\\d{6,10}");
+        Matcher matcherPhone = compiledPatternPhone.matcher(customer.getPhoneNumber());
+        boolean phoneIsCorrect = matcherPhone.matches();
+        if (!phoneIsCorrect) {
+        	errorMessages.add("Please, type phone number in these format: 30-1234567.");
+        }
+        
+        if (!phoneNumberContainsCorrectCharacters(customer.getPhoneNumber())) {
+        	errorMessages.add("Phone number can only contain digits and '-' sign.");
+        }
+        
         if (customer.getPassword().length() < 5){
             errorMessages.add("Password must be at least 5 character long.");
         }
@@ -96,6 +107,16 @@ public class CustomerDataValidator {
             }
         }
         return false;
+    }
+    
+    private boolean phoneNumberContainsCorrectCharacters(String name) {
+        String correctCharacters = "1234567890-";
+        for (int index = 0; index < name.length(); index++){
+            if (!correctCharacters.contains(Character.toString(name.charAt(index)))){
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean dataContainsSigns(String name) {
