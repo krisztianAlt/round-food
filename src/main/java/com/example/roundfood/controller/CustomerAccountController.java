@@ -160,4 +160,32 @@ public class CustomerAccountController {
         
         return "profile";
     }
+    
+    @RequestMapping(value = "/profile-delete", method = RequestMethod.POST)
+    public String renderDelete(Model model,
+							HttpServletRequest httpServletRequest) {
+    	
+    	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+    	String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+    	
+    	boolean deletionSucceeded;
+    	deletionSucceeded = customerDataHandler.deleteUser(customerId);
+    	
+    	if (deletionSucceeded) {
+    		httpServletRequest.getSession().removeAttribute("customer_id");
+            httpServletRequest.getSession().removeAttribute("customer_name");
+            return "deleted";	
+    	}
+        
+    	customerDataHandler.collectCustomerData(customerId, model);
+    	List<String> errors = new ArrayList<>();
+    	errors.add("Deletion failed. Database problem occured. Please, try later.");
+    	model.addAttribute("errors", errors);
+        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("customername", customerName);
+        model.addAttribute("passworderrors", new ArrayList<>());
+        
+        return "profile";
+    }
+    
 }

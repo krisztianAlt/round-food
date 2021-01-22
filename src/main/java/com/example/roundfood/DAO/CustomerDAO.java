@@ -46,7 +46,7 @@ public class CustomerDAO {
         return customer;
     }
 	
-	 public Customer getCustomerByEmail(String email) {
+	public Customer getCustomerByEmail(String email) {
         Customer customer = null;
         try{
             customer = customerRepository.findByEmail(email);
@@ -56,4 +56,16 @@ public class CustomerDAO {
         return customer;
     }
 
+	public boolean deleteUser(Long customerId) {
+		boolean succeeded = false;
+		
+		try{
+            customerRepository.deleteById(customerId);
+            succeeded = true;
+        } catch (Exception e){
+            System.out.println("Deletion failed: " + e.getMessage());
+        }
+		
+		return succeeded;
+	} 
 }

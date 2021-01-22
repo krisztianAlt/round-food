@@ -142,6 +142,12 @@ public class CustomerDataHandler{
     	return model;
     }
     
+    public boolean deleteUser(Long customerId) {
+    	boolean deletionSucceeded = false;
+    	deletionSucceeded = customerDAO.deleteUser(customerId);
+    	return deletionSucceeded;
+    }
+    
     private boolean saveCustomerDatas(Customer customer) {
         boolean savingSucceeded = false;
 

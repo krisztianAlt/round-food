@@ -71,7 +71,7 @@
 								<div id="basic-addon4" class="form-text">Format: 'area code'-'phone number', e. g. 30-1234567.</div>
 							</div>
 							
-							<button type="submit" class="btn btn-success">Save data</button>
+							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save data</button>
 						</form>
 						
 						<br>
@@ -89,17 +89,36 @@
 								<input type="password" class="form-control" name="newpassword" placeholder="New password" aria-label="Confirm password" aria-describedby="basic-addon6">
 								<div id="basic-addon6" class="form-text">Password must be at least 5 character long.</div>
 							</div>
-							<button type="submit" class="btn btn-success">Save new password</button>
+							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save new password</button>
 			            </form>
 			            
 			            <br>
 			            <hr class="style1">
 			            
-			            <form action="/profile-delete" method="post">
-			            	<button type="submit" class="btn btn-danger" role="button"><i class="fas fa-trash"></i> Delete profile</button>
-			            </form>
-			            
-			            
+			            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+						  <i class="fas fa-trash"></i> Delete profile
+						</button>
+						
+						<!-- Modal for account deletion -->
+						<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="deleteModalLabel">Delete profile</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p>Are you sure you want to delete your account?</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-window-close"></i> No, close</button>
+										<form action="/profile-delete" method="post">
+											<button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Yes, delete</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 			        </div>
         
 			    </div>
