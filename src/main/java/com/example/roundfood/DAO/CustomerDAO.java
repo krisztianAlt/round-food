@@ -30,6 +30,11 @@ public class CustomerDAO {
 		customerRepository.save(customer);
 	}
 	
+	public void updateCustomerPassword(Long customerId, String hashPassword) {
+		Customer customer = customerRepository.getOne(customerId);
+		customer.setPassword(hashPassword);
+		customerRepository.save(customer);
+	}
 	
 	public Customer getCustomerById(Long customerId) {
         Customer customer = null;

@@ -77,7 +77,7 @@ public class CustomerDataHandler{
 
         Customer customer = customerDAO.getCustomerById(customerId);
 
-        if (customer.getLegitimacy()== CustomerLegitimacy.ADMIN) {
+        if (customer.getLegitimacy() == CustomerLegitimacy.ADMIN) {
             return true;
 
         }
@@ -88,7 +88,7 @@ public class CustomerDataHandler{
 
         Customer customer = customerDAO.getCustomerById(customerId);
 
-        if (customer.getLegitimacy()== CustomerLegitimacy.ADMIN || customer.getLegitimacy()== CustomerLegitimacy.USER ) {
+        if (customer.getLegitimacy() == CustomerLegitimacy.ADMIN || customer.getLegitimacy() == CustomerLegitimacy.USER ) {
             return true;
 
         }
@@ -123,9 +123,27 @@ public class CustomerDataHandler{
     	return model;
     }
     
+    public Model collectCustomerPasswordModificationData(Model model, Long customerId, String currentPassword, String newPassword) {
+    	List<String> passwordErrorMessages;
+        boolean updateSucceeded = false;
+        boolean updateTried = false;
+        
+        passwordErrorMessages = customerDataValidator.validatePasswordModificationData(customerId, currentPassword, newPassword);
+        
+        if (passwordErrorMessages.size() == 0){
+            updateTried = true;
+            updateSucceeded = updateCustomerPassword(customerId, newPassword);
+        }
+        
+        model.addAttribute("passworderrors", passwordErrorMessages);
+        model.addAttribute("passwordupdatesucceeded", updateSucceeded);
+        model.addAttribute("updatetried", updateTried);
+        
+    	return model;
+    }
+    
     private boolean saveCustomerDatas(Customer customer) {
         boolean savingSucceeded = false;
-
 
         String passwordStr = customer.getPassword();
         String hashPassword = password.hashPassword(passwordStr);
@@ -154,4 +172,17 @@ public class CustomerDataHandler{
     	
     }
     
+    private boolean updateCustomerPassword(Long customerId, String newPassword) {
+    	boolean updateSucceeded = false;
+
+        String hashPassword = password.hashPassword(newPassword);
+
+        try {
+            customerDAO.updateCustomerPassword(customerId, hashPassword);
+            updateSucceeded = true;
+        } catch (Exception e){
+            System.out.println("UPDATING PASSWORD FAILED: " + e.getMessage());
+        }
+        return updateSucceeded;
+    }
 }

@@ -94,3 +94,19 @@ hr.style1 {
 #login-alert > dl, ol, ul {
 	margin: 0;
 }
+
+#data-modification-error-alert > dl, ol, ul {
+	margin: 0;
+}
+
+#password-error-alert > dl, ol, ul {
+	margin: 0;
+}
+
+#personal-data-modification-alert > p {
+	margin: 0;
+}
+
+#password-modification-alert > p {
+	margin: 0;
+}

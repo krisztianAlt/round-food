@@ -26,14 +26,18 @@ public class CustomerDataValidator {
     public List<String> validateRegistrationDatas(Customer customer, String confirm) {
         List<String> errorMessages = validatePersonalData(customer, "registration");
         
-        if (customer.getPassword().length() < 5){
-            errorMessages.add("Password must be at least 5 character long.");
+        if (customer.getPassword().length() < 5 || customer.getPassword().length() > 20){
+            errorMessages.add("Password's length must be between 5 and 20 characters.");
         }
 
         if (!customer.getPassword().equals(confirm)){
             errorMessages.add("Password confirmation failed. Type the same password in Password and Confirm fields.");
         }
-
+        
+        if (passwordContainsSpace(customer.getPassword())) {
+        	errorMessages.add("Password shall be free of white space.");
+        }
+        
         return errorMessages;
     }
 
@@ -42,6 +46,28 @@ public class CustomerDataValidator {
     	return errorMessages;
     }
     
+    public List<String> validatePasswordModificationData(Long customerId, String currentPassword, String newPassword){
+    	 List<String> errorMessages = new ArrayList();
+    	 Customer customer = queryHandler.getCustomerById(customerId);
+    	 
+    	 if (currentPassword.equals(newPassword)) {
+    		 errorMessages.add("New password must be different from current.");
+    	 }
+    	 
+    	 if (!password.checkPassword(currentPassword, customer.getPassword())) {
+    		 errorMessages.add("Wrong current password.");
+    	 }
+    	 
+         if (newPassword.length() < 5 || newPassword.length() > 20){
+             errorMessages.add("New password's length must be between 5 and 20 characters.");
+         }
+
+         if (passwordContainsSpace(newPassword)) {
+         	errorMessages.add("New password shall be free of white space.");
+         }
+         
+         return errorMessages;
+    }
     
     private List<String> validatePersonalData(Customer customer, String mode) {
     	
@@ -164,6 +190,14 @@ public class CustomerDataValidator {
         return false;
     }
 
+    private boolean passwordContainsSpace(String password) {
+    	String whiteSpaceString = " ";
+    	if (password.contains(whiteSpaceString)) {
+    		return true;
+    	}
+    	return false;
+    }
+    
     public Map<String, Object> validateLoginDatas(Map<String, String> customerDatas) {
         String email = customerDatas.get("email");
         String passwordStr = customerDatas.get("password");

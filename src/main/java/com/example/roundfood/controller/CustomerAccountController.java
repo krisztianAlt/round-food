@@ -100,6 +100,7 @@ public class CustomerAccountController {
         if (customerId != null) {
         	customerDataHandler.collectCustomerData(customerId, model);
         	model.addAttribute("errors", new ArrayList<>());
+        	model.addAttribute("passworderrors", new ArrayList<>());
         	return "profile";
         }
        
@@ -125,10 +126,38 @@ public class CustomerAccountController {
             model.addAttribute("errors", errorMessages);
         }
         
+    	model.addAttribute("passworderrors", new ArrayList<>());
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
         
         return "profile";
     }
 
+    @RequestMapping(value = "/profile-password", method = RequestMethod.POST)
+    public String renderProfile(@RequestParam("currentpassword") String currentPassword,
+    							@RequestParam("newpassword") String newPassword,
+				            	Model model,
+    							HttpServletRequest httpServletRequest) {
+    	
+    	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        
+    	model = customerDataHandler.collectCustomerPasswordModificationData(model, customerId, currentPassword, newPassword);
+
+        List<String> passwordErrorMessages = (List) model.asMap().get("passworderrors");
+        
+        if (passwordErrorMessages.size() == 0 &&
+                (boolean) model.asMap().get("updatetried") &&
+                !(boolean) model.asMap().get("passwordupdatesucceeded")){
+        	passwordErrorMessages.add("Database problem. Please, try later.");
+            model.addAttribute("passworderrors", passwordErrorMessages);
+        }
+        
+        customerDataHandler.collectCustomerData(customerId, model);
+        model.addAttribute("errors", new ArrayList<>());
+        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("customername", customerName);
+        
+        return "profile";
+    }
 }
