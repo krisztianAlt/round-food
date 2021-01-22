@@ -1,6 +1,7 @@
 package com.example.roundfood.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class ShippingAddress {
     
     private String address;
 	
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
     public ShippingAddress() {}

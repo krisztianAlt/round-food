@@ -24,12 +24,10 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private CustomerLegitimacy legitimacy;
     
-    /*
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Order> order;
-    */
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private List<ShippingAddress> shippingAddress;
 
 	public Customer() {
