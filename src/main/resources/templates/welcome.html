@@ -43,6 +43,47 @@
 			<div id="chef-info" class="container orange-background">
 				<p id="chef">The Chef Suggests...</p>
 			</div>
+			
+			<div class="container" id="foodtype-holder">
+				<div class="container-fluid" id="foodtype-selector-container">
+					
+					<h5>Our foods</h5>
+				
+					<div class="row">
+					
+						<div class="col-12 col-sm-4 d-flex justify-content-center">
+							<div class="card" style="width: 18rem;">
+							  <a th:href="@{'/cake'}"><img th:src="@{/picture_collection/epres3.jpg}" class="card-img-top" alt="Cake"></a>
+							  <div class="card-body">
+							    <h6 class="card-title food-type">Cake</h6>
+							  </div>
+							</div>
+						</div>
+						
+						<div class="col-12 col-sm-4 d-flex justify-content-center">
+							<div class="card" style="width: 18rem;">
+							  <a th:href="@{'/pizza'}"><img th:src="@{/picture_collection/sausages2.jpg}" class="card-img-top" alt="Pizza"></a>
+							  <div class="card-body">
+							    <h6 class="card-title food-type">Pizza</h6>
+							  </div>
+							</div>
+						</div>
+						
+						<div class="col-12 col-sm-4 d-flex justify-content-center">
+							<div class="card" style="width: 18rem;">
+							  <a th:href="@{'/pie'}"><img th:src="@{/picture_collection/bakedpie2.jpg}" class="card-img-top" alt="Pie"></a>
+							  <div class="card-body">
+							    <h6 class="card-title food-type">Pie</h6>
+							  </div>
+							</div>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+			
+			
+			
 		</div>
 	
 	</body>
