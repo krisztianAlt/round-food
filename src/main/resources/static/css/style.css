@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Quando';
+    margin: 0;
+    background-image: url("morocco-blue.png");
+}
+
+.orange-background {
+	background-color: #f0e0d1 !important;
+}
+
+#nav {
+	background-color: #f0e0d1 !important;
+}
+
+#carousel-container {
+	margin-top: 30px;
+	padding-top: 12px;
+	background-color: #f0e0d1;
+	border: 2px solid #f0e0d1;
+    border-radius: 10px 10px 0 0;
+}
+
+.main-title {
+	font-family: 'Lemon';
+}
+
+#content-above-footer {
+    flex: 1 0 auto;
+}
+
+#chef-info {
+	text-align: right;
+	border: 2px solid #f0e0d1;
+    border-radius: 0 0 10px 10px;
+}
+
+#chef {
+	font-family: 'Caveat';
+	font-size: x-large;
+	margin-bottom: 0;
+}
+
+#footer {
+	margin-top: 30px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+#footer p {
+    margin: auto;
+    padding: 5px 0 5px 0;
+}
+
+#footer > .container {
+	border: 2px solid #f0e0d1;
+    border-radius: 10px 10px 0 0;
+}
+
+.info {
+	margin-top: 30px;
+    padding: 20px 0 20px 0;
+    text-align: center;
+    border: 2px solid #f0e0d1;
+    border-radius: 10px;
+}
+
+.main-center-login {
+    margin: auto;
+    max-width: 350px;
+}
+
+.alert {
+	margin: 1rem auto;
+	max-width: 350px;
+}
+
+hr.style1 {
+	max-width: 720px;
+	margin: 0 auto 1rem auto;
+}
+
+#login-alert > dl, ol, ul {
+	margin: 0;
+}
+
+#data-modification-error-alert > dl, ol, ul {
+	margin: 0;
+}
+
+#password-error-alert > dl, ol, ul {
+	margin: 0;
+}
+
+#personal-data-modification-alert > p {
+	margin: 0;
+}
+
+#password-modification-alert > p {
+	margin: 0;
+}
