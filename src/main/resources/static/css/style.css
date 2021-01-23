@@ -32,13 +32,20 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
+.carousel-inner img {
+	cursor: pointer;
+}
+
 #foodtype-selector-container {
 	margin-top: 30px;
 	padding-top: 12px;
-	padding-bottom: 12px;
 	background-color: #f0e0d1;
 	border: 2px solid #f0e0d1;
     border-radius: 10px;
+}
+
+.card {
+	border: none;
 }
 
 #foodtype-holder {
@@ -54,8 +61,23 @@ body {
 	margin-bottom: 0px;
 }
 
+.card-body {
+	background-color: #f0e0d1;
+}
+
 #foodtype-selector-container > h5, h6 {
 	text-align: center;
+}
+
+.card-body > h6 > a {
+	color: black;
+	text-decoration: none;
+}
+
+.card-body > h6 > a:hover {
+	color: #735914;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 #foodtype-selector-container img {
