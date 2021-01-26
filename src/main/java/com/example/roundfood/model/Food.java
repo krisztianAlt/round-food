@@ -39,7 +39,7 @@ public class Food {
     private List<FoodPicture> foodPictures = new ArrayList<>();
     
     @ManyToMany
-    private List<FoodProperty> foodProperties;
+    private List<ExtraTopping> extraToppings;
 
     public Food() {
     }

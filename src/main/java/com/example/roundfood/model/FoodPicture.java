@@ -17,8 +17,6 @@ public class FoodPicture {
 
     private String fileName;
 
-    private String description;
-
     private String title;
 
     @ManyToOne
@@ -27,10 +25,9 @@ public class FoodPicture {
     public FoodPicture() {
     }
 
-    public FoodPicture(String fileName, String description, String title) {
+    public FoodPicture(String fileName, String title) {
 
         this.fileName = fileName;
-        this.description = description;
         this.title = title;
     }
 
@@ -48,14 +45,6 @@ public class FoodPicture {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getTitle() {
@@ -76,7 +65,7 @@ public class FoodPicture {
 
 	@Override
 	public String toString() {
-		return "FoodPicture [id=" + id + ", fileName=" + fileName + ", description=" + description + ", title=" + title
+		return "FoodPicture [id=" + id + ", fileName=" + fileName + ", title=" + title
 				+ ", food=" + food + "]";
 	}
     

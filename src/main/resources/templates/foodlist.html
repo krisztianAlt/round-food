@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Foods | Round Food</title>
+	</head>
+	
+	<body>
+				    	
+		<div layout:fragment="content">
+			<div class="container" id="food-holder">
+				<div class="container-fluid" id="food-selector-container">
+					
+					<h5 th:text="${foodtype}">Foods</h5>
+					<br>
+					
+					<p class="text-center no-acc" th:text="${'There is no food at the moment in selected category.'}" th:style="${#lists.size(foods) == 0} ? 'display: block' : 'display: none'"></p>
+				
+					<div class="row">
+					
+						<div class="col-12 col-sm-4 d-flex justify-content-center" th:each="food,iterStat : ${foods}">
+							<div class="card" style="width: 18rem;">
+							  <img th:attr="src='/picture_collection/' + ${food.getFoodPictures()[0].getFileName()}" class="card-img-top" alt="Food picture">
+							  <div class="card-body">
+							  	<h6 class="card-title food-type" th:text="${food.name}">Food name</h6>
+							  </div>
+							</div>
+						</div>
+					
+					</div>
+					
+					<br>
+					<div class="d-flex justify-content-center">
+						<button type="button" class="btn btn-primary" onclick="window.location.href='/';"><i class="fas fa-arrow-circle-left"></i> Back to main page</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	
+	</body>
+</html>

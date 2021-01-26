@@ -10,8 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "foodproperty")
-public class FoodProperty {
+@Table(name = "extratopping")
+public class ExtraTopping {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,17 +19,17 @@ public class FoodProperty {
     
 	private String name;
 	
-	private String faId;
+	private double price;
 
-    @ManyToMany(mappedBy = "foodProperties")
+    @ManyToMany(mappedBy = "extraToppings")
     private List<Food> foods;
 
-    public FoodProperty() {
+    public ExtraTopping() {
     }
 
-    public FoodProperty(String name, String faId) {
+    public ExtraTopping(String name, double price) {
         this.name = name;
-        this.faId = faId;
+        this.price = price;
     }
 
 	public long getId() {
@@ -48,12 +48,12 @@ public class FoodProperty {
 		this.name = name;
 	}
 
-	public String getFaId() {
-		return faId;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setFaId(String faId) {
-		this.faId = faId;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public List<Food> getFoods() {
@@ -66,7 +66,7 @@ public class FoodProperty {
 
 	@Override
 	public String toString() {
-		return "FoodProperty [id=" + id + ", name=" + name + ", faId=" + faId + ", foods=" + foods + "]";
+		return "ExtraTopping [id=" + id + ", name=" + name + ", price=" + price + ", foods=" + foods + "]";
 	}
     
 }
