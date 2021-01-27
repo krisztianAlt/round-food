@@ -1,6 +1,9 @@
 package com.example.roundfood.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -19,6 +22,7 @@ public class Customer {
 
     private String phoneNumber;
     
+    @JsonIgnore
     private String password;
     
     @Enumerated(EnumType.STRING)

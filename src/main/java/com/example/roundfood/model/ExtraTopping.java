@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "extratopping")
 public class ExtraTopping {
@@ -21,7 +25,8 @@ public class ExtraTopping {
 	
 	private double price;
 
-    @ManyToMany(mappedBy = "extraToppings")
+	@JsonBackReference
+    @ManyToMany(mappedBy = "extraToppings", targetEntity = Food.class)
     private List<Food> foods;
 
     public ExtraTopping() {

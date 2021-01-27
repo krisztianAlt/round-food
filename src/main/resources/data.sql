@@ -22,11 +22,11 @@ INSERT INTO extratopping VALUES (8, 'Marzipan orchestra', 22000);
 SELECT pg_catalog.setval('extratopping_id_seq', 8, true);
 
 
-INSERT INTO food VALUES (1, '8 pieces from 4 cake, with strawberry, chocolate, orange and raspberry cream. Cookies at the top.', 'CAKE', 'Colourful cake', '6000');
+INSERT INTO food VALUES (1, '8 pieces from 4 cake, with strawberry, chocolate, orange and raspberry cream. Cookies at the top.', 'CAKE', 'The Colourful', '6000');
 INSERT INTO food VALUES (2, '12 pieces chocolate cake.', 'CAKE', 'Chocolate cake', '7500');
 INSERT INTO food VALUES (3, '8 pieces. Fruits at the top.', 'CAKE', 'Curd cheesecake', '5500');
-INSERT INTO food VALUES (4, '8 pieces. Simple is better.', 'CAKE', 'Raw cake', '3000');
-INSERT INTO food VALUES (5, '20 pieces. For music fans.', 'CAKE', 'Music cake', '11300');
+INSERT INTO food VALUES (4, '8 pieces. Simple is better.', 'CAKE', 'Millstone', '3000');
+INSERT INTO food VALUES (5, '20 pieces. For music fans.', 'CAKE', 'Music tower', '11300');
 
 SELECT pg_catalog.setval('food_id_seq', 5, true);
 

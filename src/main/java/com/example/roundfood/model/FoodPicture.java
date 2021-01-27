@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "foodpicture")
 public class FoodPicture {
@@ -19,6 +22,7 @@ public class FoodPicture {
 
     private String title;
 
+    @JsonBackReference
     @ManyToOne
     private Food food;
 

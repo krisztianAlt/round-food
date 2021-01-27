@@ -15,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "food")
 public class Food {
@@ -31,14 +35,17 @@ public class Food {
 
     @Enumerated(EnumType.STRING)
     private FoodType foodType;
-
-    @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
+    
+    @JsonBackReference
+	@OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
     List<Order> orders = new ArrayList<>();
     
+	@JsonManagedReference
     @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
     private List<FoodPicture> foodPictures = new ArrayList<>();
     
-    @ManyToMany
+	@JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = ExtraTopping.class)
     private List<ExtraTopping> extraToppings;
 
     public Food() {
@@ -107,11 +114,19 @@ public class Food {
 		this.foodPictures = foodPictures;
 	}
 
+	public List<ExtraTopping> getExtraToppings() {
+		return extraToppings;
+	}
+
+	public void setExtraToppings(List<ExtraTopping> extraToppings) {
+		this.extraToppings = extraToppings;
+	}
+
 	@Override
 	public String toString() {
 		return "Food [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", foodType="
-				+ foodType + ", orders=" + orders + "]";
+				+ foodType + ", orders=" + orders + ", foodPictures=" + foodPictures + ", extraToppings="
+				+ extraToppings + "]";
 	}
-
 
 }

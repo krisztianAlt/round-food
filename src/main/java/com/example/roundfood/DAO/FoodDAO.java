@@ -2,6 +2,7 @@ package com.example.roundfood.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,10 @@ public class FoodDAO {
 	@Autowired
     private FoodRepository foodRepository;
 	
-	public Food getFoodById(Long foodId) {
-        Food food = null;
+	public Optional<Food> getFoodById(Long foodId) {
+        Optional<Food> food = null;
         try{
-            food = foodRepository.getOne(foodId);
+            food = foodRepository.findById(foodId);
         } catch (Exception e){
             System.out.println("No record found: " + e.getMessage());
         }

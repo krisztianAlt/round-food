@@ -5,6 +5,9 @@
       xmlns:th="http://www.thymeleaf.org">
 	<head>
 	    <title>Foods | Round Food</title>
+	    
+	    <!-- JavaScript file -->
+    	<script th:src="@{~/js/food.js}" defer="defer"></script>
 	</head>
 	
 	<body>
@@ -22,9 +25,9 @@
 					
 						<div class="col-12 col-sm-4 d-flex justify-content-center" th:each="food,iterStat : ${foods}">
 							<div class="card" style="width: 18rem;">
-							  <img th:attr="src='/picture_collection/' + ${food.getFoodPictures()[0].getFileName()}" class="card-img-top" alt="Food picture">
+							  <img th:attr="src='/picture_collection/' + ${food.getFoodPictures()[0].getFileName()}, data-food-id=${food.id}" class="card-img-top" alt="Food picture">
 							  <div class="card-body">
-							  	<h6 class="card-title food-type" th:text="${food.name}">Food name</h6>
+							  	<h6 th:attr="data-food-id=${food.id}" class="card-title food-type" th:text="${food.name}">Food name</h6>
 							  </div>
 							</div>
 						</div>
@@ -36,6 +39,27 @@
 						<button type="button" class="btn btn-primary" onclick="window.location.href='/';"><i class="fas fa-arrow-circle-left"></i> Back to main page</button>
 					</div>
 					
+					<!-- Food modal -->
+					<div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-scrollable">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="foodModalLabel">Food</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<p id="food-name">here comes data</p>
+								</div>
+								<div class="modal-footer">
+									<form action="/profile-delete" method="post">
+										<button type="submit" class="btn btn-success"><i class="fas fa-cart-plus"></i> Add to cart</button>
+									</form>
+									<button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-arrow-circle-left"></i> Back</button>
+								</div>
+							</div>
+						</div>
+					</div>
+						
 				</div>
 			</div>
 		</div>
