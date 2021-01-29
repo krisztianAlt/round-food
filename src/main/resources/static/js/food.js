@@ -55,10 +55,6 @@ app.foodEntitiesHandler = {
             
             var foodModalLabel = document.getElementById('foodModalLabel');
             foodModalLabel.innerText = name;
-            var descriptionParagraph = document.getElementById('food-description');
-            descriptionParagraph.innerText = "Description: " + description;
-            var priceParagraph = document.getElementById('food-price');
-            priceParagraph.innerText = "Price: " + price + " Ft";
             
             // delete previous images and indicators from carousel
             $("#car-indicators").empty();
@@ -99,6 +95,30 @@ app.foodEntitiesHandler = {
             	carouselImageHolder.appendChild(newImageDiv);
             }
             
+            var descriptionParagraph = document.getElementById('food-description');
+            descriptionParagraph.innerText = "Description: " + description;
+            
+            // delete previous price row:
+            $("#food-price").empty();
+            
+        	// new price row:
+            var priceParagraph = document.getElementById('food-price');
+            var rowDiv = document.createElement("div");
+            rowDiv.setAttribute("class", "row");
+            var priceTitle = document.createElement("div");
+            priceTitle.setAttribute("class", "col-7");
+            priceTitle.innerText = "Price:";
+            var priceValue = document.createElement("div");
+            priceValue.setAttribute("class", "col-4 price-col");
+            priceValue.innerText = price;
+            var currency = document.createElement("div");
+            currency.setAttribute("class", "col-1");
+            currency.innerText = "Ft";
+            rowDiv.appendChild(priceTitle);
+            rowDiv.appendChild(priceValue);
+            rowDiv.appendChild(currency);
+            priceParagraph.appendChild(rowDiv);
+            
             // delete previous extra toppings:
             $("#extra-toppings-container").empty();
             
@@ -107,37 +127,70 @@ app.foodEntitiesHandler = {
             	var extraToppingsContainer = document.getElementById("extra-toppings-container");
             	
             	var extrasTitle = document.createElement('p');
-            	extrasTitle.innerText = "Extras, toppings:";
+            	extrasTitle.innerText = "Extra toppings, garnishment etc.:";
             	extraToppingsContainer.appendChild(extrasTitle);
             	
             	var toppingsIndex;
             	for (toppingsIndex = 0; toppingsIndex < toppings.length; toppingsIndex++){
-
-            		var checkboxDiv = document.createElement('div');
-            		checkboxDiv.setAttribute("class", "form-check");
+            		var toppingRowDiv = document.createElement("div");
+            		toppingRowDiv.setAttribute("class", "row");
+            		if (toppingsIndex == toppings.length-1){
+            			toppingRowDiv.setAttribute("id", "last-topping-row");
+            		}
             		
+            		var inputFieldDiv = document.createElement('div');
+            		inputFieldDiv.setAttribute("class", "col-1");
             		var inputField = document.createElement('input');
             		inputField.setAttribute("class", "form-check-input");
             		inputField.setAttribute("type", "checkbox");
             		inputField.setAttribute("value", toppings[toppingsIndex].id);
             		inputField.setAttribute("data-price", toppings[toppingsIndex].price);
             		inputField.setAttribute("id", "flexCheck" + toppingsIndex);
+            		inputFieldDiv.appendChild(inputField);
             		
-            		var checkboxLabel = document.createElement('label');
-            		checkboxLabel.setAttribute("class", "form-check-label");
-            		checkboxLabel.setAttribute("for", "flexCheck" + toppingsIndex);
-            		checkboxLabel.innerText = toppings[toppingsIndex].name + ", " + toppings[toppingsIndex].price + " Ft";
+            		var toppingName = document.createElement('div');
+            		toppingName.setAttribute("class", "col-6");
+            		toppingName.innerText = toppings[toppingsIndex].name;
             		
-            		checkboxDiv.appendChild(inputField);
-            		checkboxDiv.appendChild(checkboxLabel);
+            		var toppingPriceValue = document.createElement("div");
+            		toppingPriceValue.setAttribute("class", "col-4 price-col");
+            		toppingPriceValue.innerText = toppings[toppingsIndex].price;
+                    
+            		var toppingCurrency = document.createElement("div");
+            		toppingCurrency.setAttribute("class", "col-1");
+            		toppingCurrency.innerText = "Ft";
             		
-            		extraToppingsContainer.appendChild(checkboxDiv);
+            		toppingRowDiv.appendChild(inputFieldDiv);
+            		toppingRowDiv.appendChild(toppingName);
+            		toppingRowDiv.appendChild(toppingPriceValue);
+            		toppingRowDiv.appendChild(toppingCurrency);
+           		
+            		extraToppingsContainer.appendChild(toppingRowDiv);
             	}
             }
             
-            var sumTotal = document.getElementById("sum-total");
-            sumTotal.innerText = "Total price: " + price + " Ft";
-            sumTotal.setAttribute("data-totalprice", price);
+            // delete previous total price row:
+            $("#sum-total").empty();
+            
+            // new sum-total row:
+            var sumTotalParagraph = document.getElementById('sum-total');
+            var sumRowDiv = document.createElement("div");
+            sumRowDiv.setAttribute("class", "row");
+            var sumPriceTitle = document.createElement("div");
+            sumPriceTitle.setAttribute("class", "col-7");
+            sumPriceTitle.innerText = "Total price:";
+            var sumPriceValue = document.createElement("div");
+            sumPriceValue.setAttribute("id", "sum-total-value");
+            sumPriceValue.setAttribute("class", "col-4 price-col");
+            sumPriceValue.innerText = price;
+            sumPriceValue.setAttribute("data-totalprice", price);
+            var sumCurrency = document.createElement("div");
+            sumCurrency.setAttribute("class", "col-1");
+            sumCurrency.innerText = "Ft";
+            sumRowDiv.appendChild(sumPriceTitle);
+            sumRowDiv.appendChild(sumPriceValue);
+            sumRowDiv.appendChild(sumCurrency);
+            sumTotalParagraph.appendChild(sumRowDiv);           
             
             // watch checkboxes' changing:
             app.foodEntitiesHandler.listenToppingSelection();
@@ -147,7 +200,7 @@ app.foodEntitiesHandler = {
 		
 		listenToppingSelection: function () {
 	        $('input[class=form-check-input]').change(function(){
-	            var totalPrice = $('#sum-total').data("totalprice");
+	            var totalPrice = $('#sum-total-value').data("totalprice");
 	            var newTotalPrice;
 	            var price = $(this).data("price");
 	            if($(this).is(':checked')) {
@@ -155,8 +208,8 @@ app.foodEntitiesHandler = {
 	            } else {
 	                newTotalPrice = (parseFloat(totalPrice) - parseFloat(price));
 	            }
-	            $("#sum-total").text("Total price: " + String(newTotalPrice) + " Ft");
-	            $("#sum-total").data("totalprice", String(newTotalPrice));
+	            $("#sum-total-value").text(String(newTotalPrice));
+	            $("#sum-total-value").data("totalprice", String(newTotalPrice));
 	        });
 	    }
 		

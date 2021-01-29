@@ -220,3 +220,12 @@ hr.style1 {
 small {
 	font-size: .775em;
 }
+
+.price-col {
+	text-align: right;
+	padding-right: 0;
+}
+
+#last-topping-row {
+	padding-bottom: 1rem;
+}
