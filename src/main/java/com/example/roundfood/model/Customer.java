@@ -1,6 +1,9 @@
 package com.example.roundfood.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -19,17 +22,16 @@ public class Customer {
 
     private String phoneNumber;
     
+    @JsonIgnore
     private String password;
     
     @Enumerated(EnumType.STRING)
     private CustomerLegitimacy legitimacy;
     
-    /*
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Order> order;
-    */
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private List<ShippingAddress> shippingAddress;
 
 	public Customer() {

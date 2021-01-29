@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Foods | Round Food</title>
+	    
+	    <!-- JavaScript file -->
+    	<script th:src="@{~/js/food.js}" defer="defer"></script>
+	</head>
+	
+	<body>
+				    	
+		<div layout:fragment="content">
+			<div class="container" id="food-holder">
+				<div class="container-fluid" id="food-selector-container">
+					
+					<h5 th:text="${foodtype}">Foods</h5>
+					<br>
+					
+					<p class="text-center no-acc" th:text="${'There is no food at the moment in selected category.'}" th:style="${#lists.size(foods) == 0} ? 'display: block' : 'display: none'"></p>
+				
+					<div class="row">
+					
+						<div class="col-12 col-sm-4 d-flex justify-content-center" th:each="food,iterStat : ${foods}">
+							<div class="card" style="width: 18rem;">
+							  <img th:attr="src='/picture_collection/' + ${food.getFoodPictures()[0].getFileName()}, data-food-id=${food.id}" class="card-img-top" alt="Food picture">
+							  <div class="card-body">
+							  	<h6 th:attr="data-food-id=${food.id}" class="card-title food-type" th:text="${food.name}">Food name</h6>
+							  </div>
+							</div>
+						</div>
+					
+					</div>
+					
+					<br>
+					<div class="d-flex justify-content-center">
+						<button type="button" class="btn btn-primary" onclick="window.location.href='/';"><i class="fas fa-arrow-circle-left"></i> Back to main page</button>
+					</div>
+					
+					
+						
+				</div>
+			</div>
+			
+			<!-- Food modal -->
+			<div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="foodModalLabel">Food</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>								
+						
+						<div class="modal-body">
+							<div id="carouselFoodIndicators" class="carousel slide" data-bs-ride="carousel">
+								<ol id="car-indicators" class="carousel-indicators">
+									<!-- Data comes from JS -->
+								</ol>
+								<div id="car-inner" class="carousel-inner">
+									<!-- Data comes from JS -->
+								</div>
+								<a class="carousel-control-prev" href="#carouselFoodIndicators" role="button" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="#carouselFoodIndicators" role="button" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</a>
+							</div>
+						
+							<p id="food-description">Description</p>
+							
+							<hr class="style1">
+							
+							<p id="food-price"></p>
+							
+							<hr class="style1">
+							
+							<div id="extra-toppings-container">
+								<!-- Data comes from JS -->
+							</div>
+							
+							<hr class="style1">
+							
+							<p id="sum-total">Total price</p>
+						</div>
+						<div class="modal-footer">
+							<form action="#" method="post">
+								
+								<button th:if="${loggedIn}" type="submit" class="btn btn-success"><i class="fas fa-cart-plus"></i> Add to cart</button>
+								<button th:unless="${loggedIn}" type="submit" class="btn btn-success" disabled><i class="fas fa-cart-plus"></i> Add to cart</button>
+								
+								<!--
+								<button type="submit" class="btn btn-success"><i class="fas fa-cart-plus"></i> Add to cart</button>
+								 -->
+							</form>
+							<button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-arrow-circle-left"></i> Back</button>
+							<small class="form-text" th:unless="${loggedIn}">If you want to add food to your cart, please, log in.</small>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</body>
+</html>

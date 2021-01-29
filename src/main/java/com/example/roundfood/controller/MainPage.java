@@ -24,8 +24,12 @@ public class MainPage {
 					            Model model,
 					            HttpServletRequest httpServletRequest) {
 		
-		foodDataHandler.collectFoodTypeData(allRequestParams, model, httpServletRequest);
+		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
         
+        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("customername", customerName);
+		
 		return "welcome";
     }
 	

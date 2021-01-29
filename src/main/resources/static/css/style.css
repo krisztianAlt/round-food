@@ -32,6 +32,89 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
+.carousel-inner img {
+	cursor: pointer;
+}
+
+#foodtype-selector-container, #food-selector-container {
+	margin-top: 30px;
+	padding-top: 12px;
+	background-color: #f0e0d1;
+	border: 2px solid #f0e0d1;
+    border-radius: 10px;
+}
+
+.card {
+	border: none;
+}
+
+#foodtype-holder, #food-holder {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#foodtype-selector-container > .row>div {
+	margin-bottom: 5px;
+}
+
+.food-type {
+	margin-bottom: 0px;
+}
+
+.card-body {
+	background-color: #f0e0d1;
+}
+
+#foodtype-selector-container > h5, h6 {
+	text-align: center;
+}
+
+#food-selector-container > h5, h6 {
+	text-align: center;
+}
+
+#food-selector-container >div>button {
+	margin-bottom: 12px;
+	
+}
+
+#food-selector-container img {
+    transition: all .2s ease-in-out;
+}
+
+#food-selector-container img:hover {
+	cursor: pointer;
+    transform: scale(1.07);
+    border-radius: 4px;
+}
+
+.card-body > h6 > a {
+	color: black;
+	text-decoration: none;
+}
+
+.card-body > h6 > a:hover {
+	color: #735914;
+	text-decoration: underline;
+	text-decoration-style: dotted;
+}
+
+#food-selector-container h6:hover {
+	cursor: pointer;
+	color: #735914;
+	text-decoration: underline;
+	text-decoration-style: dotted;
+}
+
+#foodtype-selector-container img {
+    transition: all .2s ease-in-out;
+}
+
+#foodtype-selector-container img:hover {
+    transform: scale(1.07);
+    border-radius: 4px;
+}
+
 .main-title {
 	font-family: 'Lemon';
 }
@@ -109,4 +192,40 @@ hr.style1 {
 
 #password-modification-alert > p {
 	margin: 0;
+}
+
+#carouselFoodIndicators {
+	max-width: 70%;
+	margin: 1% auto 2% auto;
+}
+
+#carouselFoodIndicators .carousel-inner .carousel-item .carousel-caption {
+	padding-top: 50px;
+	bottom: 0;
+	padding-bottom: 0.15rem;
+}
+
+#carouselFoodIndicators .carousel-inner .carousel-item .carousel-caption p {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 3px;
+	padding-right: 3px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 2px solid transparent;
+    border-radius: 10px;
+    width: -moz-fit-content;
+  	width: fit-content;
+}
+
+small {
+	font-size: .775em;
+}
+
+.price-col {
+	text-align: right;
+	padding-right: 0;
+}
+
+#last-topping-row {
+	padding-bottom: 1rem;
 }
