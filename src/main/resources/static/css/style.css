@@ -193,3 +193,30 @@ hr.style1 {
 #password-modification-alert > p {
 	margin: 0;
 }
+
+#carouselFoodIndicators {
+	max-width: 70%;
+	margin: 1% auto 2% auto;
+}
+
+#carouselFoodIndicators .carousel-inner .carousel-item .carousel-caption {
+	padding-top: 50px;
+	bottom: 0;
+	padding-bottom: 0.15rem;
+}
+
+#carouselFoodIndicators .carousel-inner .carousel-item .carousel-caption p {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 3px;
+	padding-right: 3px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 2px solid transparent;
+    border-radius: 10px;
+    width: -moz-fit-content;
+  	width: fit-content;
+}
+
+small {
+	font-size: .775em;
+}

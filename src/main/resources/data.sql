@@ -33,7 +33,7 @@ SELECT pg_catalog.setval('food_id_seq', 5, true);
 
 INSERT INTO foodpicture VALUES (1, 'colorcake1.jpg', 'Colourful cake', 1);
 INSERT INTO foodpicture VALUES (2, 'colorcake3.jpg', 'Mixed joy', 1);
-INSERT INTO foodpicture VALUES (3, 'colorcake4.jpg', 'Strawberry piece', 1);
+INSERT INTO foodpicture VALUES (3, 'colorcake4.jpg', 'Strawberry part', 1);
 INSERT INTO foodpicture VALUES (4, 'csoki2.jpg', 'Chocolate cake', 2);
 INSERT INTO foodpicture VALUES (5, 'csoki1.jpg', 'Brown rose', 2);
 INSERT INTO foodpicture VALUES (6, 'epres4.jpg', 'Curd cheesecake', 3);
