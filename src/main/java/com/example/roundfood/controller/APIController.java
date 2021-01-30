@@ -1,6 +1,7 @@
 package com.example.roundfood.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class APIController {
 	@PostMapping("/food")
     public ResponseEntity<Map<String, Food>> getFoodById(@RequestBody Map<String, String> dataPackageString) { 
 		String foodIdString = dataPackageString.get("foodId");
-		Map foodMap = new HashMap();
+		Map foodMap = new HashMap<String, Object>();
 		
 		try {
 			Long foodId = Long.parseLong(foodIdString);
@@ -39,5 +40,20 @@ public class APIController {
         }
 
         return new ResponseEntity<Map<String, Food>>(foodMap, HttpStatus.OK);
-    } 
+    }
+	
+	@PostMapping("/add-to-cart")
+	public ResponseEntity<Map<String, String>> addToCart(@RequestBody Map<String, Object> dataPackageString){
+		String foodIdString = (String) dataPackageString.get("foodId");
+		@SuppressWarnings("unchecked")
+		List<String> selectedToppingsString = (List<String>) dataPackageString.get("selectedToppings");
+		
+		System.out.println(foodIdString);
+		System.out.println(selectedToppingsString);
+		
+		Map responseMap = new HashMap<String, String>();
+		
+		return new ResponseEntity<Map<String, String>>(responseMap, HttpStatus.OK);
+	} 
+	
 }

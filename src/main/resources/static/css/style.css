@@ -186,6 +186,10 @@ hr.style1 {
 	margin: 0;
 }
 
+#add-to-cart-error-alert > div > p {
+	margin-bottom: 0;
+}
+
 #personal-data-modification-alert > p {
 	margin: 0;
 }

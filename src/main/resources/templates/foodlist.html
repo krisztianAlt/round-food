@@ -19,6 +19,8 @@
 					<h5 th:text="${foodtype}">Foods</h5>
 					<br>
 					
+					<div id="add-to-cart-error-alert"></div>
+					
 					<p class="text-center no-acc" th:text="${'There is no food at the moment in selected category.'}" th:style="${#lists.size(foods) == 0} ? 'display: block' : 'display: none'"></p>
 				
 					<div class="row">
@@ -70,7 +72,9 @@
 									<span class="visually-hidden">Next</span>
 								</a>
 							</div>
-						
+							
+							<p id="food-id" class="d-none"></p>
+							
 							<p id="food-description">Description</p>
 							
 							<hr class="style1">
@@ -87,17 +91,12 @@
 							
 							<p id="sum-total">Total price</p>
 						</div>
-						<div class="modal-footer">
-							<form action="#" method="post">
-								
-								<button th:if="${loggedIn}" type="submit" class="btn btn-success"><i class="fas fa-cart-plus"></i> Add to cart</button>
-								<button th:unless="${loggedIn}" type="submit" class="btn btn-success" disabled><i class="fas fa-cart-plus"></i> Add to cart</button>
-								
-								<!--
-								<button type="submit" class="btn btn-success"><i class="fas fa-cart-plus"></i> Add to cart</button>
-								 -->
-							</form>
-							<button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-arrow-circle-left"></i> Back</button>
+						<div class="modal-footer">		
+							
+							<button th:if="${loggedIn}" type="submit" id="add-to-cart-button" class="btn btn-success" data-bs-dismiss="modal"><i class="fas fa-cart-plus"></i> Add to cart</button>
+							<button th:unless="${loggedIn}" class="btn btn-success" disabled><i class="fas fa-cart-plus"></i> Add to cart</button>
+							
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
 							<small class="form-text" th:unless="${loggedIn}">If you want to add food to your cart, please, log in.</small>
 						</div>
 					</div>
