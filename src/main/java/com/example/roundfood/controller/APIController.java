@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,13 +45,17 @@ public class APIController {
     }
 	
 	@PostMapping("/add-to-cart")
-	public ResponseEntity<Map<String, String>> addToCart(@RequestBody Map<String, Object> dataPackageString){
+	public ResponseEntity<Map<String, String>> addToCart(@RequestBody Map<String, Object> dataPackageString,
+														HttpServletRequest httpServletRequest){
+		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        
 		String foodIdString = (String) dataPackageString.get("foodId");
 		@SuppressWarnings("unchecked")
 		List<String> selectedToppingsString = (List<String>) dataPackageString.get("selectedToppings");
 		
-		System.out.println(foodIdString);
-		System.out.println(selectedToppingsString);
+		System.out.println(customerId + ", " + customerName);
+		System.out.println(foodIdString + ", " + selectedToppingsString);
 		
 		Map responseMap = new HashMap<String, String>();
 		

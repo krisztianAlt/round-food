@@ -247,6 +247,7 @@ app.foodEntitiesHandler = {
 	            dataType: 'json',
 	            success: function(response) {
 	            	console.log(response);
+	            	location.reload();
 	            },
 	            error: function() {
 	                console.log('ERROR: endpoint calling failed.');
