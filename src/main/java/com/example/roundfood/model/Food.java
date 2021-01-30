@@ -3,6 +3,7 @@ package com.example.roundfood.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,10 +39,10 @@ public class Food {
     
     @JsonBackReference
 	@OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
-    List<Order> orders = new ArrayList<>();
+    List<OrderLineItem> orderLineItems = new ArrayList<>();
     
 	@JsonManagedReference
-    @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "food", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<FoodPicture> foodPictures = new ArrayList<>();
     
 	@JsonManagedReference
@@ -98,14 +99,6 @@ public class Food {
 		this.foodType = foodType;
 	}
 
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
 	public List<FoodPicture> getFoodPictures() {
 		return foodPictures;
 	}
@@ -122,11 +115,12 @@ public class Food {
 		this.extraToppings = extraToppings;
 	}
 
-	@Override
-	public String toString() {
-		return "Food [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", foodType="
-				+ foodType + ", orders=" + orders + ", foodPictures=" + foodPictures + ", extraToppings="
-				+ extraToppings + "]";
+	public List<OrderLineItem> getOrderLineItems() {
+		return orderLineItems;
+	}
+
+	public void setOrderLineItems(List<OrderLineItem> orderLineItems) {
+		this.orderLineItems = orderLineItems;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.example.roundfood.model;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
@@ -28,11 +29,13 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private CustomerLegitimacy legitimacy;
     
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Order> order;
-
+    private List<Order> orders;
+    
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
-    private List<ShippingAddress> shippingAddress;
+    private List<ShippingAddress> shippingAddresses;
 
 	public Customer() {
     }
@@ -45,7 +48,6 @@ public class Customer {
         this.password = password;
         this.legitimacy = legitimacy;
     }
-
 
     public long getId() {
         return id;
@@ -99,21 +101,21 @@ public class Customer {
 
     public void setLegitimacy(CustomerLegitimacy legitimacy) { this.legitimacy = legitimacy; }
 
-    /*
-    public List<Order> getOrder() {
-        return order;
+    
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrder(List<Order> order) {
-        this.order = order;
-    }*/
+    public void setOrders(List<Order> order) {
+        this.orders = order;
+    }
     
     public List<ShippingAddress> getShippingAddress() {
-		return shippingAddress;
+		return shippingAddresses;
 	}
 
-	public void setShippingAddress(List<ShippingAddress> shippingAddress) {
-		this.shippingAddress = shippingAddress;
+	public void setShippingAddress(List<ShippingAddress> shippingAddresses) {
+		this.shippingAddresses = shippingAddresses;
 	}
     
 }
