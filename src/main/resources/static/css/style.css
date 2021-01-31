@@ -233,3 +233,39 @@ small {
 #last-topping-row {
 	padding-bottom: 1rem;
 }
+
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px;
+   
+	animation-name: color;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+}
+
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+@keyframes color {
+  0% {
+    background-color: red;
+    color: white;
+  }
+  50% {
+    background-color: #90f542;
+    color: #fff68c;
+  }
+  100 {
+    background-color: red;
+    color: white;
+  }
+}
