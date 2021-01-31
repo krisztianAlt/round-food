@@ -246,8 +246,8 @@ app.foodEntitiesHandler = {
 	            data: JSON.stringify(dataPackage),
 	            dataType: 'json',
 	            success: function(response) {
-	            	console.log(response);
 	            	location.reload();
+	            	window.scrollTo(0, 0);
 	            },
 	            error: function() {
 	                console.log('ERROR: endpoint calling failed.');
@@ -277,6 +277,8 @@ app.foodEntitiesHandler = {
 	    	alertDiv.appendChild(alertParagraph);
 	    	alertDiv.appendChild(closeButton);
 	    	messageDiv.appendChild(alertDiv);
+	    	
+	    	window.scrollTo(0, 0);
 	    }
 		
 }

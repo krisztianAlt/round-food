@@ -2,6 +2,7 @@ package com.example.roundfood.DAO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,13 @@ public class OrderDAO {
 	private Timestamp timestampMaker;
 	
 	public Order getOrderByOrderId(Long id) {
-		Order order = orderRepository.getOne(id);
+		Optional<Order> orderOpt = orderRepository.findById(id);
+		Order order;
+		if (orderOpt.isEmpty()) {
+			order = null;
+		} else {
+			order = orderOpt.get();
+		}
 		return order;
 	}
 	

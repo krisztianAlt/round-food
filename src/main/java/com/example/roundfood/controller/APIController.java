@@ -3,10 +3,11 @@ package com.example.roundfood.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ import com.example.roundfood.model.Food;
 
 @RestController
 public class APIController {
+	
+	Logger logger = LoggerFactory.getLogger(APIController.class);
 	
 	@Autowired
 	FoodDataHandler foodDataHandler;
@@ -37,7 +40,7 @@ public class APIController {
 			Food selectedFood = foodDataHandler.collectFoodData(foodId);
 	        foodMap.put("foodData", selectedFood);
 		} catch(Exception e) {
-			System.out.print("Food ID conversion failed: " + e.getMessage());
+			logger.error("Food ID conversion failed: " + e.getMessage());
 			return new ResponseEntity<Map<String, Food>>(foodMap, HttpStatus.BAD_REQUEST);
 		}
 		
@@ -59,10 +62,6 @@ public class APIController {
 		Long foodId = Long.parseLong((String) dataPackageString.get("foodId"));
 		@SuppressWarnings("unchecked")
 		List<String> selectedToppings = (List<String>) dataPackageString.get("selectedToppings");
-		
-		System.out.println(customerId + ", " + customerName);
-		System.out.println(foodId + ", " + selectedToppings);
-		System.out.println(openedorderId + ", " + numberOfOrderItems);
 		
 		Map responseMap = new HashMap<String, String>();
 		responseMap = orderLineItemDataHandler.createNewOrderLineItem(customerId, openedorderId, foodId, selectedToppings);		

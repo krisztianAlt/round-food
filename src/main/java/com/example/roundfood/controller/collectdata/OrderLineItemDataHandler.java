@@ -1,12 +1,12 @@
 package com.example.roundfood.controller.collectdata;
 
-import java.nio.MappedByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,8 @@ import com.example.roundfood.model.OrderLineItem;
 
 @Service
 public class OrderLineItemDataHandler {
+	
+	Logger logger = LoggerFactory.getLogger(OrderLineItemDataHandler.class);
 	
 	@Autowired
 	OrderLineItemDAO orderLineItemDAO;
@@ -48,8 +50,9 @@ public class OrderLineItemDataHandler {
 		
 		Order order;
 		
-		if (openedorderId == null) {
+		if (openedorderId == null || (openedorderId != null && !openedOrderIdExists(openedorderId))) {
 			order = orderDAO.createNewOrder();
+			logger.info("NEW ORDER CREATED (ID: " + String.valueOf(order.getId()) + ")");
 			Customer customer = customerDAO.getCustomerById(customerId);
 			order.setCustomer(customer);
 		} else {
@@ -83,11 +86,23 @@ public class OrderLineItemDataHandler {
 		orderLineItems.add(newOrderLineItem);
 		order.setOrderLineItems(orderLineItems);
 		orderDAO.updateOrder(order);
+		logger.info("NEW LINEITEM ADDED TO ORDER (ID: " + String.valueOf(order.getId()) + ")");
 		
 		responseMap.put("orderId", String.valueOf(order.getId()));
 		responseMap.put("numberOfOrderItems", String.valueOf(order.getOrderLineItems().size()));
 		
 		return responseMap;
+	}
+	
+	private boolean openedOrderIdExists(Long orderId){
+		boolean orderIdExists = false;
+		Order order = orderDAO.getOrderByOrderId(orderId);
+		
+		if (order != null) {
+			orderIdExists = true;
+		}
+		
+		return orderIdExists;
 	}
 	
 }

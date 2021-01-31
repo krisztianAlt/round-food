@@ -29,9 +29,13 @@ public class FoodController {
 		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
 
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
+        model.addAttribute("openedorder_id", openedorderId);
+        model.addAttribute("number_of_order_items", numberOfOrderItems);
         
         String selectedFoodTypeString = allRequestParams.get("type");
 		
