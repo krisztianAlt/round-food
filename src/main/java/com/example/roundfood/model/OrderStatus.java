@@ -1,7 +1,7 @@
 package com.example.roundfood.model;
 
 public enum OrderStatus {
-	NEW,
+	OPENED,
 	CHECKED,
 	PAID
 }

@@ -1,5 +1,7 @@
 package com.example.roundfood.model;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -32,11 +34,15 @@ public class Order {
     @ManyToOne
     private Customer customer;
 
+    private Timestamp orderingTimeStamp;
+    
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date shippingDate;
+    
+    private Time shippingTime;
     
     @JsonManagedReference
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderLineItem> orderLineItems;
     
     @Enumerated(EnumType.STRING)
@@ -44,9 +50,8 @@ public class Order {
 
     public Order(){}
 
-    public Order(Customer customer, Date date, OrderStatus orderStatus) {
+    public Order(Customer customer, OrderStatus orderStatus) {
         this.customer = customer;
-        this.date = date;
         this.status = orderStatus;
     }
 
@@ -66,20 +71,38 @@ public class Order {
 		this.customer = customer;
 	}
 
-	public Date getDate() {
-		return date;
+	public Timestamp getOrderingTimeStamp() {
+		return orderingTimeStamp;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setOrderingTimeStamp(Timestamp orderingTimeStamp) {
+		this.orderingTimeStamp = orderingTimeStamp;
 	}
 
-	public List<OrderLineItem> getOrderItems() {
+	public Date getShippingDate() {
+		return shippingDate;
+	}
+
+	public void setShippingDate(Date shippingDate) {
+		this.shippingDate = shippingDate;
+	}
+
+	
+
+	public Time getShippingTime() {
+		return shippingTime;
+	}
+
+	public void setShippingTime(Time shippingTime) {
+		this.shippingTime = shippingTime;
+	}
+
+	public List<OrderLineItem> getOrderLineItems() {
 		return orderLineItems;
 	}
 
-	public void setOrderItems(List<OrderLineItem> orderItems) {
-		this.orderLineItems = orderItems;
+	public void setOrderLineItems(List<OrderLineItem> orderLineItems) {
+		this.orderLineItems = orderLineItems;
 	}
 
 	public OrderStatus getStatus() {

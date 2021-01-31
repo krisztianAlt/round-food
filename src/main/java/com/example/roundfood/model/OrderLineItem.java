@@ -37,9 +37,7 @@ public class OrderLineItem {
 	public OrderLineItem() {
 	}
 	
-	public OrderLineItem(long id, Order order, Food food, List<ExtraTopping> selectedExtraToppings) {
-		super();
-		this.id = id;
+	public OrderLineItem(Order order, Food food, List<ExtraTopping> selectedExtraToppings) {
 		this.order = order;
 		this.food = food;
 		this.selectedExtraToppings = selectedExtraToppings;

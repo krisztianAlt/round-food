@@ -36,8 +36,8 @@ public class FoodDataHandler {
         return model;
     }
     
-    public Optional<Food> collectFoodData(Long foodId) {
-    	Optional<Food> food = foodDAO.getFoodById(foodId);
+    public Food collectFoodData(Long foodId) {
+    	Food food = foodDAO.getFoodById(foodId);
     	return food;
 	}
     
