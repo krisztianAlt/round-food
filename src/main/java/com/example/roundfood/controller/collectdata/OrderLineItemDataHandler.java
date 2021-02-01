@@ -94,6 +94,15 @@ public class OrderLineItemDataHandler {
 		return responseMap;
 	}
 	
+	
+	public void deleteOrderLineItem(OrderLineItem orderLineItem) {
+		orderLineItemDAO.deleteOrderLineItem(orderLineItem);
+	}
+	
+	public OrderLineItem getOrderLineItemById (Long id) {
+		return orderLineItemDAO.getOrderLineItemById(id);
+	}
+	
 	private boolean openedOrderIdExists(Long orderId){
 		boolean orderIdExists = false;
 		Order order = orderDAO.getOrderByOrderId(orderId);

@@ -113,8 +113,8 @@ public class CustomerAccountController {
         
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
-        model.addAttribute("openedorder_id", openedorderId);
-        model.addAttribute("number_of_order_items", numberOfOrderItems);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         if (customerId != null) {
         	customerDataHandler.collectCustomerData(customerId, model);
@@ -150,8 +150,8 @@ public class CustomerAccountController {
     	model.addAttribute("passworderrors", new ArrayList<>());
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
-        model.addAttribute("openedorder_id", openedorderId);
-        model.addAttribute("number_of_order_items", numberOfOrderItems);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "profile";
     }
@@ -182,8 +182,8 @@ public class CustomerAccountController {
         model.addAttribute("errors", new ArrayList<>());
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
-        model.addAttribute("openedorder_id", openedorderId);
-        model.addAttribute("number_of_order_items", numberOfOrderItems);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "profile";
     }
@@ -213,8 +213,8 @@ public class CustomerAccountController {
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
         model.addAttribute("passworderrors", new ArrayList<>());
-        model.addAttribute("openedorder_id", openedorderId);
-        model.addAttribute("number_of_order_items", numberOfOrderItems);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "profile";
     }

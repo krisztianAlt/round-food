@@ -55,4 +55,9 @@ public class OrderDAO {
 		
 		orderRepository.save(order);
 	}
+	
+	public void deleteOrder(Order order) {
+		orderRepository.delete(order);
+	}
+	
 }

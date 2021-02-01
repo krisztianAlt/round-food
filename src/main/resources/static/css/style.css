@@ -36,7 +36,7 @@ body {
 	cursor: pointer;
 }
 
-#foodtype-selector-container, #food-selector-container {
+#foodtype-selector-container, #food-selector-container, #ordering-container {
 	margin-top: 30px;
 	padding-top: 12px;
 	background-color: #f0e0d1;
@@ -48,7 +48,7 @@ body {
 	border: none;
 }
 
-#foodtype-holder, #food-holder {
+#foodtype-holder, #food-holder, #ordering-holder {
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -258,14 +258,34 @@ small {
 @keyframes color {
   0% {
     background-color: red;
-    color: white;
   }
   50% {
-    background-color: #90f542;
-    color: #fff68c;
+    background-color: #2fd440;
   }
-  100 {
+  100% {
     background-color: red;
-    color: white;
   }
+}
+
+#ordering-container > h5, h6 {
+	text-align: center;
+}
+
+#back-button-in-ordering-page, #order-delete-button, #order-sending-button {
+	margin-bottom: 1rem;
+}
+
+.order-item, .total-price, .order-buttons-container {
+	max-width: 720px;
+	margin: 0 auto 1rem auto;
+}
+
+.food-name-ordering-page, .total-price-ordering-page {
+	font-weight: bold;
+}
+
+.order-line-item-delete-button {
+	text-align: right;
+	margin-top: 0.5rem;
+	margin-bottom: 1rem;
 }

@@ -23,11 +23,11 @@ public class OrderLineItemDAO {
 
     }
 	
-	public boolean deleteOrderLineItem(Long orderLineItemId) {
+	public boolean deleteOrderLineItem(OrderLineItem orderLineItem) {
 		boolean succeeded = false;
 		
 		try{
-            orderLineItemRepository.deleteById(orderLineItemId);
+            orderLineItemRepository.delete(orderLineItem);
             succeeded = true;
         } catch (Exception e){
             System.out.println("Deletion failed: " + e.getMessage());
@@ -36,4 +36,7 @@ public class OrderLineItemDAO {
 		return succeeded;
 	}
 	
+	public OrderLineItem getOrderLineItemById (Long id) {
+		return orderLineItemRepository.findById(id).get();
+	}
 }
