@@ -211,6 +211,8 @@ public class CustomerAccountController {
     	if (deletionSucceeded) {
     		httpServletRequest.getSession().removeAttribute("customer_id");
             httpServletRequest.getSession().removeAttribute("customer_name");
+            httpServletRequest.getSession().removeAttribute("openedorder_id");
+            httpServletRequest.getSession().removeAttribute("number_of_order_items");
             return "deleted";	
     	}
         
