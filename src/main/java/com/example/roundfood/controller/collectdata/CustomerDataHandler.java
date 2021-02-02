@@ -5,9 +5,7 @@ import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.CustomerLegitimacy;
 import com.example.roundfood.service.CustomerDataValidator;
 import com.example.roundfood.service.Password;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
