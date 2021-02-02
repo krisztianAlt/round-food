@@ -178,6 +178,10 @@ hr.style1 {
 	margin: 0;
 }
 
+#registration-alert {
+	max-width: 600px !important;
+}
+
 #data-modification-error-alert > dl, ol, ul {
 	margin: 0;
 }
@@ -279,7 +283,7 @@ small {
 	margin-bottom: 1rem;
 }
 
-.order-item, .total-price, .order-buttons-container {
+.order-item, .total-price, .order-buttons-container, #shipping-address-container {
 	max-width: 720px;
 	margin: 0 auto 1rem auto;
 }
@@ -292,4 +296,10 @@ small {
 	text-align: right;
 	margin-top: 0.5rem;
 	margin-bottom: 0.9rem;
+}
+
+.modify-button {
+	text-align: right;
+	margin-top: 0.5rem;
+	margin-bottom: 0;
 }

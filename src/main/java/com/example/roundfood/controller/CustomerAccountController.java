@@ -141,10 +141,18 @@ public class CustomerAccountController {
         List<String> errorMessages = (List) model.asMap().get("errors");
 
         if (errorMessages.size() == 0 &&
-                (boolean) model.asMap().get("updatetried") &&
-                !(boolean) model.asMap().get("updatesucceeded")){
+            (boolean) model.asMap().get("updatetried") &&
+            !(boolean) model.asMap().get("updatesucceeded")){
         	errorMessages.add("Database problem. Please, try later.");
             model.addAttribute("errors", errorMessages);
+        }
+        
+        if (errorMessages.size() == 0 &&
+            (boolean) model.asMap().get("updatetried") &&
+            (boolean) model.asMap().get("updatesucceeded")) {
+        	Customer updatedCustomer = (Customer) model.getAttribute("customer");
+        	customerName = updatedCustomer.getFirstName() + " " + updatedCustomer.getLastName();
+        	httpServletRequest.getSession().setAttribute("customer_name", customerName);
         }
         
     	model.addAttribute("passworderrors", new ArrayList<>());

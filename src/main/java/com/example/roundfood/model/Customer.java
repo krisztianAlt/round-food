@@ -23,6 +23,12 @@ public class Customer {
 
     private String phoneNumber;
     
+    private String city;
+	
+    private String postalCode;
+    
+    private String address;
+	
     @JsonIgnore
     private String password;
     
@@ -33,23 +39,31 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Order> orders;
     
+    // Older version:
+    /*
     @JsonManagedReference
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private List<ShippingAddress> shippingAddresses;
-
+	*/
+    
 	public Customer() {
     }
 
-    public Customer(String firstName, String lastName, String email, String phoneNumber, String password, CustomerLegitimacy legitimacy) {
+    public Customer(String firstName, String lastName, String email, 
+    				String phoneNumber, String password, CustomerLegitimacy legitimacy,
+    				String city, String postalCode, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.legitimacy = legitimacy;
+        this.city = city;
+    	this.postalCode = postalCode;
+    	this.address = address;
     }
 
-    public long getId() {
+	public long getId() {
         return id;
     }
 
@@ -110,12 +124,38 @@ public class Customer {
         this.orders = order;
     }
     
+    //Older version:
+    /*
     public List<ShippingAddress> getShippingAddress() {
 		return shippingAddresses;
 	}
 
 	public void setShippingAddress(List<ShippingAddress> shippingAddresses) {
 		this.shippingAddresses = shippingAddresses;
-	}
+	}*/
     
+    public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 }

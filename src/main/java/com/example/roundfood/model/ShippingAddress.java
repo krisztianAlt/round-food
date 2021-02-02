@@ -1,3 +1,6 @@
+// Old version:
+
+/*
 package com.example.roundfood.model;
 
 import javax.persistence.Entity;
@@ -73,3 +76,4 @@ public class ShippingAddress {
 	}
     
 }
+*/

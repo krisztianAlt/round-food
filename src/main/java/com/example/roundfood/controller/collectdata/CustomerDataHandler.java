@@ -103,6 +103,11 @@ public class CustomerDataHandler{
     	
 	}
     
+    public Customer getCustomerById(Long id) {
+    	Customer customer = customerDAO.getCustomerById(id);
+    	return customer;
+    }
+    
     public Model collectCustomerProfileModificationData(Customer customer, Model model) {
     	List<String> errorMessages;
         boolean updateSucceeded = false;

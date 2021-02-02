@@ -20,6 +20,7 @@ public class CustomerDataValidator {
     public CustomerDataValidator(CustomerDAO queryHandler) {
         this.queryHandler = queryHandler;
     }
+    
     @Autowired
     private Password password;
 
@@ -102,12 +103,8 @@ public class CustomerDataValidator {
         if (customer.getLastName().length() > 0 && dataNotStartsWithUpperCaseLetter(customer.getLastName())){
             errorMessages.add("Last name must start with upper case letter.");
         }
-
-        Pattern compiledPatternEmail = Pattern.compile(
-                "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        Matcher matcherEmail = compiledPatternEmail.matcher(customer.getEmail());
-        boolean emailIsCorrect = matcherEmail.matches();
+        
+        boolean emailIsCorrect = InputFieldPattern.EMAIL.validate(customer.getEmail());
         if (!emailIsCorrect){
             errorMessages.add("Please, type email in one of these formats: john.doe@fantasymail.com, johndoe@fantasymail.com.");
         }
@@ -120,15 +117,36 @@ public class CustomerDataValidator {
         	errorMessages.add("Another user is already using this email address. Please, type another one.");
         }
 
-        Pattern compiledPatternPhone = Pattern.compile("\\d{2,3}-\\d{6,10}");
-        Matcher matcherPhone = compiledPatternPhone.matcher(customer.getPhoneNumber());
-        boolean phoneIsCorrect = matcherPhone.matches();
+        boolean phoneIsCorrect = InputFieldPattern.PHONE.validate(customer.getPhoneNumber());
         if (!phoneIsCorrect) {
-        	errorMessages.add("Please, type phone number in these format: 30-1234567.");
+        	errorMessages.add("Please, type phone number in one of these formats: 30-1234567 or 1-987654.");
         }
         
         if (!phoneNumberContainsCorrectCharacters(customer.getPhoneNumber())) {
         	errorMessages.add("Phone number can only contain digits and '-' sign.");
+        }
+        
+        if (customer.getCity().length() > 0 && dataNotStartsWithUpperCaseLetter(customer.getCity())) {
+        	errorMessages.add("City must start with upper case letter.");
+        }
+        
+        boolean cityIsCorrect = InputFieldPattern.CITY.validate(customer.getCity());
+        if (!cityIsCorrect) {
+        	errorMessages.add("City can only contain letters, '-' sign and white space, and its length must be between 2 and 25 characters.");
+        }
+        
+        boolean postalCodeIsCorrect = InputFieldPattern.POSTAL_CODE.validate(customer.getPostalCode());
+        if (!postalCodeIsCorrect) {
+        	errorMessages.add("Postal code can only contain digits, and its length must be 4 characters.");
+        }
+        
+        boolean addressIsCorrect = InputFieldPattern.ADDRESS.validate(customer.getAddress());
+        if (!addressIsCorrect) {
+        	errorMessages.add("Address can only contain letters, digits, '.', '-' sign and white space, and its length must be between 5 and 35 characters.");
+        }
+        
+        if (customer.getAddress().length() > 0 && dataNotStartsWithUpperCaseLetter(customer.getAddress())) {
+        	errorMessages.add("Address must start with upper case letter.");
         }
         
 		return errorMessages;

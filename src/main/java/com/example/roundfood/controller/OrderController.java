@@ -1,11 +1,8 @@
 package com.example.roundfood.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.roundfood.controller.collectdata.CustomerDataHandler;
 import com.example.roundfood.controller.collectdata.OrderDataHandler;
 import com.example.roundfood.controller.collectdata.OrderLineItemDataHandler;
+import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.Order;
 import com.example.roundfood.model.OrderLineItem;
 
@@ -40,6 +38,8 @@ public class OrderController {
         Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
         Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        
         if (openedorderId != null) {
             Order order = orderDataHandler.getOrderById(openedorderId);
             double totalPrice = orderDataHandler.getTotalPrice(order);
@@ -52,6 +52,7 @@ public class OrderController {
         
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
+        model.addAttribute("customer", customer);
         httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
 		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
@@ -98,6 +99,9 @@ public class OrderController {
         	model.addAttribute("empty", true);
         }
         
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        model.addAttribute("customer", customer);
+        
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
         
@@ -137,6 +141,9 @@ public class OrderController {
         } else {
         	model.addAttribute("empty", true);
         }
+        
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        model.addAttribute("customer", customer);
         
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);

@@ -14,8 +14,9 @@
 				<div class="container-fluid" id="ordering-container">
 					
 					<h5>Ordering</h5>
+					<br>
 					
-					<div th:if="${empty != null}" class="d-flex justify-content-center">
+					<div th:if="${empty != null}" class="d-flex justify-content-center">	
 						<p>Your cart is empty.</p>
 					</div>
 					
@@ -73,19 +74,64 @@
 							</div>
 						</div>
 					</div>
-						
-					<div th:if="${empty == null}" class="order-buttons-container">
+					
+					<div th:if="${empty == null}" id="shipping-address-container">
 						<br>
 						<hr class="style1">
+						<h6>Shipping Address</h6>
 						<div class="row">
+							<div class="col-0 col-sm-3"></div>
+							<div class="col-6 col-sm-3">City:</div>
+							<div class="col-6 col-sm-3" th:text="${customer.city}"></div>
+							<div class="col-0 col-sm-3"></div>
+						</div>
+						<div class="row">
+							<div class="col-0 col-sm-3"></div>
+							<div class="col-6 col-sm-3">Address:</div>
+							<div class="col-6 col-sm-3" th:text="${customer.address}"></div>
+							<div class="col-0 col-sm-3"></div>
+						</div>
+						<div class="row">
+							<div class="col-0 col-sm-3"></div>
+							<div class="col-6 col-sm-3">Postal code:</div>
+							<div class="col-6 col-sm-3" th:text="${customer.postalCode}"></div>
+							<div class="col-0 col-sm-3"></div>
+						</div>
+						
+						<br>
+						<h6>Contact</h6>
+						<div class="row">
+							<div class="col-0 col-sm-3"></div>
+							<div class="col-6 col-sm-3">Phone:</div>
+							<div class="col-6 col-sm-3" th:text="${customer.phoneNumber}"></div>
+							<div class="col-0 col-sm-3"></div>
+						</div>
+						<div class="row">
+							<div class="col-0 col-sm-3"></div>
+							<div class="col-6 col-sm-3">Email:</div>
+							<div class="col-6 col-sm-3" th:text="${customer.email}"></div>
+							<div class="col-0 col-sm-3"></div>
+						</div>
+						
+						<div class="row">
+							<div class="col-12 modify-button">									
+                            	<a role="button" href="/profile" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i> Modify</a>
+							</div>
+						</div>
+
+					</div>
+						
+					<div th:if="${empty == null}" class="order-buttons-container">
+						<hr class="style1">
+						<div class="row">
+							<div class="col-12 col-md-4 d-flex justify-content-center">
+								<button type="button" id="back-button-in-ordering-page" class="btn btn-primary btn-sm" onclick="window.location.href='/';"><i class="fas fa-arrow-circle-left"></i> Back to main page</button>
+							</div>
 							<div class="col-12 col-md-4 d-flex justify-content-center">
 								<form action="/ordering/sending-order" method="post">
 									<input name="orderId" type="hidden" th:value="${order.getId()}" th:style="${'visibility: hidden'}" />
 									<button type="submit" id="order-sending-button" class="btn btn-success"><i class="fas fa-utensils"></i> Send order</button>
 								</form>
-							</div>
-							<div class="col-12 col-md-4 d-flex justify-content-center">
-								<button type="button" id="back-button-in-ordering-page" class="btn btn-primary" onclick="window.location.href='/';"><i class="fas fa-arrow-circle-left"></i> Back to main page</button>
 							</div>
 							<div class="col-12 col-md-4 d-flex justify-content-center">
 								<form action="/ordering/delete-order" method="post">
