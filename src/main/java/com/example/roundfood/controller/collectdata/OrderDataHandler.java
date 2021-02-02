@@ -17,7 +17,7 @@ import com.example.roundfood.model.OrderLineItem;
 @Service
 public class OrderDataHandler {
 
-	Logger logger = LoggerFactory.getLogger(OrderLineItemDataHandler.class);
+	Logger logger = LoggerFactory.getLogger(OrderDataHandler.class);
 	
 	OrderDAO orderDAO;
 	
