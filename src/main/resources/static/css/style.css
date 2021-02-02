@@ -182,6 +182,10 @@ hr.style1 {
 	margin: 0;
 }
 
+#order-deletion-error-alert > p {
+	margin: 0;
+}
+
 #password-error-alert > dl, ol, ul {
 	margin: 0;
 }
@@ -287,5 +291,5 @@ small {
 .order-line-item-delete-button {
 	text-align: right;
 	margin-top: 0.5rem;
-	margin-bottom: 1rem;
+	margin-bottom: 0.9rem;
 }

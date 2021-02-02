@@ -30,7 +30,7 @@ public class OrderLineItemDAO {
             orderLineItemRepository.delete(orderLineItem);
             succeeded = true;
         } catch (Exception e){
-            System.out.println("Deletion failed: " + e.getMessage());
+            System.out.println("Deletion failed in orderLineItemDAO: " + e.getMessage());
         }
 		
 		return succeeded;

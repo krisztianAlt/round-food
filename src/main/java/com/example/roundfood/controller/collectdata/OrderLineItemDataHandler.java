@@ -96,7 +96,14 @@ public class OrderLineItemDataHandler {
 	
 	
 	public void deleteOrderLineItem(OrderLineItem orderLineItem) {
-		orderLineItemDAO.deleteOrderLineItem(orderLineItem);
+		Long id = orderLineItem.getId();
+		boolean succeeded = orderLineItemDAO.deleteOrderLineItem(orderLineItem);
+		
+		if (succeeded) {
+			logger.info("LINEITEM DELETED (ID: " + String.valueOf(id) + ")");
+		} else {
+			logger.error("LINEITEM DELETION FAILED (ID: "+ String.valueOf(id) + ")");
+		}
 	}
 	
 	public OrderLineItem getOrderLineItemById (Long id) {

@@ -19,6 +19,11 @@
 						<p>Your cart is empty.</p>
 					</div>
 					
+					<div th:if="${deletionError != null}" id="order-deletion-error-alert" class="alert alert-danger alert-dismissible fade show">
+						<p>Deletion failed. Please, try later!</p>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+					
 					<div th:if="${empty == null}">
 						<div th:each="orderlineitem, iterStat : ${order.getOrderLineItems()}">
 							<div class="order-item">

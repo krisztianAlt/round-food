@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,7 +71,7 @@ public class OrderController {
         Long orderLineItemiId = Long.parseLong(allRequestParams.get("orderLineItemiId"));
         
         if (openedorderId != null) {
-            Order order = orderDataHandler.getOrderById(openedorderId);
+            Order order = orderDataHandler.getOrderById(orderId);
             OrderLineItem orderLineItem = orderLineItemDataHandler.getOrderLineItemById(orderLineItemiId);
             
             List<OrderLineItem> orderLineItems = order.getOrderLineItems();
@@ -89,7 +90,7 @@ public class OrderController {
                 model.addAttribute("order", order);
                 model.addAttribute("totalPrice", totalPrice);
                 numberOfOrderItems = order.getOrderLineItems().size();
-                httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+                httpServletRequest.getSession().setAttribute("openedorder_id", orderId);
         		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
             }
             
@@ -107,7 +108,39 @@ public class OrderController {
 	public String deleteOrder(Model model,
 							HttpServletRequest httpServletRequest,
 							@RequestParam Map<String,String> allRequestParams) {
-		        
+		
+		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
+        
+        Long orderId = Long.parseLong(allRequestParams.get("orderId"));
+        
+        if (orderId != null) {
+        	
+            boolean deletionSucceeded = orderDataHandler.deleteOrderAndLineItemsByOrderId(orderId);
+            
+            if (deletionSucceeded) {
+            	model.addAttribute("empty", true);
+            	httpServletRequest.getSession().setAttribute("openedorder_id", null);
+        		httpServletRequest.getSession().setAttribute("number_of_order_items", null);
+            } else {
+            	Order order = orderDataHandler.getOrderById(orderId);
+            	model.addAttribute("deletionError", true);
+            	double totalPrice = orderDataHandler.getTotalPrice(order);
+                model.addAttribute("order", order);
+                model.addAttribute("totalPrice", totalPrice);
+            	httpServletRequest.getSession().setAttribute("openedorder_id", orderId);
+        		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+            }
+            
+        } else {
+        	model.addAttribute("empty", true);
+        }
+        
+        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("customername", customerName);
+        
 		return "ordering";
 	}
 	
