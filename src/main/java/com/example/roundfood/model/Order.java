@@ -36,14 +36,16 @@ public class Order {
 
     private Timestamp orderingTimeStamp;
     
-    @Temporal(TemporalType.DATE)
-    private Date shippingDate;
-    
-    private Time shippingTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date shippingDateAndTime;
     
     @JsonManagedReference
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderLineItem> orderLineItems;
+
+    @JsonManagedReference
+	@ManyToOne
+	private PaymentOption paymentOption;
     
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -79,22 +81,12 @@ public class Order {
 		this.orderingTimeStamp = orderingTimeStamp;
 	}
 
-	public Date getShippingDate() {
-		return shippingDate;
+	public Date getShippingDateAndTime() {
+		return shippingDateAndTime;
 	}
 
-	public void setShippingDate(Date shippingDate) {
-		this.shippingDate = shippingDate;
-	}
-
-	
-
-	public Time getShippingTime() {
-		return shippingTime;
-	}
-
-	public void setShippingTime(Time shippingTime) {
-		this.shippingTime = shippingTime;
+	public void setShippingDateAndTime(Date shippingDateAndTime) {
+		this.shippingDateAndTime = shippingDateAndTime;
 	}
 
 	public List<OrderLineItem> getOrderLineItems() {
@@ -111,6 +103,14 @@ public class Order {
 
 	public void setStatus(OrderStatus status) {
 		this.status = status;
+	}
+	
+	public PaymentOption getPaymentOption() {
+		return paymentOption;
+	}
+
+	public void setPaymentOption(PaymentOption paymentOption) {
+		this.paymentOption = paymentOption;
 	}
 	
 }

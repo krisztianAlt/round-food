@@ -16,6 +16,26 @@ INSERT INTO extratopping VALUES (8, 'Whipped cream', 300);
 SELECT pg_catalog.setval('extratopping_id_seq', 8, true);
 
 
+INSERT INTO paymentoption VALUES (1, 'Credit card');
+INSERT INTO paymentoption VALUES (2, 'OTP SZÉP card');
+INSERT INTO paymentoption VALUES (3, 'K&H SZÉP card');
+INSERT INTO paymentoption VALUES (4, 'MKB SZÉP card');
+INSERT INTO paymentoption VALUES (5, 'Cash to food courier');
+
+SELECT pg_catalog.setval('paymentoption_id_seq', 5, true);
+
+
+INSERT INTO paymentoptionpicture VALUES (1, 'amex.jpg', 'American Express', 1);
+INSERT INTO paymentoptionpicture VALUES (2, 'mastercard.jpg', 'Mastercard', 1);
+INSERT INTO paymentoptionpicture VALUES (3, 'visa.jpg', 'Visa', 1);
+INSERT INTO paymentoptionpicture VALUES (4, 'otp.jpg', 'OTP SZÉP card', 2);
+INSERT INTO paymentoptionpicture VALUES (5, 'kh.jpg', 'K&H SZÉP card', 3);
+INSERT INTO paymentoptionpicture VALUES (6, 'mkb.jpg', 'MKB SZÉP card', 4);
+INSERT INTO paymentoptionpicture VALUES (7, 'coins-solid.svg', 'Cash', 5);
+
+SELECT pg_catalog.setval('paymentoptionpicture_id_seq', 5, true);
+
+
 INSERT INTO food VALUES (1, '8 pieces from 4 cake, with strawberry, chocolate, orange and raspberry cream. Cookies at the top.', 'CAKE', 'The Colourful', '6000');
 INSERT INTO food VALUES (2, '12 pieces chocolate cake.', 'CAKE', 'Chocolate cake', '7500');
 INSERT INTO food VALUES (3, '8 pieces. Fruits at the top.', 'CAKE', 'Curd cheesecake', '5500');

@@ -49,9 +49,9 @@ public class OrderDAO {
 		
 		order.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now()));
 		order.setOrderLineItems(updatedOrder.getOrderLineItems());
-		order.setShippingDate(updatedOrder.getShippingDate());
-		order.setShippingTime(updatedOrder.getShippingTime());
+		order.setShippingDateAndTime(updatedOrder.getShippingDateAndTime());
 		order.setStatus(updatedOrder.getStatus());
+		order.setPaymentOption(updatedOrder.getPaymentOption());
 		
 		orderRepository.save(order);
 	}

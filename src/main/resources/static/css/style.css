@@ -190,6 +190,10 @@ hr.style1 {
 	margin: 0;
 }
 
+#order-saving-error-alert > p {
+	margin: 0;
+}
+
 #password-error-alert > dl, ol, ul {
 	margin: 0;
 }
@@ -283,7 +287,7 @@ small {
 	margin-bottom: 1rem;
 }
 
-.order-item, .total-price, .order-buttons-container, #shipping-address-container, #shipping-date-and-time-container {
+.order-item, .total-price, .order-buttons-container, #shipping-address-container, #shipping-date-and-time-container, #payment-container {
 	max-width: 720px;
 	margin: 0 auto 1rem auto;
 }
@@ -312,4 +316,76 @@ small {
 #time-selector {
 	background-image: url("clock-solid.svg");
 	background-size: 20px 16px;
+}
+
+#payment-options-row .form-check-input{
+	display: none;
+}
+
+#payment-options-row .form-check {
+	border: 2px solid #a8a7a7;
+	cursor: pointer;
+	margin: 5px auto;
+	text-align: center;
+	background-color: #d6bfa9;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#payment-options-row .form-check:hover {
+	border: 2px solid #b36a17;
+}
+
+#payment-options-row .active {
+	border: 2px solid red;
+}
+
+#payment-options-row .active:hover {
+	border: 2px solid red;
+}
+
+#payment-options-row label {
+	cursor: pointer;
+	display: block;
+}
+
+.payment-option-pictures {
+	display: inline-block;
+	width: 60px;
+	height: 40px;
+}
+
+.payment-option-pictures img {
+	padding-top: 5px;
+	max-width: 100%;
+    max-height: 100%;
+}
+
+#viva {
+	color: #198754;
+}
+
+#viva .fas {
+	transition: all 0.4s;
+}
+
+#viva .fas:hover {
+	font-size: 250%;
+	cursor: zoom-in;
+}
+
+#viva .fa-birthday-cake:hover {
+	color: #8c20c9;
+}
+
+#viva .fa-pizza-slice:hover {
+	color: #c99620;
+}
+
+#viva .fa-utensils:hover {
+	color: blue;
+}
+
+#viva .fa-wine-glass:hover {
+	color: red;
 }

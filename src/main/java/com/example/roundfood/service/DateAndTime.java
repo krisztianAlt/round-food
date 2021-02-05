@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +40,8 @@ public class DateAndTime {
 		Date firstChoosableShippingDateAndTime = calendar.getTime();
 		calendar.setTime(currentDateAndTime);
 		if (oneHourLater.after(closingDateAndTimeOnCurrentDay)) {
-			System.out.println("AFTER");
 			firstChoosableShippingDateAndTime = getFirstChoosableShippingDateAndTimeOnNextDay(currentDateAndTime);
 		} else {
-			System.out.println("Not AFTER");
 			calendar.add(Calendar.MINUTE, MINIMUM_WAITING_BEFORE_FIRST_CHOOSABLE_SHIPPING_DATE_AND_TIME);
 			
 			if (firstChoosableShippingDateAndTime.before(getOpeningDateAndTimeOnCurrentDay(firstChoosableShippingDateAndTime))) {
@@ -138,6 +137,17 @@ public class DateAndTime {
 		dayStringsAndShippingDates.put("choosableShippingDates", choosableShippingDatesAndTimes);
 		
 		return dayStringsAndShippingDates;
+	}
+	
+	public Date convertStringToDateAndTime(String dateAndTimeString) {
+		SimpleDateFormat dateAndTimeFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+		Date dateAndTime = null;
+		try {
+			dateAndTime = dateAndTimeFormatter.parse(dateAndTimeString);
+		} catch (ParseException e) {
+			logger.error("Converting string to date failed: " + e.getMessage());
+		}
+		return dateAndTime;
 	}
 	
 }

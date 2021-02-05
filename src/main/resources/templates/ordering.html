@@ -28,6 +28,11 @@
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
 					
+					<div th:if="${savingError != null}" id="order-saving-error-alert" class="alert alert-danger alert-dismissible fade show">
+						<p>Ordering failed. Please, try later!</p>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+					
 					<div th:if="${empty == null}">
 						<div th:each="orderlineitem, iterStat : ${order.getOrderLineItems()}">
 							<div class="order-item">
@@ -124,42 +129,58 @@
 
 					</div>
 					
-					<div th:if="${empty == null}" id="shipping-date-and-time-container">
-						<br>
-						<hr class="style1">
-						<h6>Shipping date and time</h6>
-						<div class="row">
-							<div class="col-6">
-								<select class="form-select" id="date-selector">
-									<option th:each="day, iterStat : ${choosableDays}" th:attr="value=${#calendars.format(day, 'yyyy-MM-dd')}" th:text="${#calendars.format(day, 'yyyy-MM-dd, EEEEE')}">
-    								</option>
-								</select>
-							</div>
-						
-							<div class="col-6">
-								<select name="selectedDateAndTime" class="form-select" id="time-selector">
-									<option th:each="time, iterStat : ${choosableShippingDates}" th:class="${#calendars.format(time, 'yyyy-MM-dd')}" th:attr="value=${time}" th:text="${#calendars.format(time, 'HH:mm')}">
-									</option>
-								</select>
+					<form th:if="${empty == null}" action="/ordering/sending-order" method="post">
+						<div id="shipping-date-and-time-container">
+							<hr class="style1">
+							<h6>Shipping date and time</h6>
+							<div class="row">
+								<div class="col-6">
+									<select class="form-select" id="date-selector">
+										<option th:each="day, iterStat : ${choosableDays}" th:attr="value=${#calendars.format(day, 'yyyy-MM-dd')}" th:text="${#calendars.format(day, 'yyyy-MM-dd, EEEEE')}">
+	    								</option>
+									</select>
+								</div>
+							
+								<div class="col-6">
+									<select name="selectedDateAndTime" class="form-select" id="time-selector">
+										<option th:each="time, iterStat : ${choosableShippingDates}" th:class="${#calendars.format(time, 'yyyy-MM-dd')}" th:value="${time}" th:text="${#calendars.format(time, 'HH:mm')}">
+										</option>
+									</select>
+								</div>
 							</div>
 						</div>
 						
-					</div>
-					
-						
+						<div id="payment-container">
+							<hr class="style1">
+							<h6>Payment</h6>
+	
+							<div class="row" id="payment-options-row">
+								<div class="col-6 col-sm-4" th:each="paymentOption, iterStat : ${paymentOptions}">
+									<div class="form-check" >
+										<input class="form-check-input" name="paymentRadios" type="radio" th:id="${'flexCheck'+iterStat.count}" th:value="${paymentOption.id}">
+										<div class="payment-option-pictures" th:each="paymentOptionPicture, iterStat : ${paymentOption.getPaymentOptionPicture()}">
+											<img th:src="'/picture_collection/payment/' + ${paymentOptionPicture.getFileName()}">
+										</div>
+										<label class="form-check-label" th:for="${'flexCheck'+iterStat.count}" th:text="${paymentOption.name}">
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr class="style1">
+						<div class="col-12 d-flex justify-content-center">
+							<input name="orderId" type="hidden" th:value="${order.getId()}" th:style="${'visibility: hidden'}" />
+							<button type="submit" id="order-sending-button" class="btn btn-success btn-lg"><i class="fas fa-utensils"></i> Send order</button>
+						</div>
+					</form>
+							
 					<div th:if="${empty == null}" class="order-buttons-container">
 						<hr class="style1">
 						<div class="row">
-							<div class="col-12 col-md-4 d-flex justify-content-center">
-								<button type="button" id="back-button-in-ordering-page" class="btn btn-primary btn-sm" onclick="window.location.href='/';"><i class="fas fa-arrow-circle-left"></i> Back to main page</button>
+							<div class="col-12 col-md-6 d-flex justify-content-center">
+								<button type="button" id="back-button-in-ordering-page" class="btn btn-primary" onclick="window.location.href='/';"><i class="fas fa-arrow-circle-left"></i> Back to main page</button>
 							</div>
-							<div class="col-12 col-md-4 d-flex justify-content-center">
-								<form action="/ordering/sending-order" method="post">
-									<input name="orderId" type="hidden" th:value="${order.getId()}" th:style="${'visibility: hidden'}" />
-									<button type="submit" id="order-sending-button" class="btn btn-success"><i class="fas fa-utensils"></i> Send order</button>
-								</form>
-							</div>
-							<div class="col-12 col-md-4 d-flex justify-content-center">
+							<div class="col-12 col-md-6 d-flex justify-content-center">
 								<form action="/ordering/delete-order" method="post">
 									<input name="orderId" type="hidden" th:value="${order.getId()}" th:style="${'visibility: hidden'}" />
 									<button type="submit" id="order-delete-button" class="btn btn-danger"><i class="fas fa-trash"></i> Delete order</button>
