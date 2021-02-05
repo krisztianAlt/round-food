@@ -20,9 +20,13 @@ public class RoundFoodErrorController implements ErrorController  {
 
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
+        
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
-        
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         return "error";
     }
 

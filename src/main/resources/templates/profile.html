@@ -12,8 +12,7 @@
 		<div layout:fragment="content">
 			<div class="container">
 				<div class="orange-background info">
-			        <h4>Profile</h4>
-			        
+			        <h5>Profile</h5>
 			        <br>
 
 					<div id="data-modification-error-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(errors)>0}">
@@ -42,7 +41,7 @@
 			        
 			        <div class="main-center-login">
 			        
-			            <p>Modifying personal data</p>
+			            <h6>Modifying personal data</h6>
 				        
 			            <form action="/profile" th:object="${customer}" method="post">
 			            
@@ -71,13 +70,17 @@
 								<div id="basic-addon4" class="form-text">Format: 'area code'-'phone number', e. g. 30-1234567.</div>
 							</div>
 							
+							<input class="d-none" th:field="*{city}" id="city" name="city" th:value="*{city}">
+							<input class="d-none" th:field="*{address}" id="address" name="address" th:value="*{address}">
+							<input class="d-none" th:field="*{postalCode}" id="postalCode" name="postalCode" th:value="*{postalCode}">
+							
 							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save data</button>
 						</form>
 						
 						<br>
 						<hr class="style1">
 						
-						<p>Changing password</p>
+						<h6>Changing password</h6>
 				        
 						<form action="/profile-password" method="post">
 							<div class="input-group mb-3">
@@ -92,6 +95,35 @@
 							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save new password</button>
 			            </form>
 			            
+			            <br>
+			            <hr class="style1">
+			            
+			            <h6>Modifying shipping address</h6>
+			            <form action="/profile" th:object="${customer}" method="post">
+			            	<input class="d-none" th:field="*{id}" id="id" name="id" th:value="*{id}">
+							<input class="d-none" th:field="*{firstName}" id="first-name" name="first-name" th:value="*{firstName}">
+							<input class="d-none" th:field="*{lastName}" id="last-name" name="last-name" th:value="*{lastName}">
+							<input class="d-none" th:field="*{email}" id="email" name="email" th:value="*{email}">
+							<input class="d-none" th:field="*{phoneNumber}" id="phone" name="phone" th:value="*{phoneNumber}">
+							
+				            <div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon7"><i class="fas fa-city"></i></span>
+								<input type="text" class="form-control" th:field="*{city}" id="city" name="city" placeholder="City" th:value="*{city}" aria-label="City" aria-describedby="basic-addon7">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon8"><i class="fas fa-home"></i></span>
+								<input type="text" class="form-control" th:field="*{address}" id="address" name="address" placeholder="Address" th:value="*{address}" aria-label="Address" aria-describedby="basic-addon8">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon9"><i class="fas fa-parachute-box"></i></span>
+								<input type="text" class="form-control" th:field="*{postalCode}" id="postalCode" name="postalCode" placeholder="Postal code" th:value="*{postalCode}" aria-label="Postal code" aria-describedby="basic-addon9">
+							</div>
+							
+							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save new address</button>
+						</form>
+						
 			            <br>
 			            <hr class="style1">
 			            

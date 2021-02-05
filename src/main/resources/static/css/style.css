@@ -36,7 +36,7 @@ body {
 	cursor: pointer;
 }
 
-#foodtype-selector-container, #food-selector-container {
+#foodtype-selector-container, #food-selector-container, #ordering-container {
 	margin-top: 30px;
 	padding-top: 12px;
 	background-color: #f0e0d1;
@@ -48,7 +48,7 @@ body {
 	border: none;
 }
 
-#foodtype-holder, #food-holder {
+#foodtype-holder, #food-holder, #ordering-holder {
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -178,12 +178,28 @@ hr.style1 {
 	margin: 0;
 }
 
+#registration-alert {
+	max-width: 600px !important;
+}
+
 #data-modification-error-alert > dl, ol, ul {
+	margin: 0;
+}
+
+#order-deletion-error-alert > p {
+	margin: 0;
+}
+
+#order-saving-error-alert > p {
 	margin: 0;
 }
 
 #password-error-alert > dl, ol, ul {
 	margin: 0;
+}
+
+#add-to-cart-error-alert > div > p {
+	margin-bottom: 0;
 }
 
 #personal-data-modification-alert > p {
@@ -228,4 +244,148 @@ small {
 
 #last-topping-row {
 	padding-bottom: 1rem;
+}
+
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px;
+   
+	animation-name: color;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+}
+
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+@keyframes color {
+  0% {
+    background-color: red;
+  }
+  50% {
+    background-color: #2fd440;
+  }
+  100% {
+    background-color: red;
+  }
+}
+
+#ordering-container > h5, h6 {
+	text-align: center;
+}
+
+#back-button-in-ordering-page, #order-delete-button, #order-sending-button {
+	margin-bottom: 1rem;
+}
+
+.order-item, .total-price, .order-buttons-container, #shipping-address-container, #shipping-date-and-time-container, #payment-container {
+	max-width: 720px;
+	margin: 0 auto 1rem auto;
+}
+
+.food-name-ordering-page, .total-price-ordering-page {
+	font-weight: bold;
+}
+
+.order-line-item-delete-button {
+	text-align: right;
+	margin-top: 0.5rem;
+	margin-bottom: 0.9rem;
+}
+
+.modify-button {
+	text-align: right;
+	margin-top: 0.5rem;
+	margin-bottom: 0;
+}
+
+#date-selector {
+	background-image: url("calendar-day-solid.svg");
+	background-size: 20px 16px;
+}
+
+#time-selector {
+	background-image: url("clock-solid.svg");
+	background-size: 20px 16px;
+}
+
+#payment-options-row .form-check-input{
+	display: none;
+}
+
+#payment-options-row .form-check {
+	border: 2px solid #a8a7a7;
+	cursor: pointer;
+	margin: 5px auto;
+	text-align: center;
+	background-color: #d6bfa9;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#payment-options-row .form-check:hover {
+	border: 2px solid #b36a17;
+}
+
+#payment-options-row .active {
+	border: 2px solid red;
+}
+
+#payment-options-row .active:hover {
+	border: 2px solid red;
+}
+
+#payment-options-row label {
+	cursor: pointer;
+	display: block;
+}
+
+.payment-option-pictures {
+	display: inline-block;
+	width: 60px;
+	height: 40px;
+}
+
+.payment-option-pictures img {
+	padding-top: 5px;
+	max-width: 100%;
+    max-height: 100%;
+}
+
+#viva {
+	color: #198754;
+}
+
+#viva .fas {
+	transition: all 0.4s;
+}
+
+#viva .fas:hover {
+	font-size: 250%;
+	cursor: zoom-in;
+}
+
+#viva .fa-birthday-cake:hover {
+	color: #8c20c9;
+}
+
+#viva .fa-pizza-slice:hover {
+	color: #c99620;
+}
+
+#viva .fa-utensils:hover {
+	color: blue;
+}
+
+#viva .fa-wine-glass:hover {
+	color: red;
 }

@@ -1,15 +1,25 @@
 package com.example.roundfood.model;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -19,70 +29,88 @@ public class Order {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+	
+    @JsonBackReference
     @ManyToOne
     private Customer customer;
 
-    @Temporal(TemporalType.DATE)
-    private Date date;
-
-    @ManyToOne
-    private Food food;
+    private Timestamp orderingTimeStamp;
     
-    private int quantity;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date shippingDateAndTime;
+    
+    @JsonManagedReference
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderLineItem> orderLineItems;
+
+    @JsonManagedReference
+	@ManyToOne
+	private PaymentOption paymentOption;
+    
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     public Order(){}
 
-    public Order(Customer customer, Date date, Food food, int quantity) {
+    public Order(Customer customer, OrderStatus orderStatus) {
         this.customer = customer;
-        this.date = date;
-        this.food = food;
-        this.quantity = quantity;
+        this.status = orderStatus;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-	public Date getDate() {
-		return date;
+	public long getId() {
+		return id;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public Food getFood() {
-		return food;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setFood(Food food) {
-		this.food = food;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public Timestamp getOrderingTimeStamp() {
+		return orderingTimeStamp;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setOrderingTimeStamp(Timestamp orderingTimeStamp) {
+		this.orderingTimeStamp = orderingTimeStamp;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", customer=" + customer + ", date=" + date + ", quantity=" + quantity + "]";
+	public Date getShippingDateAndTime() {
+		return shippingDateAndTime;
+	}
+
+	public void setShippingDateAndTime(Date shippingDateAndTime) {
+		this.shippingDateAndTime = shippingDateAndTime;
+	}
+
+	public List<OrderLineItem> getOrderLineItems() {
+		return orderLineItems;
+	}
+
+	public void setOrderLineItems(List<OrderLineItem> orderLineItems) {
+		this.orderLineItems = orderLineItems;
+	}
+
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(OrderStatus status) {
+		this.status = status;
+	}
+	
+	public PaymentOption getPaymentOption() {
+		return paymentOption;
+	}
+
+	public void setPaymentOption(PaymentOption paymentOption) {
+		this.paymentOption = paymentOption;
 	}
 	
 }

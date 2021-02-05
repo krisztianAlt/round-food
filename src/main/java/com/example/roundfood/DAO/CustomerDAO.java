@@ -26,6 +26,9 @@ public class CustomerDAO {
 		customer.setLastName(updatedCustomer.getLastName());
 		customer.setEmail(updatedCustomer.getEmail());
 		customer.setPhoneNumber(updatedCustomer.getPhoneNumber());
+		customer.setCity(updatedCustomer.getCity());
+		customer.setAddress(updatedCustomer.getAddress());
+		customer.setPostalCode(updatedCustomer.getPostalCode());
 		
 		customerRepository.save(customer);
 	}
@@ -39,7 +42,7 @@ public class CustomerDAO {
 	public Customer getCustomerById(Long customerId) {
         Customer customer = null;
         try{
-            customer = customerRepository.getOne(customerId);
+            customer = customerRepository.findById(customerId).get();
         } catch (Exception e){
             System.out.println("No record found: " + e.getMessage());
         }

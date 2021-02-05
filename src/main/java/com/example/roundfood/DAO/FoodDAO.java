@@ -16,10 +16,10 @@ public class FoodDAO {
 	@Autowired
     private FoodRepository foodRepository;
 	
-	public Optional<Food> getFoodById(Long foodId) {
-        Optional<Food> food = null;
+	public Food getFoodById(Long foodId) {
+        Food food = null;
         try{
-            food = foodRepository.findById(foodId);
+            food = foodRepository.findById(foodId).get();
         } catch (Exception e){
             System.out.println("No record found: " + e.getMessage());
         }

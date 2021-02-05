@@ -29,6 +29,10 @@ public class ExtraTopping {
     @ManyToMany(mappedBy = "extraToppings", targetEntity = Food.class)
     private List<Food> foods;
 
+	@JsonBackReference
+    @ManyToMany(mappedBy = "selectedExtraToppings", targetEntity = OrderLineItem.class)
+    private List<OrderLineItem> orderLineItems;
+	
     public ExtraTopping() {
     }
 

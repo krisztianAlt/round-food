@@ -94,6 +94,9 @@ app.foodEntitiesHandler = {
             	newImageDiv.appendChild(titleDiv);
             	carouselImageHolder.appendChild(newImageDiv);
             }
+                
+            var foodId = document.getElementById('food-id');
+            foodId.setAttribute("value", id);
             
             var descriptionParagraph = document.getElementById('food-description');
             descriptionParagraph.innerText = "Description: " + description;
@@ -195,6 +198,12 @@ app.foodEntitiesHandler = {
             // watch checkboxes' changing:
             app.foodEntitiesHandler.listenToppingSelection();
             
+            // add eventlistener to "Add to cart" button:
+            var addToCartButton = document.getElementById("add-to-cart-button");
+            if (addToCartButton != null){
+            	addToCartButton.addEventListener("click", app.foodEntitiesHandler.addFoodToCart);
+            }
+            
             $("#foodModal").modal("toggle");
 		},
 		
@@ -211,6 +220,65 @@ app.foodEntitiesHandler = {
 	            $("#sum-total-value").text(String(newTotalPrice));
 	            $("#sum-total-value").data("totalprice", String(newTotalPrice));
 	        });
+	    },
+	    
+	    addFoodToCart: function () {
+	    	// remove eventlistener from "Add to cart" button:
+	    	var addToCartButton = document.getElementById("add-to-cart-button");
+	    	addToCartButton.removeEventListener("click", app.foodEntitiesHandler.addFoodToCart);
+	    	
+	    	// get food id and the id of selected toppings:
+	    	var foodId = document.getElementById("food-id").getAttribute("value");
+	    	var checkedToppings = [];
+	    	var checkboxes = document.getElementsByClassName("form-check-input");
+	    	var checkboxesIndex;
+	    	for (checkboxesIndex = 0; checkboxesIndex < checkboxes.length; checkboxesIndex++){
+	    		if (checkboxes[checkboxesIndex].checked) {
+	    			checkedToppings.push(checkboxes[checkboxesIndex].getAttribute("value"));
+	    	     }
+	    	}	    	
+	    	
+	    	var dataPackage = {'foodId': foodId, 'selectedToppings': checkedToppings};
+	        $.ajax({
+	            url: '/add-to-cart',
+	            type: 'POST',
+	            contentType: "application/json; charset=utf-8",
+	            data: JSON.stringify(dataPackage),
+	            dataType: 'json',
+	            success: function(response) {
+	            	location.reload();
+	            	window.scrollTo(0, 0);
+	            },
+	            error: function() {
+	                console.log('ERROR: endpoint calling failed.');
+	                app.foodEntitiesHandler.showAddToCartErrorMessage();
+	            }
+	        });
+	    },
+	    
+	    showAddToCartErrorMessage: function() {
+	    	$("#add-to-cart-error-alert").empty();
+	    	
+	    	var messageDiv = document.getElementById("add-to-cart-error-alert");
+	    	
+	    	var alertDiv = document.createElement("div");
+	    	alertDiv.setAttribute("class", "alert alert-danger alert-dismissible fade show");
+	    	alertDiv.setAttribute("role", "alert");
+	    	
+	    	var alertParagraph = document.createElement("p");
+	    	alertParagraph.innerText = "Sorry, problem occured, please, try later.";
+	    	
+	    	var closeButton = document.createElement("button");
+	    	closeButton.setAttribute("type", "button");
+	    	closeButton.setAttribute("class", "btn-close");
+	    	closeButton.setAttribute("data-bs-dismiss", "alert");
+	    	closeButton.setAttribute("aria-label", "Close");
+	    	
+	    	alertDiv.appendChild(alertParagraph);
+	    	alertDiv.appendChild(closeButton);
+	    	messageDiv.appendChild(alertDiv);
+	    	
+	    	window.scrollTo(0, 0);
 	    }
 		
 }

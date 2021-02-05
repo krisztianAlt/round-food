@@ -5,7 +5,9 @@ import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.CustomerLegitimacy;
 import com.example.roundfood.service.CustomerDataValidator;
 import com.example.roundfood.service.Password;
-import org.mindrot.jbcrypt.BCrypt;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +19,9 @@ import java.util.Map;
 
 @Service
 public class CustomerDataHandler{
-
+	
+	Logger logger = LoggerFactory.getLogger(CustomerDataHandler.class);
+	
     private CustomerDAO customerDAO;
     private CustomerDataValidator customerDataValidator;
     private Password password;
@@ -41,7 +45,11 @@ public class CustomerDataHandler{
             savingTried = true;
             savingSucceeded = saveCustomerDatas(customer);
         }
-
+        
+        if (savingSucceeded) {
+        	logger.info("NEW CUSTOMER REGISTERED, ID: " + String.valueOf(customer.getId()));
+        }
+        
         model.addAttribute("customer", customer);
         model.addAttribute("errors", errorMessages);
         model.addAttribute("savingsucceeded", savingSucceeded);
@@ -103,6 +111,11 @@ public class CustomerDataHandler{
     	
 	}
     
+    public Customer getCustomerById(Long id) {
+    	Customer customer = customerDAO.getCustomerById(id);
+    	return customer;
+    }
+    
     public Model collectCustomerProfileModificationData(Customer customer, Model model) {
     	List<String> errorMessages;
         boolean updateSucceeded = false;
@@ -115,6 +128,10 @@ public class CustomerDataHandler{
             updateSucceeded = updateCustomerDatas(customer);
         }
 
+        if (updateSucceeded) {
+        	logger.info("CUSTOMER UPDATED, ID: " + String.valueOf(customer.getId()));
+        }
+        
         model.addAttribute("customer", customer);
         model.addAttribute("errors", errorMessages);
         model.addAttribute("updatesucceeded", updateSucceeded);
@@ -145,6 +162,11 @@ public class CustomerDataHandler{
     public boolean deleteUser(Long customerId) {
     	boolean deletionSucceeded = false;
     	deletionSucceeded = customerDAO.deleteUser(customerId);
+    	
+    	if (deletionSucceeded) {
+    		logger.info("CUSTOMER DELETED, ID: " + String.valueOf(customerId));
+    	}
+    	
     	return deletionSucceeded;
     }
     
@@ -160,7 +182,7 @@ public class CustomerDataHandler{
             customerDAO.saveNewCustomer(customer);
             savingSucceeded = true;
         } catch (Exception e){
-            System.out.println("SAVING FAILED: " + e.getMessage());
+            logger.error("SAVING FAILED: " + e.getMessage());
         }
         return savingSucceeded;
     }
@@ -172,7 +194,7 @@ public class CustomerDataHandler{
             customerDAO.updateCustomer(customer);
             updateSucceeded = true;
         } catch (Exception e){
-            System.out.println("UPDATING FAILED: " + e.getMessage());
+        	logger.error("UPDATING FAILED: " + e.getMessage());
         }
         return updateSucceeded;
     	
@@ -187,7 +209,7 @@ public class CustomerDataHandler{
             customerDAO.updateCustomerPassword(customerId, hashPassword);
             updateSucceeded = true;
         } catch (Exception e){
-            System.out.println("UPDATING PASSWORD FAILED: " + e.getMessage());
+        	logger.error("UPDATING PASSWORD FAILED: " + e.getMessage());
         }
         return updateSucceeded;
     }

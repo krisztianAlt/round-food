@@ -1,7 +1,10 @@
 package com.example.roundfood.controller;
 
 import com.example.roundfood.controller.collectdata.CustomerDataHandler;
+import com.example.roundfood.controller.collectdata.OrderDataHandler;
 import com.example.roundfood.model.Customer;
+import com.example.roundfood.model.Order;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,9 @@ public class CustomerAccountController {
 
     @Autowired
     private CustomerDataHandler customerDataHandler;
+    
+    @Autowired
+    private OrderDataHandler orderDataHandler;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String renderCustomerRegistration(Model model) {
@@ -62,6 +68,13 @@ public class CustomerAccountController {
         if (errorMessages.size() == 0 && customer != null){
             httpServletRequest.getSession().setAttribute("customer_id", customer.getId());
             httpServletRequest.getSession().setAttribute("customer_name", customer.getFirstName() + " " + customer.getLastName());
+            
+            Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+            if (openedOrder != null) {
+            	httpServletRequest.getSession().setAttribute("openedorder_id", openedOrder.getId());
+            	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+            }
+            
             return "redirect:/";
         }
 
@@ -84,6 +97,8 @@ public class CustomerAccountController {
     public String renderLogout(HttpServletRequest httpServletRequest) {
         httpServletRequest.getSession().removeAttribute("customer_id");
         httpServletRequest.getSession().removeAttribute("customer_name");
+        httpServletRequest.getSession().removeAttribute("openedorder_id");
+        httpServletRequest.getSession().removeAttribute("number_of_order_items");
         return "redirect:/";
     }
     
@@ -93,9 +108,13 @@ public class CustomerAccountController {
     	
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         if (customerId != null) {
         	customerDataHandler.collectCustomerData(customerId, model);
@@ -114,21 +133,33 @@ public class CustomerAccountController {
     	
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
     	model = customerDataHandler.collectCustomerProfileModificationData(customer, model);
 
         List<String> errorMessages = (List) model.asMap().get("errors");
 
         if (errorMessages.size() == 0 &&
-                (boolean) model.asMap().get("updatetried") &&
-                !(boolean) model.asMap().get("updatesucceeded")){
+            (boolean) model.asMap().get("updatetried") &&
+            !(boolean) model.asMap().get("updatesucceeded")){
         	errorMessages.add("Database problem. Please, try later.");
             model.addAttribute("errors", errorMessages);
+        }
+        
+        if (errorMessages.size() == 0 &&
+            (boolean) model.asMap().get("updatetried") &&
+            (boolean) model.asMap().get("updatesucceeded")) {
+        	Customer updatedCustomer = (Customer) model.getAttribute("customer");
+        	customerName = updatedCustomer.getFirstName() + " " + updatedCustomer.getLastName();
+        	httpServletRequest.getSession().setAttribute("customer_name", customerName);
         }
         
     	model.addAttribute("passworderrors", new ArrayList<>());
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "profile";
     }
@@ -141,6 +172,8 @@ public class CustomerAccountController {
     	
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
     	model = customerDataHandler.collectCustomerPasswordModificationData(model, customerId, currentPassword, newPassword);
 
@@ -157,6 +190,8 @@ public class CustomerAccountController {
         model.addAttribute("errors", new ArrayList<>());
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "profile";
     }
@@ -167,13 +202,17 @@ public class CustomerAccountController {
     	
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
     	String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-    	
+    	Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
+        
     	boolean deletionSucceeded;
     	deletionSucceeded = customerDataHandler.deleteUser(customerId);
     	
     	if (deletionSucceeded) {
     		httpServletRequest.getSession().removeAttribute("customer_id");
             httpServletRequest.getSession().removeAttribute("customer_name");
+            httpServletRequest.getSession().removeAttribute("openedorder_id");
+            httpServletRequest.getSession().removeAttribute("number_of_order_items");
             return "deleted";	
     	}
         
@@ -184,6 +223,8 @@ public class CustomerAccountController {
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
         model.addAttribute("passworderrors", new ArrayList<>());
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "profile";
     }
