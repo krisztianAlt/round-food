@@ -283,7 +283,7 @@ small {
 	margin-bottom: 1rem;
 }
 
-.order-item, .total-price, .order-buttons-container, #shipping-address-container {
+.order-item, .total-price, .order-buttons-container, #shipping-address-container, #shipping-date-and-time-container {
 	max-width: 720px;
 	margin: 0 auto 1rem auto;
 }
@@ -302,4 +302,14 @@ small {
 	text-align: right;
 	margin-top: 0.5rem;
 	margin-bottom: 0;
+}
+
+#date-selector {
+	background-image: url("calendar-day-solid.svg");
+	background-size: 20px 16px;
+}
+
+#time-selector {
+	background-image: url("clock-solid.svg");
+	background-size: 20px 16px;
 }

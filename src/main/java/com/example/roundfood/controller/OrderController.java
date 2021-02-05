@@ -1,5 +1,7 @@
 package com.example.roundfood.controller;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import com.example.roundfood.controller.collectdata.OrderLineItemDataHandler;
 import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.Order;
 import com.example.roundfood.model.OrderLineItem;
+import com.example.roundfood.service.DateAndTime;
 
 @Controller
 public class OrderController {
@@ -29,6 +32,9 @@ public class OrderController {
 	
 	@Autowired
 	CustomerDataHandler customerDataHandler;
+	
+	@Autowired
+	DateAndTime dateAndTime;
 	
 	@RequestMapping(value = "/ordering", method = RequestMethod.GET)
     public String renderCartPage(Model model,
@@ -46,6 +52,9 @@ public class OrderController {
             
             model.addAttribute("order", order);
             model.addAttribute("totalPrice", totalPrice);
+            HashMap<String, List<Date>> choosableShippingDatesAndTimes = dateAndTime.getChoosableShippingDatesAndTimes();
+            model.addAttribute("choosableDays", choosableShippingDatesAndTimes.get("choosableDays"));
+            model.addAttribute("choosableShippingDates", choosableShippingDatesAndTimes.get("choosableShippingDates"));
         } else {
         	model.addAttribute("empty", true);
         }
@@ -93,6 +102,10 @@ public class OrderController {
                 numberOfOrderItems = order.getOrderLineItems().size();
                 httpServletRequest.getSession().setAttribute("openedorder_id", orderId);
         		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        		
+        		HashMap<String, List<Date>> choosableShippingDatesAndTimes = dateAndTime.getChoosableShippingDatesAndTimes();
+                model.addAttribute("choosableDays", choosableShippingDatesAndTimes.get("choosableDays"));
+                model.addAttribute("choosableShippingDates", choosableShippingDatesAndTimes.get("choosableShippingDates"));
             }
             
         } else {
@@ -136,6 +149,10 @@ public class OrderController {
                 model.addAttribute("totalPrice", totalPrice);
             	httpServletRequest.getSession().setAttribute("openedorder_id", orderId);
         		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        		
+        		HashMap<String, List<Date>> choosableShippingDatesAndTimes = dateAndTime.getChoosableShippingDatesAndTimes();
+                model.addAttribute("choosableDays", choosableShippingDatesAndTimes.get("choosableDays"));
+                model.addAttribute("choosableShippingDates", choosableShippingDatesAndTimes.get("choosableShippingDates"));
             }
             
         } else {

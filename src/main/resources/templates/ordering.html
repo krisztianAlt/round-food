@@ -5,6 +5,9 @@
       xmlns:th="http://www.thymeleaf.org">
 	<head>
 	    <title>Ordering | Round Food</title>
+	    
+	    <!-- JavaScript file -->
+    	<script th:src="@{~/js/ordering.js}" defer="defer"></script>
 	</head>
 	
 	<body>
@@ -120,6 +123,29 @@
 						</div>
 
 					</div>
+					
+					<div th:if="${empty == null}" id="shipping-date-and-time-container">
+						<br>
+						<hr class="style1">
+						<h6>Shipping date and time</h6>
+						<div class="row">
+							<div class="col-6">
+								<select class="form-select" id="date-selector">
+									<option th:each="day, iterStat : ${choosableDays}" th:attr="value=${#calendars.format(day, 'yyyy-MM-dd')}" th:text="${#calendars.format(day, 'yyyy-MM-dd, EEEEE')}">
+    								</option>
+								</select>
+							</div>
+						
+							<div class="col-6">
+								<select name="selectedDateAndTime" class="form-select" id="time-selector">
+									<option th:each="time, iterStat : ${choosableShippingDates}" th:class="${#calendars.format(time, 'yyyy-MM-dd')}" th:attr="value=${time}" th:text="${#calendars.format(time, 'HH:mm')}">
+									</option>
+								</select>
+							</div>
+						</div>
+						
+					</div>
+					
 						
 					<div th:if="${empty == null}" class="order-buttons-container">
 						<hr class="style1">
