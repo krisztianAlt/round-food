@@ -1,5 +1,7 @@
 package com.example.roundfood.DAO;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +11,11 @@ import com.example.roundfood.repository.CustomerRepository;
 
 @Service
 public class CustomerDAO {
-
+    
 	@Autowired
     private CustomerRepository customerRepository;
 	
 	public void saveNewCustomer(Customer customer) {
-
         customerRepository.save(customer);
 
     }

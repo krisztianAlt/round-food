@@ -2,6 +2,7 @@ package com.example.roundfood.DAO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,11 @@ public class OrderDAO {
 	}
 	
 	public Order getOpenedOrderByCustomer(Customer customer) {
-		return orderRepository.findFirstByCustomerOrderByOrderingTimeStampDesc(customer);
+		return orderRepository.findFirstByCustomerAndStatusOrderByOrderingTimeStampDesc(customer, OrderStatus.OPENED);
+	}
+	
+	public List<Order> getFinalizedOrdersByCustomer(Customer customer){
+		return orderRepository.findByCustomerAndStatusOrderByOrderingTimeStampDesc(customer, OrderStatus.FINALIZED);
 	}
 	
 	public Order createNewOrder() {
@@ -47,6 +52,7 @@ public class OrderDAO {
 	public void updateOrder(Order updatedOrder) {
 		Order order = orderRepository.findById(updatedOrder.getId()).get();
 		
+		order.setCustomer(updatedOrder.getCustomer());
 		order.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now()));
 		order.setOrderLineItems(updatedOrder.getOrderLineItems());
 		order.setShippingDateAndTime(updatedOrder.getShippingDateAndTime());

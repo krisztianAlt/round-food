@@ -1,7 +1,10 @@
 package com.example.roundfood.controller.collectdata;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +115,49 @@ public class OrderDataHandler {
 		order.setPaymentOption(paymentOption);
 		savingSucceeded = updateOrder(order);
 		
+		if (savingSucceeded) {
+			logger.info("ORDER IS FINALIZED (ID " + String.valueOf(order.getId()) + ")");
+		}
+		
 		return savingSucceeded;
+	}
+	
+	public List<Order> getFinalizedOrdersByCustomer(Customer customer){
+		return orderDAO.getFinalizedOrdersByCustomer(customer);
+	}
+	
+	public Map<String, Object> reorderByOrderId(Long reorderedOrderId, Long openedorderId) {
+		Map<String, Object> megaPack = new HashMap<>();
+		
+		boolean succeeded = false;
+		Map<String, String> responseMap = new HashMap<>();
+		
+		try {
+			Order originalOrder = getOrderById(reorderedOrderId);
+			Long customerId = originalOrder.getCustomer().getId();
+			
+			for (OrderLineItem lineItem : originalOrder.getOrderLineItems()) {
+				Long foodId = lineItem.getFood().getId();
+				List<String> selectedToppingIds = new ArrayList<>();
+				
+				if (!lineItem.getSelectedExtraToppings().isEmpty()) {
+					for (ExtraTopping extraTopping : lineItem.getSelectedExtraToppings()) {
+						selectedToppingIds.add(String.valueOf(extraTopping.getId()));
+					}
+				}
+				
+				responseMap = orderLineItemDataHandler.createNewOrderLineItem(customerId, openedorderId, foodId, selectedToppingIds);
+				openedorderId = Long.parseLong(responseMap.get("orderId"));
+			}
+			
+			succeeded = true;
+		} catch (Exception e) {
+			logger.error("Reordering failed: " + e.getMessage());
+		}
+		
+		megaPack.put("succeeded", succeeded);
+		megaPack.put("responseMap", responseMap);
+		
+		return megaPack;
 	}
 }

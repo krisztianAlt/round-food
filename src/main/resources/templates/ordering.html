@@ -43,7 +43,7 @@
 									<div class="col-1">Ft</div>
 								</div>
 								
-								<div th:if="${#lists.size(orderlineitem.getSelectedExtraToppings()) > 0}">
+								<div th:if="${orderlineitem.getSelectedExtraToppings() != null AND #lists.size(orderlineitem.getSelectedExtraToppings()) > 0}">
 									<div class="row">
 										<div class="col-6">Extra toppings, garnishment etc.:</div>
 									</div>

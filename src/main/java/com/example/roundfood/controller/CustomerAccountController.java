@@ -99,6 +99,7 @@ public class CustomerAccountController {
         httpServletRequest.getSession().removeAttribute("customer_name");
         httpServletRequest.getSession().removeAttribute("openedorder_id");
         httpServletRequest.getSession().removeAttribute("number_of_order_items");
+        httpServletRequest.getSession().invalidate();
         return "redirect:/";
     }
     
@@ -213,6 +214,7 @@ public class CustomerAccountController {
             httpServletRequest.getSession().removeAttribute("customer_name");
             httpServletRequest.getSession().removeAttribute("openedorder_id");
             httpServletRequest.getSession().removeAttribute("number_of_order_items");
+            httpServletRequest.getSession().invalidate();
             return "deleted";	
     	}
         
