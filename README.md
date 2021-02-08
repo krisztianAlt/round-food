@@ -16,4 +16,4 @@ The back-end is written in Java, in Spring Boot framework. Thymeleaf is used to 
 In this project I have wanted to practice:
 - the implementation of a basic registration and login process with data validation;
 - the implementation of shopping cart, which reacts to adding/deleting order items;
-- the handling of shipping date and time: listening current date and time, and create the list of choosable shipping date and time by right of these.
+- the handling of shipping date and time: listening current date and time, and create the list of choosable shipping date and time by right of these (first choosable date and time must follow the current one).
