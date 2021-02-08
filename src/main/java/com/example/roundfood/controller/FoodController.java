@@ -10,14 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.roundfood.controller.collectdata.CustomerDataHandler;
 import com.example.roundfood.controller.collectdata.FoodDataHandler;
+import com.example.roundfood.controller.collectdata.OrderDataHandler;
+import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.FoodType;
+import com.example.roundfood.model.Order;
 
 @Controller
 public class FoodController {
 
 	@Autowired
 	FoodDataHandler foodDataHandler;
+	
+	@Autowired
+	CustomerDataHandler customerDataHandler;
+	
+	@Autowired
+	OrderDataHandler orderDataHandler;
 	
 	@RequestMapping(value = "/foodlist", method = RequestMethod.GET)
     public String renderFoods(@RequestParam Map<String,String> allRequestParams,
@@ -26,13 +36,19 @@ public class FoodController {
 		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
 
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
-        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
-		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        
+        if (customerId != null) {
+        	Customer customer = customerDataHandler.getCustomerById(customerId);
+            Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+            if (openedOrder != null) {
+            	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+            } else {
+            	httpServletRequest.getSession().removeAttribute("number_of_order_items");
+            }	
+        }
         
         String selectedFoodTypeString = allRequestParams.get("type");
 		

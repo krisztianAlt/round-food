@@ -85,7 +85,7 @@ INSERT INTO foodpicture VALUES (11, 'natural3.jpg', 'Pac-Man', 4);
 INSERT INTO foodpicture VALUES (12, 'natural4.jpg', 'Without frills', 4);
 INSERT INTO foodpicture VALUES (13, 'zenetorta.jpg', 'Hommage to musical notes', 5);
 INSERT INTO foodpicture VALUES (14, 'zenetorta3.jpg', 'White roses', 5);
-INSERT INTO foodpicture VALUES (15, 'fodros1.jpg', 'Tomato cubes lives on the edge', 6);
+INSERT INTO foodpicture VALUES (15, 'fodros1.jpg', 'Tomato cubes live on the edge', 6);
 INSERT INTO foodpicture VALUES (16, 'fodros2.jpg', 'Dried tomato on green bed', 6);
 INSERT INTO foodpicture VALUES (17, 'rukkola1.jpg', 'Green blanket', 7);
 INSERT INTO foodpicture VALUES (18, 'rukkola2.jpg', 'Ham and arugula', 7);

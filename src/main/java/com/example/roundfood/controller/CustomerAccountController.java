@@ -71,8 +71,9 @@ public class CustomerAccountController {
             
             Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
             if (openedOrder != null) {
-            	httpServletRequest.getSession().setAttribute("openedorder_id", openedOrder.getId());
             	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+            } else {
+            	httpServletRequest.getSession().removeAttribute("number_of_order_items");
             }
             
             return "redirect:/";
@@ -97,7 +98,6 @@ public class CustomerAccountController {
     public String renderLogout(HttpServletRequest httpServletRequest) {
         httpServletRequest.getSession().removeAttribute("customer_id");
         httpServletRequest.getSession().removeAttribute("customer_name");
-        httpServletRequest.getSession().removeAttribute("openedorder_id");
         httpServletRequest.getSession().removeAttribute("number_of_order_items");
         httpServletRequest.getSession().invalidate();
         return "redirect:/";
@@ -109,18 +109,22 @@ public class CustomerAccountController {
     	
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
-        model.addAttribute("loggedIn", customerId != null);
-        model.addAttribute("customername", customerName);
-        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
-		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
-        
-        if (customerId != null) {
+        if (customerId != null) {	
+        	model.addAttribute("loggedIn", true);
+            model.addAttribute("customername", customerName);
         	customerDataHandler.collectCustomerData(customerId, model);
         	model.addAttribute("errors", new ArrayList<>());
         	model.addAttribute("passworderrors", new ArrayList<>());
+        	
+        	Customer customer = customerDataHandler.getCustomerById(customerId);
+            Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+            if (openedOrder != null) {
+            	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+            } else {
+            	httpServletRequest.getSession().removeAttribute("number_of_order_items");
+            }
+            
         	return "profile";
         }
        
@@ -131,11 +135,8 @@ public class CustomerAccountController {
     public String renderProfile(@ModelAttribute Customer customer,
 				            	Model model,
     							HttpServletRequest httpServletRequest) {
-    	
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
     	model = customerDataHandler.collectCustomerProfileModificationData(customer, model);
 
@@ -159,8 +160,13 @@ public class CustomerAccountController {
     	model.addAttribute("passworderrors", new ArrayList<>());
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
-        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
-		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        
+        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+        if (openedOrder != null) {
+        	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+        } else {
+        	httpServletRequest.getSession().removeAttribute("number_of_order_items");
+        }
         
         return "profile";
     }
@@ -173,8 +179,6 @@ public class CustomerAccountController {
     	
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
     	model = customerDataHandler.collectCustomerPasswordModificationData(model, customerId, currentPassword, newPassword);
 
@@ -189,10 +193,16 @@ public class CustomerAccountController {
         
         customerDataHandler.collectCustomerData(customerId, model);
         model.addAttribute("errors", new ArrayList<>());
-        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("loggedIn", true);
         model.addAttribute("customername", customerName);
-        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
-		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+        if (openedOrder != null) {
+        	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+        } else {
+        	httpServletRequest.getSession().removeAttribute("number_of_order_items");
+        }
         
         return "profile";
     }
@@ -203,8 +213,6 @@ public class CustomerAccountController {
     	
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
     	String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-    	Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
     	boolean deletionSucceeded;
     	deletionSucceeded = customerDataHandler.deleteUser(customerId);
@@ -212,7 +220,6 @@ public class CustomerAccountController {
     	if (deletionSucceeded) {
     		httpServletRequest.getSession().removeAttribute("customer_id");
             httpServletRequest.getSession().removeAttribute("customer_name");
-            httpServletRequest.getSession().removeAttribute("openedorder_id");
             httpServletRequest.getSession().removeAttribute("number_of_order_items");
             httpServletRequest.getSession().invalidate();
             return "deleted";	
@@ -225,8 +232,14 @@ public class CustomerAccountController {
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
         model.addAttribute("passworderrors", new ArrayList<>());
-        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
-		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+        if (openedOrder != null) {
+        	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+        } else {
+        	httpServletRequest.getSession().removeAttribute("number_of_order_items");
+        }
         
         return "profile";
     }
