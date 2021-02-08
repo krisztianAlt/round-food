@@ -36,7 +36,7 @@ body {
 	cursor: pointer;
 }
 
-#foodtype-selector-container, #food-selector-container, #ordering-container {
+#foodtype-selector-container, #food-selector-container, #ordering-container, #orders-container {
 	margin-top: 30px;
 	padding-top: 12px;
 	background-color: #f0e0d1;
@@ -48,7 +48,7 @@ body {
 	border: none;
 }
 
-#foodtype-holder, #food-holder, #ordering-holder {
+#foodtype-holder, #food-holder, #ordering-holder, #orders-holder {
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -86,6 +86,12 @@ body {
 	cursor: pointer;
     transform: scale(1.07);
     border-radius: 4px;
+}
+
+#orders-container{}
+
+#orders-container > h5, h6 {
+	text-align: center;
 }
 
 .card-body > h6 > a {
@@ -210,6 +216,10 @@ hr.style1 {
 	margin: 0;
 }
 
+#reordering-error-alert > p {
+	margin: 0;
+}
+
 #carouselFoodIndicators {
 	max-width: 70%;
 	margin: 1% auto 2% auto;
@@ -287,16 +297,26 @@ small {
 	margin-bottom: 1rem;
 }
 
-.order-item, .total-price, .order-buttons-container, #shipping-address-container, #shipping-date-and-time-container, #payment-container {
+.order-item, .total-price, .order-buttons-container, #shipping-address-container, #shipping-date-and-time-container, #payment-container, .open-cart-button-container, .reorder-button-container, .order-date {
 	max-width: 720px;
 	margin: 0 auto 1rem auto;
 }
 
-.food-name-ordering-page, .total-price-ordering-page {
+#orders-container .order-item {
+	margin-bottom: 0;	
+}
+
+.food-name-ordering-page, .total-price-ordering-page, .food-name-orders-page {
 	font-weight: bold;
 }
 
 .order-line-item-delete-button {
+	text-align: right;
+	margin-top: 0.5rem;
+	margin-bottom: 0.9rem;
+}
+
+.open-cart-button, .reorder-button {
 	text-align: right;
 	margin-top: 0.5rem;
 	margin-bottom: 0.9rem;
@@ -374,18 +394,52 @@ small {
 	cursor: zoom-in;
 }
 
+#viva .fa-birthday-cake {
+	color: #c99620;
+}
+
+#viva .fa-pizza-slice {
+	color: #c99620;
+}
+
+#viva .fa-utensils {
+	color: #c99620;
+}
+
+#viva .fa-wine-glass {
+	color: #c99620;
+}
+
+
 #viva .fa-birthday-cake:hover {
 	color: #8c20c9;
 }
 
 #viva .fa-pizza-slice:hover {
-	color: #c99620;
+	color: #c7551c;
 }
 
 #viva .fa-utensils:hover {
-	color: blue;
+	color: #4553d1;
 }
 
 #viva .fa-wine-glass:hover {
 	color: red;
+}
+
+#back-button-container {
+	text-align: center;
+	padding-bottom: 1rem;
+}
+
+.content-center {
+	text-align: center;
+}
+
+.food-picture-orders-page {
+	width: 140px;
+}
+
+.food-picture-orders-page img {
+	width: 100%;
 }

@@ -110,6 +110,29 @@ public class OrderLineItemDataHandler {
 		return orderLineItemDAO.getOrderLineItemById(id);
 	}
 	
+	/*
+	public List<OrderLineItem> cloneOrderLineItems(List<OrderLineItem> originalOrderLineItems, Order newOrder){
+		List<OrderLineItem> newOrderLineItems = new ArrayList<>();
+
+		for (OrderLineItem originalOrderLineItem : originalOrderLineItems) {
+			OrderLineItem newOrderLineItem = orderLineItemDAO.createNewOrderLineItem();
+			newOrderLineItem.setFood(originalOrderLineItem.getFood());
+			newOrderLineItem.setOrder(newOrder);
+			List<ExtraTopping> newSelectedExtraToppings = new ArrayList<>();
+			
+			if (!originalOrderLineItem.getSelectedExtraToppings().isEmpty()) {
+				for (ExtraTopping extraTopping : originalOrderLineItem.getSelectedExtraToppings()) {
+					newSelectedExtraToppings.add(extraTopping);
+				}
+			}
+			newOrderLineItem.setSelectedExtraToppings(newSelectedExtraToppings);
+			newOrderLineItems.add(newOrderLineItem);
+		}
+		
+		return newOrderLineItems;
+	}
+	*/
+	
 	private boolean openedOrderIdExists(Long orderId){
 		boolean orderIdExists = false;
 		Order order = orderDAO.getOrderByOrderId(orderId);

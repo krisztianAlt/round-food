@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -48,8 +49,12 @@ public class Food {
 	@JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = ExtraTopping.class)
     private List<ExtraTopping> extraToppings;
-
-    public Food() {
+	
+	@JsonBackReference
+	@OneToOne(cascade = CascadeType.ALL)
+	private FoodPictureInMainPageCarousel foodPictureInMainPageCarousel;
+	
+	public Food() {
     }
 
     public Food(String name, String description, double price, FoodType foodType) {
@@ -123,4 +128,12 @@ public class Food {
 		this.orderLineItems = orderLineItems;
 	}
 
+	public FoodPictureInMainPageCarousel getFoodPictureInMainPageCarousel() {
+		return foodPictureInMainPageCarousel;
+	}
+
+	public void setFoodPictureInMainPageCarousel(FoodPictureInMainPageCarousel foodPictureInMainPageCarousel) {
+		this.foodPictureInMainPageCarousel = foodPictureInMainPageCarousel;
+	}
+	
 }

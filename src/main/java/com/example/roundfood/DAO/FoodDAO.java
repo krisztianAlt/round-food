@@ -37,4 +37,8 @@ public class FoodDAO {
 		return foods;
 	}
 	
+	public List<Food> getFoodsInCarousel(){
+    	return foodRepository.findByFoodPictureInMainPageCarouselNotNull();
+    }
+	
 }

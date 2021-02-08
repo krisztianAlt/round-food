@@ -5,28 +5,24 @@
       xmlns:th="http://www.thymeleaf.org">
 	<head>
 	    <title>Main Page | Round Food</title>
+	    
+	    <!-- JavaScript file -->
+    	<script th:src="@{~/js/carousel.js}" defer="defer"></script>
+    	<script th:src="@{~/js/food.js}" defer="defer"></script>
 	</head>
 	
 	<body>
 				    	
 		<div layout:fragment="content">
 						
-			<div class="container" id="carousel-container">   
+			<div th:if="${foodsInCarousel != null AND #lists.size(foodsInCarousel) > 0}" class="container" id="carousel-container">   
 				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 					<ol class="carousel-indicators">
-					    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-					    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-					    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+						<li th:each="food, iterStat : ${foodsInCarousel}" data-bs-target="#carouselExampleIndicators" th:data-bs-slide-to="${iterStat.index}" th:class="${iterStat.index} == 0 ? 'active' : ''"></li>
 					</ol>
 					<div class="carousel-inner">
-						<div class="carousel-item active">				    
-							<img th:src="@{/picture_collection/slider_colorcake.jpg}" class="d-block w-100" alt="First food suggested by chef">
-					    </div>
-					    <div class="carousel-item">
-							<img th:src="@{/picture_collection/slider_fodros1.jpg}" class="d-block w-100" alt="Second food suggested by chef">
-					    </div>
-					    <div class="carousel-item">
-							<img th:src="@{/picture_collection/slider_narancspite.jpg}" class="d-block w-100" alt="Third food suggested by chef">
+						<div th:each="food, iterStat : ${foodsInCarousel}" th:class="${iterStat.index} == 0 ? 'carousel-item active' : 'carousel-item'">				    
+							<img th:attr="src='/picture_collection/' + ${food.getFoodPictureInMainPageCarousel().getFileName()}, data-food-id=${food.id}" class="d-block w-100" alt="Food suggested by chef">
 					    </div>
 					</div>
 					<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
@@ -39,8 +35,9 @@
 					</a>
 				</div>
 				
+				<div id="add-to-cart-error-alert" class="content-center"></div>
 		    </div>
-			<div id="chef-info" class="container orange-background">
+			<div th:if="${#lists.size(foodsInCarousel) > 0}" id="chef-info" class="container orange-background">
 				<p id="chef">The Chef Suggests...</p>
 			</div>
 			
@@ -83,9 +80,66 @@
 				</div>
 			</div>
 			
-			
+			<!-- Food modal -->
+			<div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="foodModalLabel">Food</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>								
+						
+						<div class="modal-body">
+							<div id="carouselFoodIndicators" class="carousel slide" data-bs-ride="carousel">
+								<ol id="car-indicators" class="carousel-indicators">
+									<!-- Data comes from JS -->
+								</ol>
+								<div id="car-inner" class="carousel-inner">
+									<!-- Data comes from JS -->
+								</div>
+								<a class="carousel-control-prev" href="#carouselFoodIndicators" role="button" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="#carouselFoodIndicators" role="button" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</a>
+							</div>
+							
+							<p id="food-id" class="d-none"></p>
+							
+							<p id="food-description">Description</p>
+							
+							<hr class="style1">
+							
+							<p id="food-price"></p>
+							
+							<hr class="style1">
+							
+							<div id="extra-toppings-container">
+								<!-- Data comes from JS -->
+							</div>
+							
+							<hr class="style1">
+							
+							<p id="sum-total">Total price</p>
+						</div>
+						<div class="modal-footer">		
+							
+							<button th:if="${loggedIn}" type="submit" id="add-to-cart-button" class="btn btn-success" data-bs-dismiss="modal"><i class="fas fa-cart-plus"></i> Add to cart</button>
+							<button th:unless="${loggedIn}" class="btn btn-success" disabled><i class="fas fa-cart-plus"></i> Add to cart</button>
+							
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
+							<small class="form-text" th:unless="${loggedIn}">If you want to add food to your cart, please, log in.</small>
+						</div>
+					</div>
+				</div>
+			</div>
 			
 		</div>
-	
+		
+		
+		
 	</body>
 </html>

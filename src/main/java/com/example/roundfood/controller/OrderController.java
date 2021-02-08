@@ -1,6 +1,5 @@
 package com.example.roundfood.controller;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.spring5.ISpringTemplateEngine;
 
 import com.example.roundfood.controller.collectdata.CustomerDataHandler;
 import com.example.roundfood.controller.collectdata.OrderDataHandler;
@@ -230,4 +228,66 @@ public class OrderController {
 		
 		return "ordering-succeeded";
 	}
+	
+	@RequestMapping(value = "/ordering/listing-orders", method = RequestMethod.GET)
+	public String listOrders(Model model,
+							HttpServletRequest httpServletRequest,
+							@RequestParam Map<String,String> allRequestParams) {
+		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
+        
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+        List<Order> finalizedOrders = orderDataHandler.getFinalizedOrdersByCustomer(customer);
+        
+        model.addAttribute("openedOrder", openedOrder);
+        model.addAttribute("previousOrders", finalizedOrders);
+        
+        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("customername", customerName);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        
+        return "orderlist";
+	}
+	
+	@RequestMapping(value = "/ordering/reorder", method = RequestMethod.POST)
+	public String reorder(Model model,
+							HttpServletRequest httpServletRequest,
+							@RequestParam Map<String,String> allRequestParams) {
+		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
+        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
+        
+        Long reorderedOrderId = Long.parseLong(allRequestParams.get("orderId"));
+        
+        Map<String, Object> megaPack = orderDataHandler.reorderByOrderId(reorderedOrderId, openedorderId);
+        boolean succeeded = (boolean) megaPack.get("succeeded");
+        Map<String, String> responseMap = (Map<String, String>) megaPack.get("responseMap");
+        
+        if (!succeeded) {
+        	model.addAttribute("reorderingFailed", true);
+        } else {
+        	openedorderId = Long.parseLong(responseMap.get("orderId"));
+        	numberOfOrderItems = Integer.parseInt(responseMap.get("numberOfOrderItems"));
+        }
+        
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+        List<Order> finalizedOrders = orderDataHandler.getFinalizedOrdersByCustomer(customer);
+        
+        model.addAttribute("openedOrder", openedOrder);
+        model.addAttribute("previousOrders", finalizedOrders);
+        
+        model.addAttribute("loggedIn", customerId != null);
+        model.addAttribute("customername", customerName);
+        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        
+        return "orderlist";
+	}
+	
 }

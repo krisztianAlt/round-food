@@ -60,9 +60,10 @@ app.foodEntitiesHandler = {
             $("#car-indicators").empty();
             $("#car-inner").empty();
             
-            // put new images and indicators into carousel  
-            var carouselIndicatorsList = document.getElementsByClassName("carousel-indicators")[0];
-            var carouselImageHolder = document.getElementsByClassName("carousel-inner")[0];
+            // put new images and indicators into carousel
+            var modal = document.getElementById('foodModal');
+            var carouselIndicatorsList = modal.getElementsByClassName("carousel-indicators")[0];
+            var carouselImageHolder = modal.getElementsByClassName("carousel-inner")[0];
             
             var index;
             for (index = 0; index < pictures.length; index++){
