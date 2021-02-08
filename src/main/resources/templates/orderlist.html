@@ -17,7 +17,7 @@
 					<br>
 					
 					<div th:if="${openedOrder} == null and ${#lists.size(previousOrders) == 0}" class="d-flex justify-content-center">	
-						<p>Your don't have orders yet.</p>
+						<p>You don't have orders yet.</p>
 					</div>
 					
 					<div th:if="${openedOrder} != null or ${#lists.size(previousOrders) gt 0}">
