@@ -12,4 +12,6 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 	
 	List<Food> getFoodsByFoodType(FoodType foodType);
 	
+	List<Food> findByFoodPictureInMainPageCarouselNotNull();
+	
 }

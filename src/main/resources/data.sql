@@ -49,17 +49,24 @@ INSERT INTO paymentoptionpicture VALUES (7, 'coins-solid.svg', 'Cash', 5);
 SELECT pg_catalog.setval('paymentoptionpicture_id_seq', 5, true);
 
 
-INSERT INTO food VALUES (1, '8 pieces from 4 cake, with strawberry, chocolate, orange and raspberry cream. Cookies at the top.', 'CAKE', 'The Colourful', '6000');
+INSERT INTO foodpictureinmainpagecarousel VALUES (1, 'slider_colorcake.jpg');
+INSERT INTO foodpictureinmainpagecarousel VALUES (2, 'slider_fodros1.jpg');
+INSERT INTO foodpictureinmainpagecarousel VALUES (3, 'slider_narancspite.jpg');
+
+SELECT pg_catalog.setval('foodpictureinmainpagecarousel_id_seq', 3, true);
+
+
+INSERT INTO food VALUES (1, '8 pieces from 4 cake, with strawberry, chocolate, orange and raspberry cream. Cookies at the top.', 'CAKE', 'The Colourful', '6000', 1);
 INSERT INTO food VALUES (2, '12 pieces chocolate cake.', 'CAKE', 'Chocolate cake', '7500');
 INSERT INTO food VALUES (3, '8 pieces. Fruits at the top.', 'CAKE', 'Curd cheesecake', '5500');
 INSERT INTO food VALUES (4, '8 pieces. Simple is better.', 'CAKE', 'Millstone', '3000');
 INSERT INTO food VALUES (5, '20 pieces. For music fans.', 'CAKE', 'Music Tower', '11300');
-INSERT INTO food VALUES (6, '32 cm. For vegetarians.', 'PIZZA', 'Italian Waves', '3000');
+INSERT INTO food VALUES (6, '32 cm. For vegetarians.', 'PIZZA', 'Italian Waves', '3000', 2);
 INSERT INTO food VALUES (7, '32 cm. A lot of ham underneath the arugula. With tomato sauce.', 'PIZZA', 'The Hungry Longshoreman', '2900');
 INSERT INTO food VALUES (8, '32 cm. Salami slices, cheese scraps, tomato sauce.', 'PIZZA', 'Salami pizza', '2800');
 INSERT INTO food VALUES (9, '32 cm. Egg, sausage, cheese, onion.', 'PIZZA', 'The Calorie Refiller', '2800');
 INSERT INTO food VALUES (10, '25 cm. Slim pie, thick stuffing. Grinded nuts in the cream.', 'PIE', 'Nutcracker', '2000');
-INSERT INTO food VALUES (11, '30 cm. Orange and orange and orange...', 'PIE', 'The Sun', '2300');
+INSERT INTO food VALUES (11, '30 cm. Orange and orange and orange...', 'PIE', 'The Sun', '2300', 3);
 
 SELECT pg_catalog.setval('food_id_seq', 11, true);
 

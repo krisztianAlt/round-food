@@ -15,6 +15,7 @@ import com.example.roundfood.DAO.FoodDAO;
 import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.Food;
 import com.example.roundfood.model.FoodType;
+import com.example.roundfood.repository.FoodRepository;
 
 @Service
 public class FoodDataHandler {
@@ -41,4 +42,7 @@ public class FoodDataHandler {
     	return food;
 	}
     
+    public List<Food> getFoodsInCarousel(){
+    	return foodDAO.getFoodsInCarousel();
+    }
 }
