@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.roundfood.controller.collectdata.CustomerDataHandler;
 import com.example.roundfood.controller.collectdata.FoodDataHandler;
+import com.example.roundfood.controller.collectdata.OrderDataHandler;
 import com.example.roundfood.controller.collectdata.OrderLineItemDataHandler;
+import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.Food;
+import com.example.roundfood.model.Order;
 
 @RestController
 public class APIController {
@@ -29,6 +33,12 @@ public class APIController {
 	
 	@Autowired
 	OrderLineItemDataHandler orderLineItemDataHandler;
+	
+	@Autowired
+	CustomerDataHandler customerDataHandler;
+	
+	@Autowired
+	OrderDataHandler orderDataHandler;
 	
 	@PostMapping("/food")
     public ResponseEntity<Map<String, Food>> getFoodById(@RequestBody Map<String, String> dataPackageString) { 
@@ -55,23 +65,28 @@ public class APIController {
 	public ResponseEntity<Map<String, String>> addToCart(@RequestBody Map<String, Object> dataPackageString,
 														HttpServletRequest httpServletRequest){
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
-        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
+        Map<String, String> responseMap = new HashMap<>();
         
 		Long foodId = Long.parseLong((String) dataPackageString.get("foodId"));
 		@SuppressWarnings("unchecked")
 		List<String> selectedToppings = (List<String>) dataPackageString.get("selectedToppings");
 		
-		Map responseMap = new HashMap<String, String>();
-		responseMap = orderLineItemDataHandler.createNewOrderLineItem(customerId, openedorderId, foodId, selectedToppings);		
-		Long orderId = Long.parseLong((String) responseMap.get("orderId"));
-		int newNumberOfOrderItems = Integer.parseInt((String) responseMap.get("numberOfOrderItems"));
+		try {
+			Customer customer = customerDataHandler.getCustomerById(customerId);
+			Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+			
+			responseMap = orderLineItemDataHandler.createNewOrderLineItem(customerId, openedOrder.getId(), foodId, selectedToppings);		
+			Long orderId = Long.parseLong((String) responseMap.get("orderId"));
+			int newNumberOfOrderItems = Integer.parseInt((String) responseMap.get("numberOfOrderItems"));
+			
+			httpServletRequest.getSession().setAttribute("number_of_order_items", newNumberOfOrderItems);
+			
+			return new ResponseEntity<Map<String, String>>(responseMap, HttpStatus.OK);	
+		} catch (Exception e) {
+			logger.error("Add to cart failed: " + e.getMessage());
+		}
 		
-		httpServletRequest.getSession().setAttribute("openedorder_id", orderId);
-		httpServletRequest.getSession().setAttribute("number_of_order_items", newNumberOfOrderItems);
-		
-		return new ResponseEntity<Map<String, String>>(responseMap, HttpStatus.OK);
+		return new ResponseEntity<Map<String, String>>(responseMap, HttpStatus.BAD_REQUEST);
 	} 
 	
 }

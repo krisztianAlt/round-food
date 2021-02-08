@@ -46,16 +46,14 @@ public class OrderController {
     							HttpServletRequest httpServletRequest) {
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
         Customer customer = customerDataHandler.getCustomerById(customerId);
+        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
         
-        if (openedorderId != null) {
-            Order order = orderDataHandler.getOrderById(openedorderId);
-            double totalPrice = orderDataHandler.getTotalPrice(order);
+        if (openedOrder != null) {
+            double totalPrice = orderDataHandler.getTotalPrice(openedOrder);
             
-            model.addAttribute("order", order);
+            model.addAttribute("order", openedOrder);
             model.addAttribute("totalPrice", totalPrice);
             HashMap<String, List<Date>> choosableShippingDatesAndTimes = dateAndTime.getChoosableShippingDatesAndTimes();
             model.addAttribute("choosableDays", choosableShippingDatesAndTimes.get("choosableDays"));
@@ -63,15 +61,16 @@ public class OrderController {
             
             List<PaymentOption> paymentOptions = paymentOptionDataHandler.getAllPaymentOptions();
             model.addAttribute("paymentOptions", paymentOptions);
+            
+        	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
         } else {
         	model.addAttribute("empty", true);
+        	httpServletRequest.getSession().removeAttribute("number_of_order_items");
         }
         
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
         model.addAttribute("customer", customer);
-        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
-		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "ordering";
     }
@@ -82,13 +81,14 @@ public class OrderController {
 									@RequestParam Map<String,String> allRequestParams) {
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
 		Long orderId = Long.parseLong(allRequestParams.get("orderId"));
         Long orderLineItemiId = Long.parseLong(allRequestParams.get("orderLineItemiId"));
         
-        if (openedorderId != null) {
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+        
+        if (openedOrder != null) {
             Order order = orderDataHandler.getOrderById(orderId);
             OrderLineItem orderLineItem = orderLineItemDataHandler.getOrderLineItemById(orderLineItemiId);
             
@@ -107,8 +107,7 @@ public class OrderController {
                 double totalPrice = orderDataHandler.getTotalPrice(order);
                 model.addAttribute("order", order);
                 model.addAttribute("totalPrice", totalPrice);
-                numberOfOrderItems = order.getOrderLineItems().size();
-                httpServletRequest.getSession().setAttribute("openedorder_id", orderId);
+                int numberOfOrderItems = order.getOrderLineItems().size();
         		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         		
         		HashMap<String, List<Date>> choosableShippingDatesAndTimes = dateAndTime.getChoosableShippingDatesAndTimes();
@@ -121,11 +120,10 @@ public class OrderController {
             
         } else {
         	model.addAttribute("empty", true);
+        	httpServletRequest.getSession().removeAttribute("number_of_order_items");
         }
         
-        Customer customer = customerDataHandler.getCustomerById(customerId);
         model.addAttribute("customer", customer);
-        
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
         
@@ -139,8 +137,6 @@ public class OrderController {
 		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
         Long orderId = Long.parseLong(allRequestParams.get("orderId"));
         
@@ -150,15 +146,15 @@ public class OrderController {
             
             if (deletionSucceeded) {
             	model.addAttribute("empty", true);
-            	httpServletRequest.getSession().setAttribute("openedorder_id", null);
-        		httpServletRequest.getSession().setAttribute("number_of_order_items", null);
+            	httpServletRequest.getSession().removeAttribute("number_of_order_items");
             } else {
             	Order order = orderDataHandler.getOrderById(orderId);
             	model.addAttribute("deletionError", true);
             	double totalPrice = orderDataHandler.getTotalPrice(order);
                 model.addAttribute("order", order);
                 model.addAttribute("totalPrice", totalPrice);
-            	httpServletRequest.getSession().setAttribute("openedorder_id", orderId);
+                int numberOfOrderItems = order.getOrderLineItems().size();
+            	
         		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         		
         		HashMap<String, List<Date>> choosableShippingDatesAndTimes = dateAndTime.getChoosableShippingDatesAndTimes();
@@ -188,8 +184,6 @@ public class OrderController {
 			@RequestParam Map<String,String> allRequestParams) {
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
         Long orderId = Long.parseLong(allRequestParams.get("orderId"));
         Date selectedOrderDateAndTimeDate = dateAndTime.convertStringToDateAndTime(allRequestParams.get("selectedDateAndTime"));
@@ -210,7 +204,7 @@ public class OrderController {
 			
             model.addAttribute("order", order);
             model.addAttribute("totalPrice", totalPrice);
-        	httpServletRequest.getSession().setAttribute("openedorder_id", orderId);
+        	int numberOfOrderItems = order.getOrderLineItems().size();
     		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
     		
     		HashMap<String, List<Date>> choosableShippingDatesAndTimes = dateAndTime.getChoosableShippingDatesAndTimes();
@@ -223,7 +217,6 @@ public class OrderController {
 			return "ordering";
 		}
 		
-		httpServletRequest.getSession().removeAttribute("openedorder_id");
 		httpServletRequest.getSession().removeAttribute("number_of_order_items");
 		
 		return "ordering-succeeded";
@@ -235,8 +228,6 @@ public class OrderController {
 							@RequestParam Map<String,String> allRequestParams) {
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
         Customer customer = customerDataHandler.getCustomerById(customerId);
         Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
@@ -247,7 +238,8 @@ public class OrderController {
         
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
-        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
+        
+        int numberOfOrderItems = openedOrder.getOrderLineItems().size();
 		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "orderlist";
@@ -259,24 +251,23 @@ public class OrderController {
 							@RequestParam Map<String,String> allRequestParams) {
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
         String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        Long openedorderId = (Long) httpServletRequest.getSession().getAttribute("openedorder_id");
-        Integer numberOfOrderItems = (Integer) httpServletRequest.getSession().getAttribute("number_of_order_items");
         
         Long reorderedOrderId = Long.parseLong(allRequestParams.get("orderId"));
         
-        Map<String, Object> megaPack = orderDataHandler.reorderByOrderId(reorderedOrderId, openedorderId);
+        Customer customer = customerDataHandler.getCustomerById(customerId);
+        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+        
+        Map<String, Object> megaPack = orderDataHandler.reorderByOrderId(reorderedOrderId, openedOrder.getId());
         boolean succeeded = (boolean) megaPack.get("succeeded");
         Map<String, String> responseMap = (Map<String, String>) megaPack.get("responseMap");
+        int numberOfOrderItems = 0;
         
         if (!succeeded) {
         	model.addAttribute("reorderingFailed", true);
         } else {
-        	openedorderId = Long.parseLong(responseMap.get("orderId"));
         	numberOfOrderItems = Integer.parseInt(responseMap.get("numberOfOrderItems"));
         }
         
-        Customer customer = customerDataHandler.getCustomerById(customerId);
-        Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
         List<Order> finalizedOrders = orderDataHandler.getFinalizedOrdersByCustomer(customer);
         
         model.addAttribute("openedOrder", openedOrder);
@@ -284,7 +275,6 @@ public class OrderController {
         
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
-        httpServletRequest.getSession().setAttribute("openedorder_id", openedorderId);
 		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
         
         return "orderlist";
