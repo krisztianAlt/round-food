@@ -271,11 +271,14 @@ public class OrderController {
         
         boolean succeeded = (boolean) megaPack.get("succeeded");
         Map<String, String> responseMap = (Map<String, String>) megaPack.get("responseMap");
+        
         int numberOfOrderItems = 0;
         
         if (!succeeded) {
         	model.addAttribute("reorderingFailed", true);
         } else {
+        	Long newOrderId = Long.parseLong(responseMap.get("orderId"));
+        	openedOrder = orderDataHandler.getOrderById(newOrderId);
         	numberOfOrderItems = Integer.parseInt(responseMap.get("numberOfOrderItems"));
         }
         
