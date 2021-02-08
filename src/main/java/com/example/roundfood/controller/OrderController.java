@@ -239,8 +239,12 @@ public class OrderController {
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
         
-        int numberOfOrderItems = openedOrder.getOrderLineItems().size();
-		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);
+        if (openedOrder != null) {
+        	int numberOfOrderItems = openedOrder.getOrderLineItems().size();
+    		httpServletRequest.getSession().setAttribute("number_of_order_items", numberOfOrderItems);	
+        } else {
+        	httpServletRequest.getSession().removeAttribute("number_of_order_items");
+        }
         
         return "orderlist";
 	}
@@ -257,7 +261,14 @@ public class OrderController {
         Customer customer = customerDataHandler.getCustomerById(customerId);
         Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
         
-        Map<String, Object> megaPack = orderDataHandler.reorderByOrderId(reorderedOrderId, openedOrder.getId());
+        Map<String, Object> megaPack; 
+        
+        if (openedOrder != null) {
+        	megaPack = orderDataHandler.reorderByOrderId(reorderedOrderId, openedOrder.getId());	
+        } else {
+        	megaPack = orderDataHandler.reorderByOrderId(reorderedOrderId, null);
+        }
+        
         boolean succeeded = (boolean) megaPack.get("succeeded");
         Map<String, String> responseMap = (Map<String, String>) megaPack.get("responseMap");
         int numberOfOrderItems = 0;

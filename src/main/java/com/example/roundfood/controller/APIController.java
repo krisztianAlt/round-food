@@ -75,7 +75,12 @@ public class APIController {
 			Customer customer = customerDataHandler.getCustomerById(customerId);
 			Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
 			
-			responseMap = orderLineItemDataHandler.createNewOrderLineItem(customerId, openedOrder.getId(), foodId, selectedToppings);		
+			if (openedOrder != null) {
+				responseMap = orderLineItemDataHandler.createNewOrderLineItem(customerId, openedOrder.getId(), foodId, selectedToppings);	
+			} else {
+				responseMap = orderLineItemDataHandler.createNewOrderLineItem(customerId, null, foodId, selectedToppings);
+			}
+			
 			Long orderId = Long.parseLong((String) responseMap.get("orderId"));
 			int newNumberOfOrderItems = Integer.parseInt((String) responseMap.get("numberOfOrderItems"));
 			
