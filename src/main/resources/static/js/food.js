@@ -1,29 +1,6 @@
 var app = app || {};
 
-app.init = function() {
-    app.foodEntitiesHandler.getFoodIdFromHTML();
-};
-
 app.foodEntitiesHandler = {
-	
-		getFoodIdFromHTML: function (){
-			var images = document.getElementsByClassName('card-img-top');
-			var cardTitles = document.getElementsByClassName('card-title');
-			
-			for (index = 0; index < images.length; index++){
-				images[index].addEventListener("click", function() {			
-					var foodId = this.getAttribute("data-food-id");
-					app.foodEntitiesHandler.getFoodDataFromServer(foodId);
-				}); 
-			}
-			
-			for (index = 0; index < cardTitles.length; index++){
-				cardTitles[index].addEventListener("click", function() {
-					var foodId = this.getAttribute("data-food-id");
-					app.foodEntitiesHandler.getFoodDataFromServer(foodId);
-				}); 
-			}
-		},
 		
 		getFoodDataFromServer: function (foodId){
 			var dataPackage = {'foodId': foodId};
