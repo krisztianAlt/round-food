@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Registration | Round Food</title>
+	</head>
+	
+	<body>
+				    	
+		<div layout:fragment="content">
+			<div class="container">
+				<div class="orange-background info">
+			        <h5>Registration</h5>
+			        <br>
+			        
+			        <div id="registration-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(errors)>0}">
+			            <ul th:each="error : ${errors}">
+			                <li th:text="${error}"></li>
+			            </ul>
+			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			        </div>
+			       	
+			        <div class="main-center-login">
+			            <form action="/registration" th:object="${customer}" method="post">
+				 			<h6>Personal data</h6>
+				 			
+				            <div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+								<input type="text" class="form-control" th:field="*{firstName}" id="first-name" name="first-name" placeholder="First name" th:value="*{firstName}" aria-label="First name" aria-describedby="basic-addon1">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon2"><i class="fas fa-user"></i></span>
+								<input type="text" class="form-control" th:field="*{lastName}" id="last-name" name="last-name" placeholder="Last name" th:value="*{lastName}" aria-label="Last name" aria-describedby="basic-addon2">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon3"><i class="fas fa-envelope"></i></span>
+								<input type="email" class="form-control" th:field="*{email}" id="email" name="email" placeholder="Email address" th:value="*{email}" aria-label="Email" aria-describedby="basic-addon3">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon4"><i class="fas fa-phone"></i></span>
+								<input type="tel" class="form-control" th:field="*{phoneNumber}" id="phone" name="phone" placeholder="Phone number" th:value="*{phoneNumber}" aria-label="Phone" aria-describedby="basic-addon4">
+								<div id="basic-addon4" class="form-text">Format: 'area code'-'phone number', e. g. 30-1234567 or 1-987654.</div>
+							</div>
+							
+							<br>
+							<h6>Password</h6>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon5"><i class="fas fa-lock"></i></span>
+								<input type="password" class="form-control" th:field="*{password}" id="password" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon5">
+								<div id="basic-addon5" class="form-text">Password must be at least 5 character long.</div>
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon6"><i class="fas fa-lock"></i></span>
+								<input type="password" class="form-control" name="confirm" placeholder="Confirm password" aria-label="Confirm password" aria-describedby="basic-addon6">
+							</div>
+							
+							<br>
+							<h6>Shipping address</h6>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon7"><i class="fas fa-city"></i></span>
+								<input type="text" class="form-control" th:field="*{city}" id="city" name="city" placeholder="City" th:value="*{city}" aria-label="City" aria-describedby="basic-addon7">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon8"><i class="fas fa-home"></i></span>
+								<input type="text" class="form-control" th:field="*{address}" id="address" name="address" placeholder="Address" th:value="*{address}" aria-label="Address" aria-describedby="basic-addon8">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon9"><i class="fas fa-parachute-box"></i></span>
+								<input type="text" class="form-control" th:field="*{postalCode}" id="postalCode" name="postalCode" placeholder="Postal code" th:value="*{postalCode}" aria-label="Postal code" aria-describedby="basic-addon9">
+							</div>
+							
+							<button type="submit" class="btn btn-success"><i class="fas fa-user"></i> Create account</button>
+			            </form>
+			        </div>
+        
+			    </div>
+			</div>
+		</div>
+	
+	</body>
+</html>

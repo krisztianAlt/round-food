@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Orders | Round Food</title>
+	</head>
+	
+	<body>
+				    	
+		<div layout:fragment="content">
+			<div class="container" id="orders-holder">
+				<div class="container-fluid" id="orders-container">
+					
+					<h5>Orders</h5>
+					<br>
+					
+					<div th:if="${openedOrder} == null and ${#lists.size(previousOrders) == 0}" class="d-flex justify-content-center">	
+						<p>Your don't have orders yet.</p>
+					</div>
+					
+					<div th:if="${openedOrder} != null or ${#lists.size(previousOrders) gt 0}">
+						<h6>Opened order</h6>
+						<div th:if="${openedOrder} != null">
+							<div th:each="orderlineitem, iterStat : ${openedOrder.getOrderLineItems()}">
+								<div class="order-item">
+								
+									<div class="row">
+										<div class="col-3 food-picture-orders-page">
+											<img th:attr="src='/picture_collection/' + ${orderlineitem.getFood().getFoodPictures()[0].getFileName()}" alt="Food picture">
+										</div>
+									
+										<div class="col-9">
+											<div class="row order-line-item-row">
+												<div class="col-7 food-name-orders-page" th:text="${orderlineitem.getFood().name}"></div>
+												<div class="col-4 price-col" th:text="${#strings.substringBefore(orderlineitem.getFood().price, '.')}"></div>
+												<div class="col-1">Ft</div>
+											</div>
+											<div th:if="${orderlineitem.getSelectedExtraToppings() != null AND #lists.size(orderlineitem.getSelectedExtraToppings()) > 0}">
+												<div class="row">
+													<div class="col-12">Extra toppings, garnishment etc.:</div>
+												</div>
+												<div th:each="topping, iterStat : ${orderlineitem.getSelectedExtraToppings()}">
+													<div class="row">
+														<div class="col-1">
+														</div>
+														<div class="col-6" th:text="${topping.name}">
+														</div>
+														<div class="col-4 price-col" th:text="${#strings.substringBefore(topping.price, '.')}">
+														</div>
+														<div class="col-1">Ft</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									
+									</div>
+	 
+									<br>
+								</div>
+							</div>
+							<div class="row open-cart-button-container">
+								<div class="col-12 open-cart-button">
+                                       <a class="btn btn-primary btn-sm" href="/ordering" role="button"><i class="fas fa-shopping-cart"></i> Open cart</a>
+								</div>
+							</div>
+						</div>
+						
+						<div th:if="${openedOrder} == null" class="content-center">
+							<br>
+							<p>You don't have opened order.</p>
+						</div>
+						
+						<hr class="style1">
+						<h6>Previous orders</h6>
+						<br>
+						
+						<div th:if="${reorderingFailed} != null" id="reordering-error-alert" class="alert alert-danger alert-dismissible fade show">
+							<p>Reordering failed. Please, try later!</p>
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>	
+						
+						<div th:if="${#lists.size(previousOrders) gt 0}">
+							<div th:each="order, iterStat : ${previousOrders}">
+								<div class="order-date">
+									<div class="row">
+										<div class="col-3 food-picture-orders-page">
+										</div>
+										<div class="col-9" th:text="${'Ordering date: ' + #calendars.format(order.getShippingDateAndTime(), 'yyyy-MM-dd, EEEEE')}">
+										</div>
+									</div>
+								</div>	
+								
+								<div th:each="orderlineitem, iterStat : ${order.getOrderLineItems()}">
+									<div class="order-item">
+										<div class="row">
+											<div class="col-3 food-picture-orders-page">
+												<img th:attr="src='/picture_collection/' + ${orderlineitem.getFood().getFoodPictures()[0].getFileName()}" alt="Food picture">
+											</div>
+										
+											<div class="col-9">
+												<div class="row order-line-item-row">
+													<div class="col-7 food-name-orders-page" th:text="${orderlineitem.getFood().name}"></div>
+													<div class="col-4 price-col" th:text="${#strings.substringBefore(orderlineitem.getFood().price, '.')}"></div>
+													<div class="col-1">Ft</div>
+												</div>
+												<div th:if="${#lists.size(orderlineitem.getSelectedExtraToppings()) > 0}">
+													<div class="row">
+														<div class="col-12">Extra toppings, garnishment etc.:</div>
+													</div>
+													<div th:each="topping, iterStat : ${orderlineitem.getSelectedExtraToppings()}">
+														<div class="row">
+															<div class="col-1">
+															</div>
+															<div class="col-6" th:text="${topping.name}">
+															</div>
+															<div class="col-4 price-col" th:text="${#strings.substringBefore(topping.price, '.')}">
+															</div>
+															<div class="col-1">Ft</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										
+										</div>
+		 
+										<br>
+									</div>
+								</div>
+								<div class="row reorder-button-container">
+									<form action="/ordering/reorder" method="post" class="reorder-button">
+										<input name="orderId" type="hidden" th:value="${order.getId()}" th:style="${'visibility: hidden'}" />
+                                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> Reorder</button>
+									</form>
+								</div>
+								<hr class="style1">
+							</div>
+						</div>
+						
+						<div th:if="${#lists.size(previousOrders) == 0}" class="content-center">
+							<br>
+							<p>You don't have previous orders.</p>
+						</div>
+						
+					</div>
+					
+					<br>
+					<div id="back-button-container">
+						<button type="button" class="btn btn-primary" onclick="window.location.href='/';"><i class="fas fa-arrow-circle-left"></i> Back to main page</button>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+	
+	</body>
+</html>

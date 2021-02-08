@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{main}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <title>Profile | Round Food</title>
+	</head>
+	
+	<body>
+				    	
+		<div layout:fragment="content">
+			<div class="container">
+				<div class="orange-background info">
+			        <h5>Profile</h5>
+			        <br>
+
+					<div id="data-modification-error-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(errors)>0}">
+			            <ul th:each="error : ${errors}">
+			                <li th:text="${error}"></li>
+			            </ul>
+			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			        </div>
+			        
+		            <div id="personal-data-modification-alert" class="alert alert-success alert-dismissible fade show" role="alert" th:if="${updatesucceeded}">
+			            <p><strong>Saved.</strong></p>
+			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			        </div>
+			        
+			        <div id="password-error-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(passworderrors)>0}">
+			            <ul th:each="error : ${passworderrors}">
+			                <li th:text="${error}"></li>
+			            </ul>
+			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			        </div>
+			        
+					<div id="password-modification-alert" class="alert alert-success alert-dismissible fade show" role="alert" th:if="${passwordupdatesucceeded}">
+			            <p><strong>Changing password succeeded!</strong></p>
+			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			        </div>
+			        
+			        <div class="main-center-login">
+			        
+			            <h6>Modifying personal data</h6>
+				        
+			            <form action="/profile" th:object="${customer}" method="post">
+			            
+			            	<div class="d-none">
+								<input type="text" class="form-control" th:field="*{id}" id="id" name="id" th:value="*{id}">
+							</div>
+				 			
+				            <div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+								<input type="text" class="form-control" th:field="*{firstName}" id="first-name" name="first-name" placeholder="First name" th:value="*{firstName}" aria-label="First name" aria-describedby="basic-addon1">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon2"><i class="fas fa-user"></i></span>
+								<input type="text" class="form-control" th:field="*{lastName}" id="last-name" name="last-name" placeholder="Last name" th:value="*{lastName}" aria-label="Last name" aria-describedby="basic-addon2">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon3"><i class="fas fa-envelope"></i></span>
+								<input type="email" class="form-control" th:field="*{email}" id="email" name="email" placeholder="Email address" th:value="*{email}" aria-label="Email" aria-describedby="basic-addon3">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon4"><i class="fas fa-phone"></i></span>
+								<input type="tel" class="form-control" th:field="*{phoneNumber}" id="phone" name="phone" placeholder="Phone number" th:value="*{phoneNumber}" aria-label="Phone" aria-describedby="basic-addon4">
+								<div id="basic-addon4" class="form-text">Format: 'area code'-'phone number', e. g. 30-1234567.</div>
+							</div>
+							
+							<input class="d-none" th:field="*{city}" id="city" name="city" th:value="*{city}">
+							<input class="d-none" th:field="*{address}" id="address" name="address" th:value="*{address}">
+							<input class="d-none" th:field="*{postalCode}" id="postalCode" name="postalCode" th:value="*{postalCode}">
+							
+							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save data</button>
+						</form>
+						
+						<br>
+						<hr class="style1">
+						
+						<h6>Changing password</h6>
+				        
+						<form action="/profile-password" method="post">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon5"><i class="fas fa-lock"></i></span>
+								<input type="password" class="form-control" name="currentpassword" placeholder="Current password" aria-label="Password" aria-describedby="basic-addon5">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon6"><i class="fas fa-lock"></i></span>
+								<input type="password" class="form-control" name="newpassword" placeholder="New password" aria-label="Confirm password" aria-describedby="basic-addon6">
+								<div id="basic-addon6" class="form-text">Password must be at least 5 character long.</div>
+							</div>
+							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save new password</button>
+			            </form>
+			            
+			            <br>
+			            <hr class="style1">
+			            
+			            <h6>Modifying shipping address</h6>
+			            <form action="/profile" th:object="${customer}" method="post">
+			            	<input class="d-none" th:field="*{id}" id="id" name="id" th:value="*{id}">
+							<input class="d-none" th:field="*{firstName}" id="first-name" name="first-name" th:value="*{firstName}">
+							<input class="d-none" th:field="*{lastName}" id="last-name" name="last-name" th:value="*{lastName}">
+							<input class="d-none" th:field="*{email}" id="email" name="email" th:value="*{email}">
+							<input class="d-none" th:field="*{phoneNumber}" id="phone" name="phone" th:value="*{phoneNumber}">
+							
+				            <div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon7"><i class="fas fa-city"></i></span>
+								<input type="text" class="form-control" th:field="*{city}" id="city" name="city" placeholder="City" th:value="*{city}" aria-label="City" aria-describedby="basic-addon7">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon8"><i class="fas fa-home"></i></span>
+								<input type="text" class="form-control" th:field="*{address}" id="address" name="address" placeholder="Address" th:value="*{address}" aria-label="Address" aria-describedby="basic-addon8">
+							</div>
+							
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon9"><i class="fas fa-parachute-box"></i></span>
+								<input type="text" class="form-control" th:field="*{postalCode}" id="postalCode" name="postalCode" placeholder="Postal code" th:value="*{postalCode}" aria-label="Postal code" aria-describedby="basic-addon9">
+							</div>
+							
+							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save new address</button>
+						</form>
+						
+			            <br>
+			            <hr class="style1">
+			            
+			            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+						  <i class="fas fa-trash"></i> Delete profile
+						</button>
+						
+						<!-- Modal for account deletion -->
+						<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="deleteModalLabel">Delete profile</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p>Are you sure you want to delete your account?</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-window-close"></i> No, close</button>
+										<form action="/profile-delete" method="post">
+											<button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Yes, delete</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+			        </div>
+        
+			    </div>
+			</div>
+		</div>
+	
+	</body>
+</html>
