@@ -9,11 +9,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.thymeleaf.templateparser.markup.decoupled.DecoupledTemplateLogic;
 
 import com.example.roundfood.DAO.OrderDAO;
-import com.example.roundfood.DAO.OrderLineItemDAO;
 import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.ExtraTopping;
 import com.example.roundfood.model.Order;

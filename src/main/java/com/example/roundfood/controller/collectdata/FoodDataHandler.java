@@ -1,21 +1,13 @@
 package com.example.roundfood.controller.collectdata;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.roundfood.DAO.FoodDAO;
-import com.example.roundfood.model.Customer;
 import com.example.roundfood.model.Food;
 import com.example.roundfood.model.FoodType;
-import com.example.roundfood.repository.FoodRepository;
 
 @Service
 public class FoodDataHandler {
