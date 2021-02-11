@@ -39,8 +39,8 @@ public class DateAndTime {
 		logger.info("DEFAULT TIME ZONE: " + calendar.getTimeZone().getDisplayName());
 		
 		// calendar.setTimeZone(TIME_ZONE);
-		calendar.set(localDateTime.getYear(), localDateTime.getMonthValue()-1, localDateTime.getDayOfMonth(),
-	              localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
+		calendar.set(localDateTime.now(zoneId).getYear(), localDateTime.now(zoneId).getMonthValue()-1, localDateTime.now(zoneId).getDayOfMonth(),
+	              localDateTime.now(zoneId).getHour(), localDateTime.now(zoneId).getMinute(), localDateTime.now(zoneId).getSecond());
 		
 		logger.info("TIME ZONE AFTER SETTING: " + calendar.getTimeZone().getDisplayName());
 		
