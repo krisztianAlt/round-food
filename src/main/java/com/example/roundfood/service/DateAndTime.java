@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +26,11 @@ public class DateAndTime {
 	private final static int MINIMUM_WAITING_BEFORE_FIRST_CHOOSABLE_SHIPPING_DATE_AND_TIME = 40;
 	private final static int SHIPPING_MINUTE_INTERVAL = 20;
 	private final static int NUMBER_OF_SHIPPING_DAYS = 3;
+	private final static TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Budapest");
 	
 	public HashMap<String, List<Date>> getChoosableShippingDatesAndTimes() {
-		
 		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeZone(TIME_ZONE);
 		SimpleDateFormat dateAndTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date currentDateAndTime = calendar.getTime();
