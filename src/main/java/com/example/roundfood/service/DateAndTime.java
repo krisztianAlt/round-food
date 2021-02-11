@@ -26,10 +26,10 @@ public class DateAndTime {
 	private final static int MINIMUM_WAITING_BEFORE_FIRST_CHOOSABLE_SHIPPING_DATE_AND_TIME = 40;
 	private final static int SHIPPING_MINUTE_INTERVAL = 20;
 	private final static int NUMBER_OF_SHIPPING_DAYS = 3;
-	private final static TimeZone TIME_ZONE = TimeZone.getTimeZone("CET");
+	private final static TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Budapest");
 	
 	public HashMap<String, List<Date>> getChoosableShippingDatesAndTimes() {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(Locale.GERMANY);
 		
 		logger.info("DEFAULT TIME ZONE: " + calendar.getTimeZone().getDisplayName());
 		
@@ -49,7 +49,7 @@ public class DateAndTime {
 		calendar.setTime(currentDateAndTime);
 		
 		// Test:
-		try {
+		try {			
 			logger.info("CURRENT: " + dateAndTimeFormatter.parse(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(currentDateAndTime)) +
 					", ONEHOURLATER: " + dateAndTimeFormatter.parse(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(oneHourLater)) +
 					", CLOSING: " + dateAndTimeFormatter.parse(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(closingDateAndTimeOnCurrentDay)));

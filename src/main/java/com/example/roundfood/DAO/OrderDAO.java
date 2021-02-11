@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import com.example.roundfood.repository.OrderRepository;
 @Service
 public class OrderDAO {
 
+	Logger logger = LoggerFactory.getLogger(OrderDAO.class);
+	
 	@Autowired
 	OrderRepository orderRepository;
 	
@@ -54,6 +58,9 @@ public class OrderDAO {
 		
 		order.setCustomer(updatedOrder.getCustomer());
 		order.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now()));
+		
+		logger.info("ORDER TIMESTAMP: " + timestampMaker.valueOf(localDateTime.now()).toString());
+		
 		order.setOrderLineItems(updatedOrder.getOrderLineItems());
 		order.setShippingDateAndTime(updatedOrder.getShippingDateAndTime());
 		order.setStatus(updatedOrder.getStatus());
