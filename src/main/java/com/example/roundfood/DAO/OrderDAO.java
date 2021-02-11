@@ -2,6 +2,7 @@ package com.example.roundfood.DAO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import com.example.roundfood.repository.OrderRepository;
 public class OrderDAO {
 
 	Logger logger = LoggerFactory.getLogger(OrderDAO.class);
+	private final static ZoneId zoneId = ZoneId.of("Europe/Budapest"); 
 	
 	@Autowired
 	OrderRepository orderRepository;
@@ -57,9 +59,9 @@ public class OrderDAO {
 		Order order = orderRepository.findById(updatedOrder.getId()).get();
 		
 		order.setCustomer(updatedOrder.getCustomer());
-		order.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now()));
+		order.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now(zoneId)));
 		
-		logger.info("ORDER TIMESTAMP: " + timestampMaker.valueOf(localDateTime.now()).toString());
+		logger.info("ORDER TIMESTAMP: " + timestampMaker.valueOf(localDateTime.now(zoneId)).toString());
 		
 		order.setOrderLineItems(updatedOrder.getOrderLineItems());
 		order.setShippingDateAndTime(updatedOrder.getShippingDateAndTime());

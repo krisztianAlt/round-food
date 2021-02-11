@@ -29,7 +29,7 @@ public class DateAndTime {
 	private final static TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Budapest");
 	
 	public HashMap<String, List<Date>> getChoosableShippingDatesAndTimes() {
-		Calendar calendar = Calendar.getInstance(Locale.GERMANY);
+		Calendar calendar = Calendar.getInstance();
 		
 		logger.info("DEFAULT TIME ZONE: " + calendar.getTimeZone().getDisplayName());
 		
