@@ -49,7 +49,7 @@ public class OrderDAO {
 	
 	public Order createNewOrder() {
 		Order newOrder = new Order();
-		newOrder.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now()));
+		newOrder.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now(zoneId)));
 		newOrder.setStatus(OrderStatus.OPENED);
 		orderRepository.save(newOrder);
 		return newOrder;

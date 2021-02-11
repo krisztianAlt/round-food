@@ -2,6 +2,8 @@ package com.example.roundfood.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,14 +28,19 @@ public class DateAndTime {
 	private final static int MINIMUM_WAITING_BEFORE_FIRST_CHOOSABLE_SHIPPING_DATE_AND_TIME = 40;
 	private final static int SHIPPING_MINUTE_INTERVAL = 20;
 	private final static int NUMBER_OF_SHIPPING_DAYS = 3;
-	private final static TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Budapest");
+	// private final static TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Budapest");
+	
+	private LocalDateTime localDateTime;
+	private final static ZoneId zoneId = ZoneId.of("Europe/Budapest"); 
 	
 	public HashMap<String, List<Date>> getChoosableShippingDatesAndTimes() {
 		Calendar calendar = Calendar.getInstance();
 		
 		logger.info("DEFAULT TIME ZONE: " + calendar.getTimeZone().getDisplayName());
 		
-		calendar.setTimeZone(TIME_ZONE);
+		// calendar.setTimeZone(TIME_ZONE);
+		calendar.set(localDateTime.getYear(), localDateTime.getMonthValue()-1, localDateTime.getDayOfMonth(),
+	              localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
 		
 		logger.info("TIME ZONE AFTER SETTING: " + calendar.getTimeZone().getDisplayName());
 		
