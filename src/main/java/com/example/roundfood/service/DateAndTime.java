@@ -41,6 +41,17 @@ public class DateAndTime {
 	
 		Date firstChoosableShippingDateAndTime = calendar.getTime();
 		calendar.setTime(currentDateAndTime);
+		
+		// Test:
+		try {
+			logger.info("CURRENT: " + dateAndTimeFormatter.parse(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(currentDateAndTime)) +
+					", ONEHOURLATER: " + dateAndTimeFormatter.parse(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(oneHourLater)) +
+					", CLOSING: " + dateAndTimeFormatter.parse(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(closingDateAndTimeOnCurrentDay)));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if (oneHourLater.after(closingDateAndTimeOnCurrentDay)) {
 			firstChoosableShippingDateAndTime = getFirstChoosableShippingDateAndTimeOnNextDay(currentDateAndTime);
 		} else {
