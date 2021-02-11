@@ -19,7 +19,6 @@ import com.example.roundfood.repository.OrderRepository;
 @Service
 public class OrderDAO {
 
-	Logger logger = LoggerFactory.getLogger(OrderDAO.class);
 	private final static ZoneId zoneId = ZoneId.of("Europe/Budapest"); 
 	
 	@Autowired
@@ -60,9 +59,6 @@ public class OrderDAO {
 		
 		order.setCustomer(updatedOrder.getCustomer());
 		order.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now(zoneId)));
-		
-		logger.info("ORDER TIMESTAMP: " + timestampMaker.valueOf(localDateTime.now(zoneId)).toString());
-		
 		order.setOrderLineItems(updatedOrder.getOrderLineItems());
 		order.setShippingDateAndTime(updatedOrder.getShippingDateAndTime());
 		order.setStatus(updatedOrder.getStatus());
