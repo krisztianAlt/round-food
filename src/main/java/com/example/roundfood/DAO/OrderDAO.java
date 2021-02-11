@@ -2,9 +2,12 @@ package com.example.roundfood.DAO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ import com.example.roundfood.repository.OrderRepository;
 @Service
 public class OrderDAO {
 
+	private final static ZoneId zoneId = ZoneId.of("Europe/Budapest"); 
+	
 	@Autowired
 	OrderRepository orderRepository;
 	
@@ -43,7 +48,7 @@ public class OrderDAO {
 	
 	public Order createNewOrder() {
 		Order newOrder = new Order();
-		newOrder.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now()));
+		newOrder.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now(zoneId)));
 		newOrder.setStatus(OrderStatus.OPENED);
 		orderRepository.save(newOrder);
 		return newOrder;
@@ -53,7 +58,7 @@ public class OrderDAO {
 		Order order = orderRepository.findById(updatedOrder.getId()).get();
 		
 		order.setCustomer(updatedOrder.getCustomer());
-		order.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now()));
+		order.setOrderingTimeStamp(timestampMaker.valueOf(localDateTime.now(zoneId)));
 		order.setOrderLineItems(updatedOrder.getOrderLineItems());
 		order.setShippingDateAndTime(updatedOrder.getShippingDateAndTime());
 		order.setStatus(updatedOrder.getStatus());

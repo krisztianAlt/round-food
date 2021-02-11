@@ -2,13 +2,14 @@ package com.example.roundfood.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +27,15 @@ public class DateAndTime {
 	private final static int MINIMUM_WAITING_BEFORE_FIRST_CHOOSABLE_SHIPPING_DATE_AND_TIME = 40;
 	private final static int SHIPPING_MINUTE_INTERVAL = 20;
 	private final static int NUMBER_OF_SHIPPING_DAYS = 3;
-	private final static TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Budapest");
+	
+	private LocalDateTime localDateTime;
+	private final static ZoneId zoneId = ZoneId.of("Europe/Budapest"); 
 	
 	public HashMap<String, List<Date>> getChoosableShippingDatesAndTimes() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeZone(TIME_ZONE);
-		SimpleDateFormat dateAndTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		calendar.set(localDateTime.now(zoneId).getYear(), localDateTime.now(zoneId).getMonthValue()-1, localDateTime.now(zoneId).getDayOfMonth(),
+	              localDateTime.now(zoneId).getHour(), localDateTime.now(zoneId).getMinute(), localDateTime.now(zoneId).getSecond());
+		
 		Date currentDateAndTime = calendar.getTime();
 		calendar.add(Calendar.HOUR_OF_DAY, 1);
 		Date oneHourLater = calendar.getTime();
@@ -41,6 +44,7 @@ public class DateAndTime {
 	
 		Date firstChoosableShippingDateAndTime = calendar.getTime();
 		calendar.setTime(currentDateAndTime);
+		
 		if (oneHourLater.after(closingDateAndTimeOnCurrentDay)) {
 			firstChoosableShippingDateAndTime = getFirstChoosableShippingDateAndTimeOnNextDay(currentDateAndTime);
 		} else {
