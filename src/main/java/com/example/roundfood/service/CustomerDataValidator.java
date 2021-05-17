@@ -49,21 +49,25 @@ public class CustomerDataValidator {
     	 List<String> errorMessages = new ArrayList();
     	 Customer customer = queryHandler.getCustomerById(customerId);
     	 
-    	 if (currentPassword.equals(newPassword)) {
-    		 errorMessages.add("New password must be different from current.");
-    	 }
-    	 
-    	 if (!password.checkPassword(currentPassword, customer.getPassword())) {
-    		 errorMessages.add("Wrong current password.");
-    	 }
-    	 
-         if (newPassword.length() < 5 || newPassword.length() > 20){
-             errorMessages.add("New password's length must be between 5 and 20 characters.");
-         }
+    	 if (customerId == 1) {
+    		 errorMessages.add("Demo user's password cannot be modified. If you want to try password modification, please, create your own profile.");
+    	 } else {
+    		 if (currentPassword.equals(newPassword)) {
+        		 errorMessages.add("New password must be different from current.");
+        	 }
+        	 
+        	 if (!password.checkPassword(currentPassword, customer.getPassword())) {
+        		 errorMessages.add("Wrong current password.");
+        	 }
+        	 
+             if (newPassword.length() < 5 || newPassword.length() > 20){
+                 errorMessages.add("New password's length must be between 5 and 20 characters.");
+             }
 
-         if (passwordContainsSpace(newPassword)) {
-         	errorMessages.add("New password shall be free of white space.");
-         }
+             if (passwordContainsSpace(newPassword)) {
+             	errorMessages.add("New password shall be free of white space.");
+             }
+    	 }
          
          return errorMessages;
     }
