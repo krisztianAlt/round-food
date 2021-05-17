@@ -214,20 +214,26 @@ public class CustomerAccountController {
     	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
     	String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
         
-    	boolean deletionSucceeded;
-    	deletionSucceeded = customerDataHandler.deleteUser(customerId);
+    	String errorMessage = "Deletion failed. Database problem occured. Please, try later.";
     	
-    	if (deletionSucceeded) {
-    		httpServletRequest.getSession().removeAttribute("customer_id");
-            httpServletRequest.getSession().removeAttribute("customer_name");
-            httpServletRequest.getSession().removeAttribute("number_of_order_items");
-            httpServletRequest.getSession().invalidate();
-            return "deleted";	
+    	if (customerId == 1) {
+    		errorMessage = "Demo user cannot be deleted. If you want to try user deletion, please, create your own profile.";
+    	} else {
+        	boolean deletionSucceeded;
+        	deletionSucceeded = customerDataHandler.deleteUser(customerId);
+        	
+        	if (deletionSucceeded) {
+        		httpServletRequest.getSession().removeAttribute("customer_id");
+                httpServletRequest.getSession().removeAttribute("customer_name");
+                httpServletRequest.getSession().removeAttribute("number_of_order_items");
+                httpServletRequest.getSession().invalidate();
+                return "deleted";	
+        	}	
     	}
-        
+    	
     	customerDataHandler.collectCustomerData(customerId, model);
     	List<String> errors = new ArrayList<>();
-    	errors.add("Deletion failed. Database problem occured. Please, try later.");
+    	errors.add(errorMessage);
     	model.addAttribute("errors", errors);
         model.addAttribute("loggedIn", customerId != null);
         model.addAttribute("customername", customerName);
