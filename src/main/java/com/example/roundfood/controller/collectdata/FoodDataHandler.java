@@ -16,25 +16,25 @@ public class FoodDataHandler {
 	
 	public FoodDataHandler(FoodDAO foodDAO) {
 		this.foodDAO = foodDAO;
-    }
+	}
 
-    public Model collectFoodDataByType(FoodType foodType,
+	public Model collectFoodDataByType(FoodType foodType,
 									Model model) {
-    	
-    	List<Food> foods = foodDAO.getFoodsByFoodType(foodType);
+		
+		List<Food> foods = foodDAO.getFoodsByFoodType(foodType);
+		
+		model.addAttribute("foods", foods);
+		model.addAttribute("foodtype", foodType.name().substring(0, 1) + foodType.name().substring(1).toLowerCase());
+		
+		return model;
+	}
 
-    	model.addAttribute("foods", foods);
-    	model.addAttribute("foodtype", foodType.name().substring(0, 1) + foodType.name().substring(1).toLowerCase());
-    	
-        return model;
-    }
-    
-    public Food collectFoodData(Long foodId) {
-    	Food food = foodDAO.getFoodById(foodId);
-    	return food;
+	public Food collectFoodData(Long foodId) {
+		Food food = foodDAO.getFoodById(foodId);
+		return food;
 	}
     
-    public List<Food> getFoodsInCarousel(){
-    	return foodDAO.getFoodsInCarousel();
-    }
+	public List<Food> getFoodsInCarousel(){
+		return foodDAO.getFoodsInCarousel();
+	}
 }

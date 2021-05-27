@@ -23,7 +23,7 @@ import com.example.roundfood.model.Order;
 public class MainPage {
 
 	@Autowired
-    FoodDataHandler foodDataHandler;
+	FoodDataHandler foodDataHandler;
 	
 	@Autowired
 	CustomerDataHandler customerDataHandler;
@@ -32,53 +32,53 @@ public class MainPage {
 	OrderDataHandler orderDataHandler;
 	
 	@RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String renderMainPage(@RequestParam Map<String,String> allRequestParams,
-					            Model model,
-					            HttpServletRequest httpServletRequest) {
+	public String renderMainPage(@RequestParam Map<String,String> allRequestParams,
+								Model model,
+								HttpServletRequest httpServletRequest) {
 		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
-        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        
-        List<Food> foodsInCarouse = foodDataHandler.getFoodsInCarousel();
-        
-        model.addAttribute("foodsInCarousel", foodsInCarouse);
-        model.addAttribute("loggedIn", customerId != null);
-        model.addAttribute("customername", customerName);
-        
-        if (customerId != null) {
-        	Customer customer = customerDataHandler.getCustomerById(customerId);
-            Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
-            if (openedOrder != null) {
-            	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
-            } else {
-            	httpServletRequest.getSession().removeAttribute("number_of_order_items");
-            }	
-        }
-        
+		String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+		
+		List<Food> foodsInCarouse = foodDataHandler.getFoodsInCarousel();
+		
+		model.addAttribute("foodsInCarousel", foodsInCarouse);
+		model.addAttribute("loggedIn", customerId != null);
+		model.addAttribute("customername", customerName);
+		
+		if (customerId != null) {
+			Customer customer = customerDataHandler.getCustomerById(customerId);
+			Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+			if (openedOrder != null) {
+				httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+			} else {
+				httpServletRequest.getSession().removeAttribute("number_of_order_items");
+			}	
+		}
+		
 		return "welcome";
-    }
+	}
 	
 	@RequestMapping(value = {"/about"}, method = RequestMethod.GET)
-    public String renderAboutPage(@RequestParam Map<String,String> allRequestParams,
-					            Model model,
-					            HttpServletRequest httpServletRequest) {
+	public String renderAboutPage(@RequestParam Map<String,String> allRequestParams,
+								Model model,
+								HttpServletRequest httpServletRequest) {
 		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
-        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        
-        model.addAttribute("loggedIn", customerId != null);
-        model.addAttribute("customername", customerName);
-        
-        if (customerId != null) {
-        	Customer customer = customerDataHandler.getCustomerById(customerId);
-            Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
-            if (openedOrder != null) {
-            	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
-            } else {
-            	httpServletRequest.getSession().removeAttribute("number_of_order_items");
-            }	
-        }
-        
-        return "about";
+		String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+		
+		model.addAttribute("loggedIn", customerId != null);
+		model.addAttribute("customername", customerName);
+		
+		if (customerId != null) {
+			Customer customer = customerDataHandler.getCustomerById(customerId);
+			Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+			if (openedOrder != null) {
+				httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+			} else {
+				httpServletRequest.getSession().removeAttribute("number_of_order_items");
+			}	
+		}
+		
+		return "about";
     }
 }

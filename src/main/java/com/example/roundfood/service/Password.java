@@ -11,7 +11,6 @@ public class Password {
     public String hashPassword(String password) {
         String salt = BCrypt.gensalt(saltInt);
         String hashed_password = BCrypt.hashpw(password, salt);
-
         return hashed_password;
     }
 
@@ -20,12 +19,9 @@ public class Password {
 
         if(null == stored_hash || !stored_hash.startsWith("$2a$")){
             return false;
-
         }
 
         password_verified = BCrypt.checkpw(password, stored_hash);
-
-
         return (password_verified);
     }
 }

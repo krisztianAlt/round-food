@@ -11,11 +11,10 @@ import com.example.roundfood.repository.CustomerRepository;
 public class CustomerDAO {
     
 	@Autowired
-    private CustomerRepository customerRepository;
+	private CustomerRepository customerRepository;
 	
 	public void saveNewCustomer(Customer customer) {
-        customerRepository.save(customer);
-
+		customerRepository.save(customer);
     }
 	
 	public void updateCustomer(Customer updatedCustomer) {
@@ -39,34 +38,34 @@ public class CustomerDAO {
 	}
 	
 	public Customer getCustomerById(Long customerId) {
-        Customer customer = null;
-        try{
-            customer = customerRepository.findById(customerId).get();
-        } catch (Exception e){
-            System.out.println("No record found: " + e.getMessage());
-        }
-        return customer;
+		Customer customer = null;
+		try{
+			customer = customerRepository.findById(customerId).get();
+		} catch (Exception e){
+			System.out.println("No record found: " + e.getMessage());
+		}
+		return customer;
     }
 	
 	public Customer getCustomerByEmail(String email) {
-        Customer customer = null;
-        try{
-            customer = customerRepository.findByEmail(email);
-        } catch (Exception e){
-            System.out.println("No record found: " + e.getMessage());
-        }
-        return customer;
+		Customer customer = null;
+		try{
+			customer = customerRepository.findByEmail(email);
+		} catch (Exception e){
+			System.out.println("No record found: " + e.getMessage());
+		}
+		return customer;
     }
 
 	public boolean deleteUser(Long customerId) {
 		boolean succeeded = false;
 		
 		try{
-            customerRepository.deleteById(customerId);
-            succeeded = true;
-        } catch (Exception e){
-            System.out.println("Deletion failed: " + e.getMessage());
-        }
+			customerRepository.deleteById(customerId);
+			succeeded = true;
+		} catch (Exception e){
+			System.out.println("Deletion failed: " + e.getMessage());
+		}
 		
 		return succeeded;
 	} 

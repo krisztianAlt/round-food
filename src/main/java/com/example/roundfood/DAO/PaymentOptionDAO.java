@@ -15,12 +15,10 @@ public class PaymentOptionDAO {
 	PaymentOptionRepository paymentOptionRepository;
 	
 	public List<PaymentOption> getAllPaymentOptions(){
-		
 		return paymentOptionRepository.findAll();
 	}
 	
 	public PaymentOption getPaymentOptionById(Long id) {
-		
 		return paymentOptionRepository.findById(id).get();
 	}
 	

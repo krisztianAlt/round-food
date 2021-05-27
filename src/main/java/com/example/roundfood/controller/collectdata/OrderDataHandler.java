@@ -60,15 +60,15 @@ public class OrderDataHandler {
 	
 	public double getTotalPrice(Order order) {
 		double totalPrice = 0;
-        
-        for (OrderLineItem orderLineItem : order.getOrderLineItems()) {
-        	totalPrice += orderLineItem.getFood().getPrice();
-        	for (ExtraTopping extraTopping : orderLineItem.getSelectedExtraToppings()) {
-        		totalPrice += extraTopping.getPrice();
-        	}
-        }
-        
-        return totalPrice;
+
+		for (OrderLineItem orderLineItem : order.getOrderLineItems()) {
+			totalPrice += orderLineItem.getFood().getPrice();
+			for (ExtraTopping extraTopping : orderLineItem.getSelectedExtraToppings()) {
+				totalPrice += extraTopping.getPrice();
+			}
+		}
+		
+		return totalPrice;
 	}
 	
 	public void deleteOrder(Order order) {
@@ -85,8 +85,8 @@ public class OrderDataHandler {
 
 			while (size > 0) {
 				OrderLineItem orderLineItem = orderLineItems.get(size-1);
-	            orderLineItemDataHandler.deleteOrderLineItem(orderLineItem);
-	            size--;
+				orderLineItemDataHandler.deleteOrderLineItem(orderLineItem);
+				size--;	
 			}
 			updateOrder(order);
 			orderDAO.deleteOrder(order);

@@ -18,21 +18,19 @@ public class OrderLineItemDAO {
 	}
 	
 	public void saveNewOrderLineItem(OrderLineItem orderLineItem) {
-
-        orderLineItemRepository.save(orderLineItem);
-
+		orderLineItemRepository.save(orderLineItem);
     }
 	
 	public boolean deleteOrderLineItem(OrderLineItem orderLineItem) {
 		boolean succeeded = false;
 		
 		try{
-            orderLineItemRepository.delete(orderLineItem);
-            succeeded = true;
-        } catch (Exception e){
-            System.out.println("Deletion failed in orderLineItemDAO: " + e.getMessage());
-        }
-		
+			orderLineItemRepository.delete(orderLineItem);
+			succeeded = true;
+		} catch (Exception e){
+			System.out.println("Deletion failed in orderLineItemDAO: " + e.getMessage());
+		}
+
 		return succeeded;
 	}
 	

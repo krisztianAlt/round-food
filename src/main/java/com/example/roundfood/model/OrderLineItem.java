@@ -19,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class OrderLineItem {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -33,7 +33,7 @@ public class OrderLineItem {
 	@JsonManagedReference
 	@ManyToMany(fetch = FetchType.LAZY, targetEntity = ExtraTopping.class)
 	private List<ExtraTopping> selectedExtraToppings;
-
+	
 	public OrderLineItem() {
 	}
 	
@@ -42,35 +42,35 @@ public class OrderLineItem {
 		this.food = food;
 		this.selectedExtraToppings = selectedExtraToppings;
 	}
-
+	
 	public long getId() {
 		return id;
 	}
-
+	
 	public void setId(long id) {
 		this.id = id;
 	}
-
+	
 	public Order getOrder() {
 		return order;
 	}
-
+	
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-
+	
 	public Food getFood() {
 		return food;
 	}
-
+	
 	public void setFood(Food food) {
 		this.food = food;
 	}
-
+	
 	public List<ExtraTopping> getSelectedExtraToppings() {
 		return selectedExtraToppings;
 	}
-
+	
 	public void setSelectedExtraToppings(List<ExtraTopping> selectedExtraToppings) {
 		this.selectedExtraToppings = selectedExtraToppings;
 	}
