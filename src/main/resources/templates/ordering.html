@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{main}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+	layout:decorate="~{main}"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
 	<head>
-	    <title>Ordering | Round Food</title>
-	    
-	    <!-- JavaScript file -->
-    	<script th:src="@{~/js/ordering.js}" defer="defer"></script>
+		<title>Ordering | Round Food</title>
+
+		<!-- JavaScript file -->
+		<script th:src="@{~/js/ordering.js}" defer="defer"></script>
 	</head>
 	
 	<body>
-				    	
+		
 		<div layout:fragment="content">
 			<div class="container" id="ordering-holder">
 				<div class="container-fluid" id="ordering-container">
@@ -63,8 +63,8 @@
 									<div class="col-12 order-line-item-delete-button">
 										<form action="/ordering/delete-item" method="post">
 											<input name="orderId" type="hidden" th:value="${order.getId()}" th:style="${'visibility: hidden'}" />
-	                                        <input name="orderLineItemiId" type="hidden" th:value="${orderlineitem.getId()}" th:style="${'visibility: hidden'}" />
-	                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete order item</button>
+											<input name="orderLineItemiId" type="hidden" th:value="${orderlineitem.getId()}" th:style="${'visibility: hidden'}" />
+											<button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete order item</button>
 										</form>
 									</div>
 								</div>
@@ -123,7 +123,7 @@
 						
 						<div class="row">
 							<div class="col-12 modify-button">									
-                            	<a role="button" href="/profile" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i> Modify</a>
+								<a role="button" href="/profile" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i> Modify</a>
 							</div>
 						</div>
 
@@ -137,10 +137,10 @@
 								<div class="col-6">
 									<select class="form-select" id="date-selector">
 										<option th:each="day, iterStat : ${choosableDays}" th:attr="value=${#calendars.format(day, 'yyyy-MM-dd')}" th:text="${#calendars.format(day, 'yyyy-MM-dd, EEEEE')}">
-	    								</option>
+										</option>
 									</select>
 								</div>
-							
+
 								<div class="col-6">
 									<select name="selectedDateAndTime" class="form-select" id="time-selector">
 										<option th:each="time, iterStat : ${choosableShippingDates}" th:class="${#calendars.format(time, 'yyyy-MM-dd')}" th:value="${time}" th:text="${#calendars.format(time, 'HH:mm')}">

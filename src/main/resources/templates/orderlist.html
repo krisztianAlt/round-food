@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{main}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+	layout:decorate="~{main}"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
 	<head>
-	    <title>Orders | Round Food</title>
+		<title>Orders | Round Food</title>
 	</head>
 	
 	<body>
@@ -62,7 +62,7 @@
 							</div>
 							<div class="row open-cart-button-container">
 								<div class="col-12 open-cart-button">
-                                       <a class="btn btn-primary btn-sm" href="/ordering" role="button"><i class="fas fa-shopping-cart"></i> Open cart</a>
+									<a class="btn btn-primary btn-sm" href="/ordering" role="button"><i class="fas fa-shopping-cart"></i> Open cart</a>
 								</div>
 							</div>
 						</div>
@@ -131,7 +131,7 @@
 								<div class="row reorder-button-container">
 									<form action="/ordering/reorder" method="post" class="reorder-button">
 										<input name="orderId" type="hidden" th:value="${order.getId()}" th:style="${'visibility: hidden'}" />
-                                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> Reorder</button>
+										<button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> Reorder</button>
 									</form>
 								</div>
 								<hr class="style1">
