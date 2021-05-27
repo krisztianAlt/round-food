@@ -121,6 +121,10 @@ public class CustomerDataValidator {
 			errorMessages.add("Another user is already using this email address. Please, type another one.");
 		}
 		
+		if (mode.equals("modification") && customer.getId() == 1) {
+			errorMessages.add("Demo user's email address cannot be modified. If you want to try email address modification, please, create your own profile.");
+		}
+		
 		boolean phoneIsCorrect = InputFieldPattern.PHONE.validate(customer.getPhoneNumber());
 		if (!phoneIsCorrect) {
 			errorMessages.add("Please, type phone number in one of these formats: 30-1234567 or 1-987654.");
