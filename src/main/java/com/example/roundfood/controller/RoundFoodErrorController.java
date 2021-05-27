@@ -24,12 +24,12 @@ public class RoundFoodErrorController implements ErrorController {
 	
 	@Autowired
 	OrderDataHandler orderDataHandler;
-
+	
 	@RequestMapping("/error")
 	public String handleError(@RequestParam Map<String,String> allRequestParams,
 							Model model,
 							HttpServletRequest httpServletRequest) {
-
+	
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
 		String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
 		
@@ -47,11 +47,11 @@ public class RoundFoodErrorController implements ErrorController {
 		}
 		
 		return "error";
-    }
+	}
 	
 	@Override
 	public String getErrorPath() {
 		return null;
 	}
-	
+
 }

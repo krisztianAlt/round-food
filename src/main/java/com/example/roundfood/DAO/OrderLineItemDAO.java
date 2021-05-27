@@ -19,7 +19,7 @@ public class OrderLineItemDAO {
 	
 	public void saveNewOrderLineItem(OrderLineItem orderLineItem) {
 		orderLineItemRepository.save(orderLineItem);
-    }
+	}
 	
 	public boolean deleteOrderLineItem(OrderLineItem orderLineItem) {
 		boolean succeeded = false;
@@ -30,7 +30,7 @@ public class OrderLineItemDAO {
 		} catch (Exception e){
 			System.out.println("Deletion failed in orderLineItemDAO: " + e.getMessage());
 		}
-
+	
 		return succeeded;
 	}
 	

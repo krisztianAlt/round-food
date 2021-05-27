@@ -25,7 +25,7 @@ import com.example.roundfood.service.DateAndTime;
 
 @Controller
 public class OrderController {
-
+	
 	@Autowired
 	OrderDataHandler orderDataHandler;
 	
@@ -117,7 +117,7 @@ public class OrderController {
 				List<PaymentOption> paymentOptions = paymentOptionDataHandler.getAllPaymentOptions();
 				model.addAttribute("paymentOptions", paymentOptions);
 			}
-
+	
 		} else {
 			model.addAttribute("empty", true);
 			httpServletRequest.getSession().removeAttribute("number_of_order_items");

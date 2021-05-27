@@ -24,19 +24,19 @@ public class CustomerAccountController {
 	
 	@Autowired
 	private OrderDataHandler orderDataHandler;
-
+	
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String renderCustomerRegistration(Model model) {
 		model.addAttribute("customer", new Customer());
 		model.addAttribute("errors", new ArrayList<>());
 		return "registration";
 	}
-
+	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String renderCustomerRegistration(@ModelAttribute Customer customer,
 											@RequestParam("confirm") String confirm,
 											Model model) {
-
+	
 		model = customerDataHandler.collectCustomerRegistrationData(customer, confirm, model);
 		
 		List<String> errorMessages = (List) model.asMap().get("errors");
@@ -52,9 +52,9 @@ public class CustomerAccountController {
 		}
 		
 		return "registration";
-
-    }
-
+	
+	}
+	
 	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
 	public String renderLogin(@RequestParam Map<String,String> allRequestParams,
 							Model model,
@@ -80,9 +80,9 @@ public class CustomerAccountController {
 		}
 		
 		return "login";
-
+	
 	}
-
+	
 	@RequestMapping(value = "/login-after-registration", method = RequestMethod.GET)
 	public String renderPlanetsAfterRegistration(@RequestParam Map<String,String> allRequestParams,
 												Model model,
@@ -102,14 +102,14 @@ public class CustomerAccountController {
 		httpServletRequest.getSession().invalidate();
 		return "redirect:/";
 	}
-    
+	
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String renderProfile(Model model,
 							HttpServletRequest httpServletRequest) {
-    	
+		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
 		String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-
+	
 		if (customerId != null) {	
 			model.addAttribute("loggedIn", true);
 			model.addAttribute("customername", customerName);
@@ -127,10 +127,10 @@ public class CustomerAccountController {
 			
 			return "profile";
 		}
-
+	
 		return "redirect:/";
-    }
-    
+	}
+	
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 	public String renderProfile(@ModelAttribute Customer customer,
 								Model model,
@@ -170,13 +170,13 @@ public class CustomerAccountController {
 		
 		return "profile";
 	}
-
-    @RequestMapping(value = "/profile-password", method = RequestMethod.POST)
-    public String renderProfile(@RequestParam("currentpassword") String currentPassword,
+	
+	@RequestMapping(value = "/profile-password", method = RequestMethod.POST)
+	public String renderProfile(@RequestParam("currentpassword") String currentPassword,
 								@RequestParam("newpassword") String newPassword,
 								Model model,
 								HttpServletRequest httpServletRequest) {
-    	
+		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
 		String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
 		
@@ -205,12 +205,12 @@ public class CustomerAccountController {
 		}
 		
 		return "profile";
-    }
-
+	}
+	
 	@RequestMapping(value = "/profile-delete", method = RequestMethod.POST)
 	public String renderDelete(Model model,
 							HttpServletRequest httpServletRequest) {
-    	
+		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
 		String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
 		
@@ -230,7 +230,7 @@ public class CustomerAccountController {
 				return "deleted";	
 			}	
 		}
-
+	
 		customerDataHandler.collectCustomerData(customerId, model);
 		List<String> errors = new ArrayList<>();
 		errors.add(errorMessage);

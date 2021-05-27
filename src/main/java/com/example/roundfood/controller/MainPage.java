@@ -21,7 +21,7 @@ import com.example.roundfood.model.Order;
 
 @Controller
 public class MainPage {
-
+	
 	@Autowired
 	FoodDataHandler foodDataHandler;
 	
@@ -80,5 +80,5 @@ public class MainPage {
 		}
 		
 		return "about";
-    }
+	}
 }

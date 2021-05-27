@@ -15,7 +15,7 @@ public class CustomerDAO {
 	
 	public void saveNewCustomer(Customer customer) {
 		customerRepository.save(customer);
-    }
+	}
 	
 	public void updateCustomer(Customer updatedCustomer) {
 		Customer customer = customerRepository.getOne(updatedCustomer.getId());
@@ -45,7 +45,7 @@ public class CustomerDAO {
 			System.out.println("No record found: " + e.getMessage());
 		}
 		return customer;
-    }
+	}
 	
 	public Customer getCustomerByEmail(String email) {
 		Customer customer = null;
@@ -55,8 +55,8 @@ public class CustomerDAO {
 			System.out.println("No record found: " + e.getMessage());
 		}
 		return customer;
-    }
-
+	}
+	
 	public boolean deleteUser(Long customerId) {
 		boolean succeeded = false;
 		
