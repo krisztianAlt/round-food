@@ -116,6 +116,9 @@ public class CustomerAccountController {
 			customerDataHandler.collectCustomerData(customerId, model);
 			model.addAttribute("errors", new ArrayList<>());
 			model.addAttribute("passworderrors", new ArrayList<>());
+			if (customerId == 1) {
+				model.addAttribute("demouser", true);	
+			}
 			
 			Customer customer = customerDataHandler.getCustomerById(customerId);
 			Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
@@ -160,6 +163,10 @@ public class CustomerAccountController {
 		model.addAttribute("passworderrors", new ArrayList<>());
 		model.addAttribute("loggedIn", customerId != null);
 		model.addAttribute("customername", customerName);
+		
+		if (customerId == 1) {
+			model.addAttribute("demouser", true);	
+		}
 		
 		Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
 		if (openedOrder != null) {

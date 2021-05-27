@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerDataValidator {
 
-	private CustomerDAO queryHandler;
+	private CustomerDAO customerDAO;
 	
-	public CustomerDataValidator(CustomerDAO queryHandler) {
-		this.queryHandler = queryHandler;
+	public CustomerDataValidator(CustomerDAO customerDAO) {
+		this.customerDAO = customerDAO;
 	}
 	
 	@Autowired
@@ -47,7 +47,7 @@ public class CustomerDataValidator {
 	
 	public List<String> validatePasswordModificationData(Long customerId, String currentPassword, String newPassword){
 		List<String> errorMessages = new ArrayList();
-		Customer customer = queryHandler.getCustomerById(customerId);
+		Customer customer = customerDAO.getCustomerById(customerId);
 		 
 		if (customerId == 1) {
 			errorMessages.add("Demo user's password cannot be modified. If you want to try password modification, please, create your own profile.");
@@ -121,7 +121,7 @@ public class CustomerDataValidator {
 			errorMessages.add("Another user is already using this email address. Please, type another one.");
 		}
 		
-		if (mode.equals("modification") && customer.getId() == 1) {
+		if (mode.equals("modification") && customer.getId() == 1 && !customer.getEmail().equals(customerDAO.getCustomerById(customer.getId()).getEmail())) {
 			errorMessages.add("Demo user's email address cannot be modified. If you want to try email address modification, please, create your own profile.");
 		}
 		
@@ -166,7 +166,7 @@ public class CustomerDataValidator {
 	
 	private boolean emailExists(String email) {
 		boolean emailExists = false;
-		Customer customer = queryHandler.getCustomerByEmail(email);
+		Customer customer = customerDAO.getCustomerByEmail(email);
 		if (customer != null){
 			emailExists = true;
 		}
@@ -175,7 +175,7 @@ public class CustomerDataValidator {
 	
 	private boolean anotherUserIsUsingEmail(Customer customer) {
 		boolean anotherUserIsUsingEmail = false;
-		Customer customerInDB = queryHandler.getCustomerByEmail(customer.getEmail());
+		Customer customerInDB = customerDAO.getCustomerByEmail(customer.getEmail());
 		
 		if (customerInDB != null && 
 			customer.getId() != customerInDB.getId()){
@@ -230,7 +230,7 @@ public class CustomerDataValidator {
 		
 		List<String> errorMessages = new ArrayList();
 		
-		Customer customerFromDB = queryHandler.getCustomerByEmail(email);
+		Customer customerFromDB = customerDAO.getCustomerByEmail(email);
 		
 		if (customerFromDB == null) {
 			errorMessages.add("Invalid email or password.");
