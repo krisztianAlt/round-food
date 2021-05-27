@@ -27,6 +27,11 @@
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
 
+					<div id="demouser-alert" class="alert alert-info alert-dismissible fade show" role="alert" th:if="${demouser}">
+						<p>Demo user's email address and password cannot be modified, and demo user cannot be deleted.</p>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+
 					<div id="password-error-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(passworderrors)>0}">
 						<ul th:each="error : ${passworderrors}">
 							<li th:text="${error}"></li>

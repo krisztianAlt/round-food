@@ -123,7 +123,7 @@ public class CustomerDataHandler{
 			logger.info("CUSTOMER UPDATED, ID: " + String.valueOf(customer.getId()));
 		}
 		
-		model.addAttribute("customer", customer);
+		model.addAttribute("customer", customerDAO.getCustomerById(customer.getId()));
 		model.addAttribute("errors", errorMessages);
 		model.addAttribute("updatesucceeded", updateSucceeded);
 		model.addAttribute("updatetried", updateTried);
