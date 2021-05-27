@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{main}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+	layout:decorate="~{main}"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
 	<head>
-	    <title>Main Page | Round Food</title>
-	    
-	    <!-- JavaScript file -->
-    	<script th:src="@{~/js/carousel.js}" defer="defer"></script>
-    	<script th:src="@{~/js/food.js}" defer="defer"></script>
+		<title>Main Page | Round Food</title>
+		
+		<!-- JavaScript file -->
+		<script th:src="@{~/js/carousel.js}" defer="defer"></script>
+		<script th:src="@{~/js/food.js}" defer="defer"></script>
 	</head>
 	
 	<body>
@@ -23,7 +23,7 @@
 					<div class="carousel-inner">
 						<div th:each="food, iterStat : ${foodsInCarousel}" th:class="${iterStat.index} == 0 ? 'carousel-item active' : 'carousel-item'">				    
 							<img th:attr="src='/picture_collection/' + ${food.getFoodPictureInMainPageCarousel().getFileName()}, data-food-id=${food.id}" class="d-block w-100" alt="Food suggested by chef">
-					    </div>
+						</div>
 					</div>
 					<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -36,7 +36,7 @@
 				</div>
 				
 				<div id="add-to-cart-error-alert" class="content-center"></div>
-		    </div>
+			</div>
 			<div th:if="${#lists.size(foodsInCarousel) > 0}" id="chef-info" class="container orange-background">
 				<p id="chef">The Chef Suggests...</p>
 			</div>
@@ -51,28 +51,28 @@
 					
 						<div class="col-12 col-sm-4 d-flex justify-content-center">
 							<div class="card" style="width: 18rem;">
-							  <a th:href="@{/foodlist(type='cake')}"><img th:src="@{/picture_collection/epres3.jpg}" class="card-img-top" alt="Cake"></a>
-							  <div class="card-body">
-							    <h6 class="card-title food-type"><a th:href="@{/foodlist(type='cake')}">Cake</a></h6>
-							  </div>
+								<a th:href="@{/foodlist(type='cake')}"><img th:src="@{/picture_collection/epres3.jpg}" class="card-img-top" alt="Cake"></a>
+								<div class="card-body">
+									<h6 class="card-title food-type"><a th:href="@{/foodlist(type='cake')}">Cake</a></h6>
+								</div>
 							</div>
 						</div>
 						
 						<div class="col-12 col-sm-4 d-flex justify-content-center">
 							<div class="card" style="width: 18rem;">
-							  <a th:href="@{/foodlist(type='pizza')}"><img th:src="@{/picture_collection/sausages2.jpg}" class="card-img-top" alt="Pizza"></a>
-							  <div class="card-body">
-							    <h6 class="card-title food-type"><a th:href="@{/foodlist(type='pizza')}">Pizza</a></h6>
-							  </div>
+								<a th:href="@{/foodlist(type='pizza')}"><img th:src="@{/picture_collection/sausages2.jpg}" class="card-img-top" alt="Pizza"></a>
+								<div class="card-body">
+									<h6 class="card-title food-type"><a th:href="@{/foodlist(type='pizza')}">Pizza</a></h6>
+								</div>
 							</div>
 						</div>
 						
 						<div class="col-12 col-sm-4 d-flex justify-content-center">
 							<div class="card" style="width: 18rem;">
-							  <a th:href="@{/foodlist(type='pie')}"><img th:src="@{/picture_collection/bakedpie2.jpg}" class="card-img-top" alt="Pie"></a>
-							  <div class="card-body">
-							    <h6 class="card-title food-type"><a th:href="@{/foodlist(type='pie')}">Pie</a></h6>
-							  </div>
+								<a th:href="@{/foodlist(type='pie')}"><img th:src="@{/picture_collection/bakedpie2.jpg}" class="card-img-top" alt="Pie"></a>
+								<div class="card-body">
+									<h6 class="card-title food-type"><a th:href="@{/foodlist(type='pie')}">Pie</a></h6>
+								</div>
 							</div>
 						</div>
 					

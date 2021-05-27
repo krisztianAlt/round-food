@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{main}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+	layout:decorate="~{main}"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
 	<head>
-	    <title>Profile | Round Food</title>
+		<title>Profile | Round Food</title>
 	</head>
 	
 	<body>
@@ -12,48 +12,48 @@
 		<div layout:fragment="content">
 			<div class="container">
 				<div class="orange-background info">
-			        <h5>Profile</h5>
-			        <br>
+					<h5>Profile</h5>
+					<br>
 
 					<div id="data-modification-error-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(errors)>0}">
-			            <ul th:each="error : ${errors}">
-			                <li th:text="${error}"></li>
-			            </ul>
-			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			        </div>
-			        
-		            <div id="personal-data-modification-alert" class="alert alert-success alert-dismissible fade show" role="alert" th:if="${updatesucceeded}">
-			            <p><strong>Saved.</strong></p>
-			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			        </div>
-			        
-			        <div id="password-error-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(passworderrors)>0}">
-			            <ul th:each="error : ${passworderrors}">
-			                <li th:text="${error}"></li>
-			            </ul>
-			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			        </div>
-			        
+						<ul th:each="error : ${errors}">
+						    <li th:text="${error}"></li>
+						</ul>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+
+					<div id="personal-data-modification-alert" class="alert alert-success alert-dismissible fade show" role="alert" th:if="${updatesucceeded}">
+						<p><strong>Saved.</strong></p>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+
+					<div id="password-error-alert" class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#lists.size(passworderrors)>0}">
+						<ul th:each="error : ${passworderrors}">
+							<li th:text="${error}"></li>
+						</ul>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+
 					<div id="password-modification-alert" class="alert alert-success alert-dismissible fade show" role="alert" th:if="${passwordupdatesucceeded}">
-			            <p><strong>Changing password succeeded!</strong></p>
-			            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			        </div>
-			        
-			        <div class="main-center-login">
-			        
-			            <h6>Modifying personal data</h6>
-				        
-			            <form action="/profile" th:object="${customer}" method="post">
-			            
-			            	<div class="d-none">
+						<p><strong>Changing password succeeded!</strong></p>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+
+					<div class="main-center-login">
+					
+						<h6>Modifying personal data</h6>
+
+						<form action="/profile" th:object="${customer}" method="post">
+
+							<div class="d-none">
 								<input type="text" class="form-control" th:field="*{id}" id="id" name="id" th:value="*{id}">
 							</div>
-				 			
-				            <div class="input-group mb-3">
+		
+							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
 								<input type="text" class="form-control" th:field="*{firstName}" id="first-name" name="first-name" placeholder="First name" th:value="*{firstName}" aria-label="First name" aria-describedby="basic-addon1">
 							</div>
-							
+
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon2"><i class="fas fa-user"></i></span>
 								<input type="text" class="form-control" th:field="*{lastName}" id="last-name" name="last-name" placeholder="Last name" th:value="*{lastName}" aria-label="Last name" aria-describedby="basic-addon2">
@@ -81,7 +81,7 @@
 						<hr class="style1">
 						
 						<h6>Changing password</h6>
-				        
+						
 						<form action="/profile-password" method="post">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon5"><i class="fas fa-lock"></i></span>
@@ -93,20 +93,19 @@
 								<div id="basic-addon6" class="form-text">Password must be at least 5 character long.</div>
 							</div>
 							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save new password</button>
-			            </form>
-			            
-			            <br>
-			            <hr class="style1">
-			            
-			            <h6>Modifying shipping address</h6>
-			            <form action="/profile" th:object="${customer}" method="post">
-			            	<input class="d-none" th:field="*{id}" id="id" name="id" th:value="*{id}">
+						</form>
+
+						<br>
+						<hr class="style1">
+
+						<h6>Modifying shipping address</h6>
+						<form action="/profile" th:object="${customer}" method="post">
+							<input class="d-none" th:field="*{id}" id="id" name="id" th:value="*{id}">
 							<input class="d-none" th:field="*{firstName}" id="first-name" name="first-name" th:value="*{firstName}">
 							<input class="d-none" th:field="*{lastName}" id="last-name" name="last-name" th:value="*{lastName}">
 							<input class="d-none" th:field="*{email}" id="email" name="email" th:value="*{email}">
 							<input class="d-none" th:field="*{phoneNumber}" id="phone" name="phone" th:value="*{phoneNumber}">
-							
-				            <div class="input-group mb-3">
+							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon7"><i class="fas fa-city"></i></span>
 								<input type="text" class="form-control" th:field="*{city}" id="city" name="city" placeholder="City" th:value="*{city}" aria-label="City" aria-describedby="basic-addon7">
 							</div>
@@ -124,11 +123,11 @@
 							<button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save new address</button>
 						</form>
 						
-			            <br>
-			            <hr class="style1">
-			            
-			            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-						  <i class="fas fa-trash"></i> Delete profile
+						<br>
+						<hr class="style1">
+
+						<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+							<i class="fas fa-trash"></i> Delete profile
 						</button>
 						
 						<!-- Modal for account deletion -->
@@ -151,9 +150,9 @@
 								</div>
 							</div>
 						</div>
-			        </div>
-        
-			    </div>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	

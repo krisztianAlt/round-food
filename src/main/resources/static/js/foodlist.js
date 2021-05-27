@@ -15,7 +15,7 @@ app.foodListHandler = {
 				images[index].addEventListener("click", function() {			
 					var foodId = this.getAttribute("data-food-id");
 					app.foodEntitiesHandler.getFoodDataFromServer(foodId);
-				}); 
+				});
 			}
 			
 			for (index = 0; index < cardTitles.length; index++){
