@@ -164,10 +164,6 @@ public class CustomerAccountController {
 		model.addAttribute("loggedIn", customerId != null);
 		model.addAttribute("customername", customerName);
 		
-		if (customerId == 1) {
-			model.addAttribute("demouser", true);	
-		}
-		
 		Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
 		if (openedOrder != null) {
 			httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());

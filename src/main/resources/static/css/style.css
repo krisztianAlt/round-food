@@ -215,6 +215,10 @@ hr.style1 {
 	margin: 0;
 }
 
+#demouser-alert > p {
+	margin: 0;
+}
+
 #reordering-error-alert > p {
 	margin: 0;
 }
