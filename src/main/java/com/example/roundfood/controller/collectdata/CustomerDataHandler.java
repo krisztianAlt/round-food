@@ -33,8 +33,8 @@ public class CustomerDataHandler{
 	}
 
 	public Model collectCustomerRegistrationData(Customer customer, 
-												String confirm, 
-												Model model) {
+			String confirm, 
+			Model model) {
 		List<String> errorMessages;
 		boolean savingSucceeded = false;
 		boolean savingTried = false;

@@ -19,7 +19,7 @@ import com.example.roundfood.model.Order;
 
 @Controller
 public class FoodController {
-
+	
 	@Autowired
 	FoodDataHandler foodDataHandler;
 	
@@ -56,7 +56,7 @@ public class FoodController {
 			model = foodDataHandler.collectFoodDataByType(getFoodTypeByName(selectedFoodTypeString), model);
 			return "foodlist";	
 		}
-
+	
 		return "redirect:/";
 	}
 	

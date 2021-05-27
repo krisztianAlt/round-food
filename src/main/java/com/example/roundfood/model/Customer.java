@@ -11,43 +11,43 @@ import java.util.List;
 @Table(name = "customer")
 public class Customer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String firstName;
-    private String lastName;
-
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    private String phoneNumber;
-    
-    private String city;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	
-    private String postalCode;
-    
-    private String address;
+	private String firstName;
+	private String lastName;
 	
-    @JsonIgnore
-    private String password;
-    
-    @Enumerated(EnumType.STRING)
-    private CustomerLegitimacy legitimacy;
-    
-    @JsonManagedReference
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Order> orders;
-
+	@Column(unique = true, nullable = false)
+	private String email;
+	
+	private String phoneNumber;
+	
+	private String city;
+	
+	private String postalCode;
+	
+	private String address;
+	
+	@JsonIgnore
+	private String password;
+	
+	@Enumerated(EnumType.STRING)
+	private CustomerLegitimacy legitimacy;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private List<Order> orders;
+	
 	/* Older version:
 	@JsonManagedReference
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
 	private List<ShippingAddress> shippingAddresses;
 	*/
-
+	
 	public Customer() {
 	}
-
+	
 	public Customer(String firstName, String lastName, String email, 
 					String phoneNumber, String password, CustomerLegitimacy legitimacy,
 					String city, String postalCode, String address) {
@@ -61,7 +61,7 @@ public class Customer {
 		this.postalCode = postalCode;
 		this.address = address;
 	}
-
+	
 	public long getId() {
 		return id;
 	}

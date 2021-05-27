@@ -11,7 +11,7 @@ import com.example.roundfood.repository.FoodRepository;
 
 @Service
 public class FoodDAO {
-
+	
 	@Autowired
 	private FoodRepository foodRepository;
 	
@@ -23,7 +23,7 @@ public class FoodDAO {
 			System.out.println("No record found: " + e.getMessage());
 		}
 		return food;
-    }
+	}
 	
 	public List<Food> getFoodsByFoodType(FoodType foodType) {		
 		List<Food> foods = new ArrayList<>();
@@ -37,6 +37,6 @@ public class FoodDAO {
 	
 	public List<Food> getFoodsInCarousel(){
 		return foodRepository.findByFoodPictureInMainPageCarouselNotNull();
-    }
+	}
 	
 }
