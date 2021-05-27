@@ -41,31 +41,31 @@ public class APIController {
 	OrderDataHandler orderDataHandler;
 	
 	@PostMapping("/food")
-    public ResponseEntity<Map<String, Food>> getFoodById(@RequestBody Map<String, String> dataPackageString) { 
+	public ResponseEntity<Map<String, Food>> getFoodById(@RequestBody Map<String, String> dataPackageString) { 
 		String foodIdString = dataPackageString.get("foodId");
 		Map<String, Food> foodMap = new HashMap<String, Food>();
 		
 		try {
 			Long foodId = Long.parseLong(foodIdString);
 			Food selectedFood = foodDataHandler.collectFoodData(foodId);
-	        foodMap.put("foodData", selectedFood);
+			foodMap.put("foodData", selectedFood);
 		} catch(Exception e) {
 			logger.error("Food ID conversion failed: " + e.getMessage());
 			return new ResponseEntity<Map<String, Food>>(foodMap, HttpStatus.BAD_REQUEST);
 		}
 		
-        if (foodMap.isEmpty()){
-            return new ResponseEntity<Map<String, Food>>(foodMap, HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<Map<String, Food>>(foodMap, HttpStatus.OK);
-    }
+		if (foodMap.isEmpty()){
+			return new ResponseEntity<Map<String, Food>>(foodMap, HttpStatus.NOT_FOUND);
+		}
+	
+		return new ResponseEntity<Map<String, Food>>(foodMap, HttpStatus.OK);
+	}
 	
 	@PostMapping("/add-to-cart")
 	public ResponseEntity<Map<String, String>> addToCart(@RequestBody Map<String, Object> dataPackageString,
 														HttpServletRequest httpServletRequest){
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
-        Map<String, String> responseMap = new HashMap<>();
+		Map<String, String> responseMap = new HashMap<>();
         
 		Long foodId = Long.parseLong((String) dataPackageString.get("foodId"));
 		@SuppressWarnings("unchecked")

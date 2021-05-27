@@ -25,32 +25,33 @@ public class RoundFoodErrorController implements ErrorController {
 	@Autowired
 	OrderDataHandler orderDataHandler;
 
-    @RequestMapping("/error")
-    public String handleError(@RequestParam Map<String,String> allRequestParams,
-				            Model model,
-				            HttpServletRequest httpServletRequest) {
+	@RequestMapping("/error")
+	public String handleError(@RequestParam Map<String,String> allRequestParams,
+							Model model,
+							HttpServletRequest httpServletRequest) {
 
-    	Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
-        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-        
-        model.addAttribute("loggedIn", customerId != null);
-        model.addAttribute("customername", customerName);
-        
-        if (customerId != null) {
-        	Customer customer = customerDataHandler.getCustomerById(customerId);
-            Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
-            if (openedOrder != null) {
-            	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
-            } else {
-            	httpServletRequest.getSession().removeAttribute("number_of_order_items");
-            }	
-        }
-        
-        return "error";
+		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
+		String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+		
+		model.addAttribute("loggedIn", customerId != null);
+		model.addAttribute("customername", customerName);
+		
+		if (customerId != null) {
+			Customer customer = customerDataHandler.getCustomerById(customerId);
+			Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+			if (openedOrder != null) {
+				httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+			} else {
+				httpServletRequest.getSession().removeAttribute("number_of_order_items");
+			}	
+		}
+		
+		return "error";
     }
-
-    @Override
-    public String getErrorPath() {
-        return null;
-    }
+	
+	@Override
+	public String getErrorPath() {
+		return null;
+	}
+	
 }

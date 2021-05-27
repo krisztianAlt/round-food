@@ -30,35 +30,35 @@ public class FoodController {
 	OrderDataHandler orderDataHandler;
 	
 	@RequestMapping(value = "/foodlist", method = RequestMethod.GET)
-    public String renderFoods(@RequestParam Map<String,String> allRequestParams,
-				            Model model,
-				            HttpServletRequest httpServletRequest) {
+	public String renderFoods(@RequestParam Map<String,String> allRequestParams,
+							Model model,
+							HttpServletRequest httpServletRequest) {
 		
 		Long customerId = (Long) httpServletRequest.getSession().getAttribute("customer_id");
-        String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
-
-        model.addAttribute("loggedIn", customerId != null);
-        model.addAttribute("customername", customerName);
-        
-        if (customerId != null) {
-        	Customer customer = customerDataHandler.getCustomerById(customerId);
-            Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
-            if (openedOrder != null) {
-            	httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
-            } else {
-            	httpServletRequest.getSession().removeAttribute("number_of_order_items");
-            }	
-        }
-        
-        String selectedFoodTypeString = allRequestParams.get("type");
+		String customerName = (String) httpServletRequest.getSession().getAttribute("customer_name");
+		
+		model.addAttribute("loggedIn", customerId != null);
+		model.addAttribute("customername", customerName);
+		
+		if (customerId != null) {
+			Customer customer = customerDataHandler.getCustomerById(customerId);
+			Order openedOrder = orderDataHandler.getOpenedOrderByCustomer(customer);
+			if (openedOrder != null) {
+				httpServletRequest.getSession().setAttribute("number_of_order_items", openedOrder.getOrderLineItems().size());
+			} else {
+				httpServletRequest.getSession().removeAttribute("number_of_order_items");
+			}	
+		}
+		
+		String selectedFoodTypeString = allRequestParams.get("type");
 		
 		if (paramIsAValidFoodType(selectedFoodTypeString)) {
 			model = foodDataHandler.collectFoodDataByType(getFoodTypeByName(selectedFoodTypeString), model);
 			return "foodlist";	
 		}
-		        
+
 		return "redirect:/";
-    }
+	}
 	
 	private boolean paramIsAValidFoodType(String param) {
 		for (FoodType foodType : FoodType.values()) {

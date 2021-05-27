@@ -13,31 +13,30 @@ import com.example.roundfood.repository.FoodRepository;
 public class FoodDAO {
 
 	@Autowired
-    private FoodRepository foodRepository;
+	private FoodRepository foodRepository;
 	
 	public Food getFoodById(Long foodId) {
-        Food food = null;
-        try{
-            food = foodRepository.findById(foodId).get();
-        } catch (Exception e){
-            System.out.println("No record found: " + e.getMessage());
-        }
-        return food;
+		Food food = null;
+		try{
+			food = foodRepository.findById(foodId).get();
+		} catch (Exception e){
+			System.out.println("No record found: " + e.getMessage());
+		}
+		return food;
     }
 	
-	public List<Food> getFoodsByFoodType(FoodType foodType) {
-		
+	public List<Food> getFoodsByFoodType(FoodType foodType) {		
 		List<Food> foods = new ArrayList<>();
 		try{
-            foods = foodRepository.getFoodsByFoodType(foodType);
-        } catch (Exception e) {
-            System.out.println("No record found: " + e.getMessage());
-        }
+			foods = foodRepository.getFoodsByFoodType(foodType);
+		} catch (Exception e) {
+			System.out.println("No record found: " + e.getMessage());
+		}
 		return foods;
 	}
 	
 	public List<Food> getFoodsInCarousel(){
-    	return foodRepository.findByFoodPictureInMainPageCarouselNotNull();
+		return foodRepository.findByFoodPictureInMainPageCarouselNotNull();
     }
 	
 }
