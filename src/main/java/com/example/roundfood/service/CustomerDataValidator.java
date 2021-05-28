@@ -14,13 +14,12 @@ import org.springframework.stereotype.Service;
 public class CustomerDataValidator {
 
 	private CustomerDAO customerDAO;
-	
-	public CustomerDataValidator(CustomerDAO customerDAO) {
-		this.customerDAO = customerDAO;
-	}
-	
-	@Autowired
 	private Password password;
+	
+	public CustomerDataValidator(CustomerDAO customerDAO, Password password) {
+		this.customerDAO = customerDAO;
+		this.password = password;
+	}	
 	
 	public List<String> validateRegistrationDatas(Customer customer, String confirm) {
 		List<String> errorMessages = validatePersonalData(customer, "registration");
@@ -235,7 +234,7 @@ public class CustomerDataValidator {
 		if (customerFromDB == null) {
 			errorMessages.add("Invalid email or password.");
 		} else {
-			if (!password.checkPassword(passwordStr,customerFromDB.getPassword())) {
+			if (!password.checkPassword(passwordStr, customerFromDB.getPassword())) {
 				errorMessages.add("Invalid email or password.");
 			}
 		}
