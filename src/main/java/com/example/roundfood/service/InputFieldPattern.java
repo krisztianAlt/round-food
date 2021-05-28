@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public enum InputFieldPattern {
 	EMAIL ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"),
 	PHONE ("\\d{1,2}-\\d{6,7}"),
-	CITY ("^[a-zA-Z -íÍöÖüÜóÓőŐúÚéÉáÁ]{2,25}$"),
+	CITY ("^[a-zA-Z-íÍöÖüÜóÓőŐúÚéÉáÁ ]{2,25}$"),
 	POSTAL_CODE ("^[0-9]{4}$"),
 	ADDRESS ("^[a-zA-Z0-9,. -íÍöÖüÜóÓőŐúÚéÉáÁ]{5,35}$"); 
 	
